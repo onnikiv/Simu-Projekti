@@ -2,16 +2,14 @@ en tee mitää... glhf
 
 
 ```mermaid
-graph
-    A[Saapuminen] -->|Jono| B[Pöytiinohjaus]
-    B --> C[Pöydän ruokatilaus]
-    C -->|Tilaukset| K[Keittiö: Tilauksen vastaanotto]
-    K --> L[Keittiö: Ruoan valmistus]
-    L --> F[Tarjoilu]
-    F --> G[Laskutus ja maksaminen]
-    G --> H[Poistuminen]
-    subgraph KEITTIÖ
-        K
-        L
-    end
+flowchart LR
+
+A(Saapuminen) --> B[( )]
+B .-> C((Pöytiinohjaus))
+C --> D((Tilaaminen))
+D .-> E[( )]
+E --> F((Ruoan Tarjoilu))
+F --> G((Maksaminen))
+G --> H(Poistuminen)
+
 ```
