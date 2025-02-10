@@ -2,7 +2,7 @@ en tee mitää... glhf
 
 
 ```mermaid
-flowchart LR
+graph
     A[Saapuminen] -->|Jono| B[Pöytiinohjaus]
     B --> C[Pöydän ruokatilaus]
     C -->|Tilaukset| K[Keittiö: Tilauksen vastaanotto]
