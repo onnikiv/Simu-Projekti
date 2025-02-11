@@ -3,7 +3,7 @@ en tee mitää... glhf
 
 --- 
 ```mermaid
-flowchart LR
+flowchart TD
 
 A(Saapuminen) --> B
 B --> C((Pöytiinohjaus))
