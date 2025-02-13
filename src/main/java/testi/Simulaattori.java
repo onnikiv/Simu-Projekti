@@ -1,5 +1,6 @@
 package testi;
 
+/*
 import simu.framework.Moottori;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
@@ -16,3 +17,5 @@ public class Simulaattori { //Tekstipohjainen
 		///
 	}
 }
+
+ */
