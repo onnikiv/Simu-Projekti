@@ -7,4 +7,7 @@ import simu.framework.IEventType;
 public enum EventType implements IEventType {
 	ARRIVAL, TABLEASSIGNMENT, ORDER, SERVE, PAYMENT, EXIT, APPETIZER, DESSERT, MAINCOURSE;
 
+	/*public static boolean valueOf() {
+        return true;
+    }*/
 }

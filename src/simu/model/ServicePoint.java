@@ -57,7 +57,17 @@ public class ServicePoint {
 
 
 	public boolean isInQueue(){
-		return queue.size() != 0;
+		return !queue.isEmpty();
+	}
+
+	public void serveCustomer(Customer a) {		// Placeholder for testing purposes
+		if (EventType.MAINCOURSE == EventType.valueOf("MAINCOURSE")) {
+			System.out.println("Serving Customer" + a.getId() + " kitchen.getOrder()");
+		} else if (EventType.APPETIZER == EventType.valueOf("APPETIZER")) {
+			System.out.println("Serving Customer" + a.getId() + " kitchen.getOrder()");
+		} else if (EventType.DESSERT == EventType.valueOf("DESERT")) {
+			System.out.println("Serving Customer" + a.getId() + " kitchen.getOrder()");
+		}
 	}
 
 }

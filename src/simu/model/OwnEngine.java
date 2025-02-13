@@ -17,14 +17,14 @@ public class OwnEngine extends simu.framework.Engine {
 
 		servicePoints[0] = new ServicePoint(new Normal(10, 6), eventList, EventType.TABLEASSIGNMENT);
 		servicePoints[1] = new ServicePoint(new Normal(10, 10), eventList, EventType.ORDER);
-		servicePoints[2] = new ServicePoint(new Normal(5, 3), eventList, EventType.APPETIZER);
-		servicePoints[3] = new ServicePoint(new Normal(5, 3), eventList, EventType.SERVE);
+		servicePoints[2] = new ServicePoint(new Normal(2, 3), eventList, EventType.APPETIZER);
+		servicePoints[3] = new ServicePoint(new Normal(2, 3), eventList, EventType.SERVE);
 		servicePoints[4] = new ServicePoint(new Normal(5, 3), eventList, EventType.MAINCOURSE);
-		servicePoints[5] = new ServicePoint(new Normal(5, 3), eventList, EventType.DESSERT);
-		servicePoints[6] = new ServicePoint(new Normal(5, 3), eventList, EventType.PAYMENT);
-		servicePoints[7] = new ServicePoint(new Normal(5, 3), eventList, EventType.EXIT);
+		servicePoints[5] = new ServicePoint(new Normal(2, 3), eventList, EventType.DESSERT);
+		servicePoints[6] = new ServicePoint(new Normal(1, 3), eventList, EventType.PAYMENT);
+		servicePoints[7] = new ServicePoint(new Normal(2, 3), eventList, EventType.EXIT);
 
-		arrivalProcess = new ArrivalProcess(new Negexp(15, 5), eventList, EventType.ARRIVAL);
+		arrivalProcess = new ArrivalProcess(new Negexp(10, 5), eventList, EventType.ARRIVAL);
 
 	}
 
@@ -54,6 +54,7 @@ public class OwnEngine extends simu.framework.Engine {
 				break;
 			case APPETIZER:
 				a = (Customer) servicePoints[2].fetchFromQueue();
+				servicePoints[2].serveCustomer(a);
 				servicePoints[3].addToQueue(a);
 				break;
 			case SERVE:
