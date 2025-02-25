@@ -90,7 +90,6 @@ public class ControllerForFxml implements IControllerForM, IControllerForV {
     @Override
     public void visualizeCustomer() {
         Platform.runLater(() -> {
-            System.out.println("Lisätty");
             gc.setFill(Color.RED);
             gc.fillOval(i, j, 10, 10);
             i = (i + 10) % canvas.getWidth();
