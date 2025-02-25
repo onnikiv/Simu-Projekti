@@ -2,21 +2,27 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import simu.framework.IEngine;
 import javafx.scene.control.Button;
 import simu.model.OwnEngine;
 
 import view.Visualization;
-
+import view.Visualization.*;
 import java.awt.*;
 import java.text.DecimalFormat;
 
 
 public class ControllerForFxml implements IControllerForM, IControllerForV {
     private IEngine engine;
+    private GraphicsContext gc;
+    @FXML
     private Visualization ui;
+
     private Visualization screen;
 
     @FXML
@@ -40,7 +46,18 @@ public class ControllerForFxml implements IControllerForM, IControllerForV {
     @FXML
     private Canvas canvas;
 
+    @FXML
+    public void initialize() {
+        gc = canvas.getGraphicsContext2D();
+        clearScreen();
+    }
+    double i = 0;
+    double j = 10;
 
+    public void clearScreen() {
+        gc.setFill(Color.YELLOW);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+    }
     public double getTime() {
         return Double.parseDouble(timeTextField.getText());
     }
@@ -55,7 +72,6 @@ public class ControllerForFxml implements IControllerForM, IControllerForV {
         DecimalFormat formatter = new DecimalFormat("#0.00");
         resultLabel.setText(formatter.format(time));
     }
-
 
     public void startSimulation() {
         engine = new OwnEngine(this);
@@ -73,10 +89,13 @@ public class ControllerForFxml implements IControllerForM, IControllerForV {
 
     @Override
     public void visualizeCustomer() {
-        Platform.runLater(new Runnable() {
-            public void run() {
-                ui.newCustomer();
-            }
+        Platform.runLater(() -> {
+            System.out.println("Lisätty");
+            gc.setFill(Color.RED);
+            gc.fillOval(i, j, 10, 10);
+            i = (i + 10) % canvas.getWidth();
+            //j = (j + 12) % this.getHeight();
+            if (i==0) j+=10;
         });
     }
 

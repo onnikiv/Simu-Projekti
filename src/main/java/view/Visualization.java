@@ -1,12 +1,12 @@
 package view;
 
+import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 public class Visualization extends Canvas implements IVisualization {
-
-    private final GraphicsContext gc;
+    private GraphicsContext gc;
 
     double i = 0;
     double j = 10;

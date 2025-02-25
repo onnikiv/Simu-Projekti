@@ -3,8 +3,11 @@ package view;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import simu.framework.Trace;
@@ -14,8 +17,10 @@ import view.Visualization;
 import java.io.IOException;
 
 
-public class SimulatorView extends Application {
 
+public class SimulatorView extends Application {
+    @FXML
+    private Canvas canvas;
 
     @Override
     public void init() {
