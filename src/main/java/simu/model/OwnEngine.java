@@ -1,9 +1,12 @@
 package simu.model;
 
-import simu.framework.*;
+import controller.IControllerForM;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
-import controller.IControllerForM;
+import simu.framework.ArrivalProcess;
+import simu.framework.Clock;
+import simu.framework.Engine;
+import simu.framework.Event;
 
 public class OwnEngine extends Engine {
 
@@ -15,14 +18,16 @@ public class OwnEngine extends Engine {
 
         super(controller);
 
-        servicePoints = new ServicePoint[3];
+        servicePoints = new ServicePoint[4];
 
-        servicePoints[0] = new ServicePoint(new Normal(10, 6), eventList, EventType.DEP1);
-        servicePoints[1] = new ServicePoint(new Normal(10, 10), eventList, EventType.DEP2);
-        servicePoints[2] = new ServicePoint(new Normal(5, 3), eventList, EventType.DEP3);
+        servicePoints[0] = new ServicePoint(new Normal(10, 10), eventList, EventType.PÖYTIINOHJAUS);
+        servicePoints[1] = new ServicePoint(new Normal(5, 3), eventList, EventType.TILAAMINEN);
+        servicePoints[2] = new ServicePoint(new Normal(10, 6), eventList, EventType.TARJOILU);
+        servicePoints[3] = new ServicePoint(new Normal(10, 6), eventList, EventType.POISTUMINEN);
 
-        arrivalProcess = new ArrivalProcess(new Negexp(15, 5), eventList, EventType.ARR1);
-
+        arrivalProcess = new ArrivalProcess(new Negexp(15, 5), eventList, EventType.SAAPUMINEN);
+        
+        // SAAPUMINEN, PÖYTIINOHJAUS, TILAAMINEN, TARJOILU, POISTUMINEN;
     }
 
 
@@ -37,22 +42,32 @@ public class OwnEngine extends Engine {
         Customer a;
         switch ((EventType) t.getType()) {
 
-            case ARR1:
+            case SAAPUMINEN:
                 servicePoints[0].addToQueue(new Customer());
                 arrivalProcess.generateNext();
                 controller.visualizeCustomer();
+                break;
 
-                break;
-            case DEP1:
+            case PÖYTIINOHJAUS:
                 a = (Customer) servicePoints[0].fetchFromQueue();
-                servicePoints[1].addToQueue(a);
+                servicePoints[1].addToQueue(a); 
+                System.out.print("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n"); // ONNIN DEBUG
                 break;
-            case DEP2:
+
+            case TILAAMINEN:
                 a = (Customer) servicePoints[1].fetchFromQueue();
                 servicePoints[2].addToQueue(a);
+                System.out.print("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n"); // ONNIN DEBUG
                 break;
-            case DEP3:
+
+            case TARJOILU:
                 a = (Customer) servicePoints[2].fetchFromQueue();
+                servicePoints[3].addToQueue(a);
+                System.out.print("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n"); // ONNIN DEBUG
+                break;
+            
+            case POISTUMINEN:
+                a = (Customer) servicePoints[3].fetchFromQueue();
                 a.setDepartTime(Clock.getInstance().getTime());
                 a.report();
         }

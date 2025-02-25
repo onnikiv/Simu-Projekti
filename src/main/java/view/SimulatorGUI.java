@@ -1,25 +1,29 @@
 package view;
 
 
-import controller.IControllerForV;
+import java.text.DecimalFormat;
+
 import controller.Controller;
+import controller.IControllerForV;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.*;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.*;
-import javafx.scene.layout.*;
-import javafx.scene.text.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import simu.framework.Trace;
 import simu.framework.Trace.Level;
-
-import java.text.DecimalFormat;
 
 
 public class SimulatorGUI extends Application implements ISimulatorUI {
@@ -86,13 +90,13 @@ public class SimulatorGUI extends Application implements ISimulatorUI {
 
             timeLabel = new Label("Simulointiaika:");
             timeLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            time = new TextField("Syötä aika");
+            time = new TextField("20");
             time.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             time.setPrefWidth(150);
 
             delayLabel = new Label("Viive:");
             delayLabel.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
-            delay = new TextField("Syötä viive");
+            delay = new TextField("1");
             delay.setFont(Font.font("Tahoma", FontWeight.NORMAL, 20));
             delay.setPrefWidth(150);
 

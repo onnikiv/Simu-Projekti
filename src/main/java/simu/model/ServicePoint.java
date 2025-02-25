@@ -1,8 +1,12 @@
 package simu.model;
 
-import simu.framework.*;
 import java.util.LinkedList;
+
 import eduni.distributions.ContinuousGenerator;
+import simu.framework.Clock;
+import simu.framework.Event;
+import simu.framework.EventList;
+import simu.framework.Trace;
 
 // TODO:
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
@@ -40,7 +44,7 @@ public class ServicePoint {
 
 	public void beginService(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 
-		Trace.out(Trace.Level.INFO, "Starting new service for customer  " + queue.peek().getId());
+		Trace.out(Trace.Level.INFO, "ALOITETAAN UUSI SERVICE, ASIAKAS: " + queue.peek().getId());
 
 		reserved = true;
 		double serviceTime = generator.sample();
