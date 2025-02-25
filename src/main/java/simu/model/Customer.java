@@ -1,6 +1,7 @@
 package simu.model;
 
-import simu.framework.*;
+import simu.framework.Clock;
+import simu.framework.Trace;
 
 // TODO:
 // Asiakas koodataan simulointimallin edellyttämällä tavalla (data!)
@@ -15,7 +16,7 @@ public class Customer {
         id = i++;
 
         arrivalTime = Clock.getInstance().getTime();
-        Trace.out(Trace.Level.INFO, "New customer number " + id + " arrived at  " + arrivalTime);
+        Trace.out(Trace.Level.INFO, "ASIAKAS: " + id + ", SAAPUMINEN, AIKA: (" + arrivalTime + ")");
     }
 
     public double getDepartTime() {
