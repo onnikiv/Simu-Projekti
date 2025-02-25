@@ -4,6 +4,6 @@ public interface IControllerForM {
 
     // Rajapinta, joka tarjotaan moottorille:
 
-    public void showEndTime(double aika);
+    public void showEndTime(double time);
     public void visualizeCustomer();
 }

@@ -24,20 +24,19 @@ public class Controller implements IControllerForM, IControllerForV {   // UUSI
         engine.setSimulationTime(ui.getTime());
         engine.setDelay(ui.getDelay());
         ui.getVisualization().clearScreen();
-        ((Thread)engine).start();
+        ((Thread) engine).start();
         //((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?
     }
 
     @Override
     public void slowDown() { // hidastetaan moottorisäiettä
-        engine.setDelay((long)(engine.getDelay()*1.10));
+        engine.setDelay((long) (engine.getDelay() * 1.10));
     }
 
     @Override
     public void speedUp() { // nopeutetaan moottorisäiettä
-        engine.setDelay((long)(engine.getDelay()*0.9));
+        engine.setDelay((long) (engine.getDelay() * 0.9));
     }
-
 
 
     // Simulointitulosten välittämistä käyttöliittymään.
@@ -45,19 +44,18 @@ public class Controller implements IControllerForM, IControllerForV {   // UUSI
 
     @Override
     public void showEndTime(double time) {
-        Platform.runLater(()->ui.setEndTime(time));
+        Platform.runLater(() -> ui.setEndTime(time));
     }
 
 
     @Override
     public void visualizeCustomer() {
-        Platform.runLater(new Runnable(){
-            public void run(){
+        Platform.runLater(new Runnable() {
+            public void run() {
                 ui.getVisualization().newCustomer();
             }
         });
     }
-
 
 
 }
