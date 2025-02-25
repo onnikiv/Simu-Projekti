@@ -44,7 +44,7 @@ public class ServicePoint {
 
 	public void beginService(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 
-		Trace.out(Trace.Level.INFO, "ALOITETAAN UUSI SERVICE, ASIAKAS: " + queue.peek().getId());
+		Trace.out(Trace.Level.INFO, "ALOITETAAN UUSI SERVICE, ASIAKAS: " + queue.peek().getId() + " --> " + scheduledEventType); // lisätty mihin eventtiin asiakas siirtyy
 
 		reserved = true;
 		double serviceTime = generator.sample();
