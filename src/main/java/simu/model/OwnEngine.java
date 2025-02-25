@@ -1,5 +1,6 @@
 package simu.model;
 
+import controller.ControllerForFxml;
 import controller.IControllerForM;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
@@ -13,10 +14,14 @@ public class OwnEngine extends Engine {
     private ArrivalProcess arrivalProcess;
 
     private ServicePoint[] servicePoints;
+    private ControllerForFxml controllerFxml;
 
-    public OwnEngine(IControllerForM controller) {
+
+    public OwnEngine(IControllerForM controller,  ControllerForFxml controllerFxml) {
 
         super(controller);
+        this.controllerFxml = controllerFxml;
+
 
         servicePoints = new ServicePoint[4];
 
@@ -52,24 +57,27 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[0].fetchFromQueue();
                 servicePoints[1].addToQueue(a); 
                 System.out.print("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n"); // ONNIN DEBUG
+                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n");
                 break;
 
             case TILAAMINEN:
                 a = (Customer) servicePoints[1].fetchFromQueue();
                 servicePoints[2].addToQueue(a);
                 System.out.print("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n"); // ONNIN DEBUG
+                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n");
                 break;
 
             case TARJOILU:
                 a = (Customer) servicePoints[2].fetchFromQueue();
                 servicePoints[3].addToQueue(a);
                 System.out.print("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n"); // ONNIN DEBUG
+                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n");
                 break;
             
             case POISTUMINEN:
                 a = (Customer) servicePoints[3].fetchFromQueue();
                 a.setDepartTime(Clock.getInstance().getTime());
-                a.report();
+                a.report(this.controllerFxml);
         }
     }
 

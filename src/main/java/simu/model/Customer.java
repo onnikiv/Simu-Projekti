@@ -1,5 +1,6 @@
 package simu.model;
 
+import controller.ControllerForFxml;
 import simu.framework.Clock;
 import simu.framework.Trace;
 
@@ -40,7 +41,7 @@ public class Customer {
         return id;
     }
 
-    public void report() {
+    public void report(ControllerForFxml controllerForFxml) {
         Trace.out(Trace.Level.INFO, "\nCustomer " + id + " done! ");
         Trace.out(Trace.Level.INFO, "Customer " + id + " arrived at: " + arrivalTime);
         Trace.out(Trace.Level.INFO, "Customer " + id + " departed at: " + departTime);
@@ -48,6 +49,14 @@ public class Customer {
         sum += (departTime - arrivalTime);
         double average = sum / id;
         System.out.println("Average time customers spent in the service:  " + average);
+        //  Print the results to the text area
+        controllerForFxml.updateTextArea("\nCustomer " + id + " done! ");
+        controllerForFxml.updateTextArea("\nCustomer " + id + " arrived at: " + arrivalTime);
+        controllerForFxml.updateTextArea("\nCustomer " + id + " departed at: " + departTime );
+        controllerForFxml.updateTextArea("\nCustomer " + id + " stayed for: " + (departTime - arrivalTime));
+        controllerForFxml.updateTextArea("\nAverage time customers spent in the service:  " + average);
+        controllerForFxml.updateTextArea("\n");
+
     }
 
 }
