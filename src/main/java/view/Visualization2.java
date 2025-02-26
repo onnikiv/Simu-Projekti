@@ -35,5 +35,9 @@ public class Visualization2 extends Canvas implements IVisualization {
 
 	}
 
+	public int getCustomerAmount() {
+		return 0;
+	}
+
 
 }

@@ -7,4 +7,6 @@ public interface IVisualization {
 
 	public void newCustomer();
 
+	public int getCustomerAmount();
+
 }

@@ -106,8 +106,10 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             public void run() {
             getVisualization().newCustomer();
             
+            
+            
             // LABEL - ASIAKAS MÄÄRÄ
-            customerAmount.setText(String.valueOf(visualization.getCustomerAmount()));
+            customerAmount.setText(String.valueOf(getVisualization().getCustomerAmount()));
 
             }
         });
