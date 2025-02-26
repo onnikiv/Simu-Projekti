@@ -114,7 +114,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             long delay = ui.getDelay();
 
             if (time < 0 || delay < 0) {
-            throw new IllegalArgumentException("ERROR // Time and delay can't be negative");
+            throw new IllegalArgumentException("ERROR // Time and delay can't be negative\n");
             }
 
             engine = new OwnEngine(this, ControllerForFxml.this);
@@ -123,7 +123,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             ((Thread) engine).start();
 
         } catch (NumberFormatException e) {
-            updateTextArea("ERROR // Time and delay must be numbers!");
+            updateTextArea("ERROR // Time and delay must be numbers!\n");
 
         } catch (IllegalArgumentException e) {
             updateTextArea(e.getMessage());
@@ -248,7 +248,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     public void updateTextArea(String message) {
         if (consoleLogTextArea != null) {
-            Platform.runLater(() -> consoleLogTextArea.appendText(message+ "\n")); // rivivaihto
+            Platform.runLater(() -> consoleLogTextArea.appendText(message));
         } else {
             System.err.println("TextArea is not initialized.");
         }
