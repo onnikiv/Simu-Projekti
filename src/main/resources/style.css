@@ -1,0 +1,44 @@
+/* src/main/resources/style.css */
+.root {
+    -fx-font-family: "Arial";
+}
+
+.label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #FFF4E0;
+}
+
+.text-field {
+    -fx-font-size: 18px;
+    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
+    -fx-background-color: rgba(255, 191, 155, 0.68);
+    -fx-text-fill: #FFF4E0;
+}
+
+.button {
+    -fx-font-size: 16px;
+    -fx-background-color: #FFBF9B;
+    -fx-text-fill: #FFF4E0;
+}
+
+.canvas {
+    -fx-border-color: #000000;
+    -fx-border-width: 2px;
+}
+
+
+.consoleLogTextArea{
+    -fx-background-color: #B46060;
+    -fx-border-color: #B46060;
+    -fx-progress-color: #B46060;
+}
+
+.TextArea{
+    -fx-background-color: #B46060;
+}
+
+.grid-pane {
+    -fx-background-color: #4D4D4D; /* Light gray background color */
+    -fx-border-color: #000000; /* Border color */
+    -fx-border-width: 2px; /* Border width */
+}
