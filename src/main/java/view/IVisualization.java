@@ -9,4 +9,6 @@ public interface IVisualization {
 
 	public int getCustomerAmount();
 
+	public void removeCustomer();
+
 }

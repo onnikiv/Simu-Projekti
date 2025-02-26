@@ -104,13 +104,23 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-            getVisualization().newCustomer();
-            
-            
-            
-            // LABEL - ASIAKAS MÄÄRÄ
-            customerAmount.setText(String.valueOf(getVisualization().getCustomerAmount()));
+                getVisualization().newCustomer();
 
+
+                // LABEL - ASIAKAS MÄÄRÄ
+                customerAmount.setText(String.valueOf(getVisualization().getCustomerAmount()));
+
+            }
+        });
+    }
+
+
+    @Override
+    public void visualizeRemoveCustomers () {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getVisualization().removeCustomer();
             }
         });
     }

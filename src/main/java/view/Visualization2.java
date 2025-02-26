@@ -34,6 +34,15 @@ public class Visualization2 extends Canvas implements IVisualization {
 		gc.fillText("Asiakas " + customerCount, 100, 100);
 
 	}
+	public void removeCustomer() {
+
+		gc.fillRect(100,80, 100, 20);
+		gc.setFill(Color.RED);
+		gc.setFont(new Font(20));
+		gc.fillText("Asiakas " + customerCount, 100, 100);
+
+	}
+
 
 	public int getCustomerAmount() {
 		return 0;

@@ -6,4 +6,5 @@ public interface IControllerForM {
 
     public void showEndTime(double time);
     public void visualizeCustomer();
+    public void visualizeRemoveCustomers();
 }

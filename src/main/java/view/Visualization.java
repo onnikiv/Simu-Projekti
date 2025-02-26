@@ -12,7 +12,8 @@ public class Visualization extends Canvas implements IVisualization {
     private final GraphicsContext gc;
     double i = 0;
     double j = 10;
-
+    double a = 0;
+    double b = 10;
 
     public Visualization(Canvas canvas) {
         this.gc = canvas.getGraphicsContext2D();
@@ -40,6 +41,14 @@ public class Visualization extends Canvas implements IVisualization {
 
     public int getCustomerAmount() {
         return customerCount;
+    }
+
+    public void removeCustomer() {
+        gc.setFill(Color.DARKGRAY);
+        gc.fillOval(a,b,10,10);
+        a = (a + 10) % gc.getCanvas().getWidth();
+        //j = (j + 12) % this.getHeight();
+        if (a==0) b+=10;
     }
 
 }

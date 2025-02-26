@@ -78,6 +78,7 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[3].fetchFromQueue();
                 a.setDepartTime(Clock.getInstance().getTime());
                 a.report(this.controllerFxml);
+                controller.visualizeRemoveCustomers();
         }
     }
 
