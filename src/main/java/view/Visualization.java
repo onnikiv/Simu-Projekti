@@ -11,31 +11,23 @@ public class Visualization extends Canvas implements IVisualization {
     private final GraphicsContext[] gcs;
     private final Color[] backgroundColors;
     private final String[] types;
-    double i = 0;
-    double j = 10;
-    double a = 0;
-    double b = 10;
-    double i1 = 0;
-    double j1 = 10;
-    double a1 = 0;
-    double b1 = 10;
-    double i2 = 0;
-    double j2 = 10;
-    double a2 = 0;
-    double b2 = 10;
-    double i3 = 0;
-    double j3 = 10;
-    double a3 = 0;
-    double b3 = 10;
-    double i4 = 0;
-    double j4 = 10;
+    private final double[] i, j, a, b;
 
     public Visualization(Canvas[] canvases, Color[] backgroundColors, String[] types) {
         this.types = types;
         this.gcs = new GraphicsContext[canvases.length];
         this.backgroundColors = backgroundColors;
+        this.i = new double[canvases.length];
+        this.j = new double[canvases.length];
+        this.a = new double[canvases.length];
+        this.b = new double[canvases.length];
+
         for (int y = 0; y < canvases.length; y++) {
             this.gcs[y] = canvases[y].getGraphicsContext2D();
+            this.i[y] = 0;
+            this.j[y] = 10;
+            this.a[y] = 0;
+            this.b[y] = 10;
         }
 
         clearScreen();
@@ -63,85 +55,93 @@ public class Visualization extends Canvas implements IVisualization {
         
 
         gcs[0].setFill(Color.LIGHTGRAY);
-        gcs[0].fillOval(i,j,10,10);
+        gcs[0].fillOval(i[0],j[0],10,10);
 
-        i = (i + 10) % gcs[0].getCanvas().getWidth();
+        i[0] = (i[0] + 10) % gcs[0].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (i==0) j+=10;
+        if (i[0]==0) j[0]+=10;
     }
 
     public int getCustomerAmount() {
         return customerCount;
     }
 
+    public void newCustomer(int customer) {
+        gcs[customer].setFill(Color.LIGHTGRAY);
+        gcs[customer].fillOval(i[customer],j[customer],10,10);
+
+        i[customer] = (i[customer] + 10) % gcs[0].getCanvas().getWidth();
+        //j = (j + 12) % this.getHeight();
+        if (i[customer]==0) j[customer]+=10;
+    }
+
     public void removeCustomer() {
         gcs[0].setFill(Color.DARKGRAY);
-        gcs[0].fillRect(a,b,10,10);
-        a = (a + 10) % gcs[0].getCanvas().getWidth();
+        gcs[0].fillRect(a[0],b[0],10,10);
+        a[0] = (a[0] + 10) % gcs[0].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (a==0) b+=10;
+        if (a[0]==0) b[0]+=10;
     }
 
     public void newCustomer1() {
 
         gcs[1].setFill(Color.LIGHTGRAY);
-        gcs[1].fillOval(i1,j1,10,10);
+        gcs[1].fillOval(i[1],j[1],10,10);
 
-        i1 = (i1 + 10) % gcs[1].getCanvas().getWidth();
+        i[1] = (i[1] + 10) % gcs[1].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (i1==0) j1+=10;
+        if (i[1]==0) j[1]+=10;
     }
 
     public void removeCustomer1() {
         gcs[1].setFill(backgroundColors[1]);
-        gcs[1].fillRect(a1,b1,10,10);
-        a1 = (a1 + 10) % gcs[1].getCanvas().getWidth();
+        gcs[1].fillRect(a[1],b[1],10,10);
+        a[1] = (a[1] + 10) % gcs[1].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (a1==0) b1+=10;
+        if (a[1]==0) b[1]+=10;
     }
     public void newCustomer2() {
 
         gcs[2].setFill(Color.LIGHTGRAY);
-        gcs[2].fillOval(i2,j2,10,10);
+        gcs[2].fillOval(i[2],j[2],10,10);
 
-        i2 = (i2 + 10) % gcs[2].getCanvas().getWidth();
+        i[2]= (i[2] + 10) % gcs[2].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (i2==0) j2+=10;
+        if (i[2]==0) j[2]+=10;
     }
 
     public void removeCustomer2() {
         gcs[2].setFill(backgroundColors[2]);
-        gcs[2].fillRect(a2,b2,10,10);
-        a2 = (a2 + 10) % gcs[2].getCanvas().getWidth();
+        gcs[2].fillRect(a[2],b[2],10,10);
+        a[2] = (a[2] + 10) % gcs[2].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (a2==0) b2+=10;
+        if (a[2]==0) b[2]+=10;
     }
     public void newCustomer3() {
 
         gcs[3].setFill(Color.LIGHTGRAY);
-        gcs[3].fillOval(i3,j3,10,10);
+        gcs[3].fillOval(i[3],j[3],10,10);
 
-        i3 = (i3 + 10) % gcs[3].getCanvas().getWidth();
+        i[3] = (i[3] + 10) % gcs[3].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (i3==0) j3+=10;
+        if (i[3] == 0) j[3] += 10;
     }
 
     public void removeCustomer3() {
         gcs[3].setFill(backgroundColors[3]);
-        gcs[3].fillRect(a3,b3,10,10);
-        a3 = (a3 + 10) % gcs[3].getCanvas().getWidth();
+        gcs[3].fillRect(a[3],b[3],10,10);
+        a[3] = (a[3] + 10) % gcs[3].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (a3==0) b3+=10;
+        if (a[3] == 0) b[3] += 10;
     }
     public void newCustomer4() {
 
         gcs[4].setFill(Color.LIGHTGRAY);
-        gcs[4].fillOval(i4,j4,10,10);
+        gcs[4].fillOval(i[4],j[4],10,10);
 
-        i4 = (i4 + 10) % gcs[3].getCanvas().getWidth();
+        i[4] = (i[4] + 10) % gcs[3].getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
-        if (i4==0) j4+=10;
+        if (i[4]==0) j[4]+=10;
     }
-
 
 }
