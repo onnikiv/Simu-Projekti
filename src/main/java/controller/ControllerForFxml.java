@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import simu.framework.IEngine;
 import simu.model.OwnEngine;
 import view.ISimulatorUI;
@@ -20,6 +21,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private IEngine engine;
     private IVisualization screen;
     private Visualization visualization;
+    private Visualization visualization1;
+    private Visualization visualization2;
+    private Visualization visualization3;
     private ISimulatorUI ui;
 
     @FXML
@@ -51,8 +55,22 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private Canvas canvas;
 
     @FXML
+    private Canvas canvas1;
+
+    @FXML
+    private Canvas canvas2;
+
+    @FXML
+    private Canvas canvas3;
+    @FXML
+    private Canvas canvas4;
+
+    @FXML
     public void initialize() {
-        visualization = new Visualization(canvas);
+        Canvas[] canvases = {canvas, canvas1, canvas2, canvas3, canvas4};
+        Color[] colors = {Color.DARKGRAY, Color.DARKBLUE, Color.DARKCYAN, Color.DARKGOLDENROD, Color.DARKGREEN};
+        String[] types = {"SAAPUMINEN", "PÖYTIINOHJAUS", "TILAAMINEN", "TARJOILU", "POISTUMINEN"};
+        Visualization visualization = new Visualization(canvases, colors, types);
         setIVisualization(visualization);
         setUi(this);
     }
