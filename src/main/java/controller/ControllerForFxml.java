@@ -83,16 +83,19 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         this.ui = ui;
     }
 
+    @Override
     public double getTime() {
         return Double.parseDouble(timeTextField.getText());
     }
 
 
+    @Override
     public long getDelay() {
         return (long) Double.parseDouble(delayTextField.getText());
     }
 
 
+    @Override
     public void setEndTime(double time) {
         DecimalFormat formatter = new DecimalFormat("#0.00");
         resultLabel.setText(formatter.format(time));
@@ -102,12 +105,29 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     public IVisualization getVisualization() {
         return screen;
     }
-
+    @Override
     public void startSimulation() {
-        engine = new OwnEngine(this, ControllerForFxml.this);
-        engine.setSimulationTime(ui.getTime());
-        engine.setDelay(ui.getDelay());
-        ((Thread) engine).start();
+
+        // ERROR HANDLÄYSTÄ
+        try {
+            double time = ui.getTime();
+            long delay = ui.getDelay();
+
+            if (time < 0 || delay < 0) {
+            throw new IllegalArgumentException("ERROR // Time and delay can't be negative");
+            }
+
+            engine = new OwnEngine(this, ControllerForFxml.this);
+            engine.setSimulationTime(time);
+            engine.setDelay(delay);
+            ((Thread) engine).start();
+
+        } catch (NumberFormatException e) {
+            updateTextArea("ERROR // Time and delay must be numbers!");
+
+        } catch (IllegalArgumentException e) {
+            updateTextArea(e.getMessage());
+        }
         //((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?
     }
 
@@ -228,7 +248,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     public void updateTextArea(String message) {
         if (consoleLogTextArea != null) {
-            Platform.runLater(() -> consoleLogTextArea.appendText(message));
+            Platform.runLater(() -> consoleLogTextArea.appendText(message+ "\n")); // rivivaihto
         } else {
             System.err.println("TextArea is not initialized.");
         }
