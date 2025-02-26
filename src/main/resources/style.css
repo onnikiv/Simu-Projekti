@@ -1,4 +1,4 @@
-/* src/main/resources/style.css */
+
 .root {
     -fx-font-family: "Arial";
 }
@@ -30,13 +30,6 @@
     -fx-padding: 10px 20px;
 }
 
-/* src/main/resources/style.css */
-#canvas {
-    -fx-border-color: #ff0000; /* Border color set to red */
-    -fx-border-width: 2px;
-    -fx-control-inner-background: #dddddc;
-    -fx-text-fill: #384145;
-}
 
 .consoleLogTextArea{
     -fx-background-color: #30475E;
