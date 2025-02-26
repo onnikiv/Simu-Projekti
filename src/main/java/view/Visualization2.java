@@ -23,6 +23,11 @@ public class Visualization2 extends Canvas implements IVisualization {
 		gc.fillRect(0, 0, this.getWidth(), this.getHeight());
 	}
 
+	@Override
+	public void newCustomer(int customer) {
+
+	}
+
 	public void newCustomer() {
 
 		customerCount++;
@@ -43,44 +48,14 @@ public class Visualization2 extends Canvas implements IVisualization {
 
 	}
 
-	@Override
-	public void newCustomer1() {
-
-	}
-
-	@Override
-	public void removeCustomer1() {
-
-	}
-
-	@Override
-	public void newCustomer2() {
-
-	}
-
-	@Override
-	public void removeCustomer2() {
-
-	}
-
-	@Override
-	public void newCustomer3() {
-
-	}
-
-	@Override
-	public void removeCustomer3() {
-
-	}
-
-	@Override
-	public void newCustomer4() {
-
-	}
-
 
 	public int getCustomerAmount() {
 		return 0;
+	}
+
+	@Override
+	public void removeCustomer(int customer) {
+
 	}
 
 

@@ -50,40 +50,40 @@ public class OwnEngine extends Engine {
             case SAAPUMINEN:
                 servicePoints[0].addToQueue(new Customer());
                 arrivalProcess.generateNext();
-                controller.visualizeCustomer();
+                controller.visualizeCustomer(0);
                 break;
 
             case PÖYTIINOHJAUS:
                 a = (Customer) servicePoints[0].fetchFromQueue();
                 servicePoints[1].addToQueue(a);
-                controller.visualizeRemoveCustomers();
+                controller.visualizeRemoveCustomers(0);
                 System.out.print("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n"); // ONNIN DEBUG
                 controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n");
-                controller.visualizeCustomer1();
+                controller.visualizeCustomer(1);
                 break;
 
             case TILAAMINEN:
                 a = (Customer) servicePoints[1].fetchFromQueue();
-                controller.visualizeRemoveCustomers1();
+                controller.visualizeRemoveCustomers(1);
                 servicePoints[2].addToQueue(a);
                 System.out.print("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n"); // ONNIN DEBUG
                 controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n");
-                controller.visualizeCustomer2();
+                controller.visualizeCustomer(2);
                 break;
 
             case TARJOILU:
                 a = (Customer) servicePoints[2].fetchFromQueue();
-                controller.visualizeRemoveCustomers2();
+                controller.visualizeRemoveCustomers(2);
                 servicePoints[3].addToQueue(a);
                 System.out.print("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n"); // ONNIN DEBUG
                 controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n");
-                controller.visualizeCustomer3();
+                controller.visualizeCustomer(3);
                 break;
             
             case POISTUMINEN:
-                controller.visualizeRemoveCustomers3();
+                controller.visualizeRemoveCustomers(3);
                 a = (Customer) servicePoints[3].fetchFromQueue();
-                controller.visualizeCustomer4();
+                controller.visualizeCustomer(4);
                 a.setDepartTime(Clock.getInstance().getTime());
                 a.report(this.controllerFxml);
         }
