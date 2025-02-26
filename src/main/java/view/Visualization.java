@@ -21,7 +21,7 @@ public class Visualization extends Canvas implements IVisualization {
 
     public void clearScreen() {
 
-        gc.setFill(Color.LIGHTBLUE);
+        gc.setFill(Color.DARKGRAY);
         gc.fillRect(0, 0, gc.getCanvas().getWidth(), gc.getCanvas().getHeight());
     }
 
@@ -30,7 +30,7 @@ public class Visualization extends Canvas implements IVisualization {
         customerCount++;
         
 
-        gc.setFill(Color.DARKGRAY);
+        gc.setFill(Color.LIGHTGRAY);
         gc.fillOval(i,j,10,10);
 
         i = (i + 10) % gc.getCanvas().getWidth();

@@ -11,36 +11,58 @@
 .text-field {
     -fx-font-size: 18px;
     -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
-    -fx-background-color: rgba(255, 191, 155, 0.68);
-    -fx-text-fill: #DDDDDD;
+    -fx-background-color: #94939a;
+    -fx-text-fill: #384145;
+    -fx-border-color: #4e535c;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
 .button {
     -fx-font-size: 16px;
-    -fx-background-color: #30475E;
-    -fx-text-fill: #DDDDDD;
-}
-
-.canvas {
-    -fx-border-color: #000000;
+    -fx-background-color: #838994;
+    -fx-text-fill: #384145;
+    -fx-border-color: #4e535c;
     -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 10px 20px;
 }
 
+/* src/main/resources/style.css */
+#canvas {
+    -fx-border-color: #ff0000; /* Border color set to red */
+    -fx-border-width: 2px;
+    -fx-control-inner-background: #dddddc;
+    -fx-text-fill: #384145;
+}
 
 .consoleLogTextArea{
     -fx-background-color: #30475E;
     -fx-border-color: #B46060;
     -fx-progress-color: #B46060;
+    -fx-text-fill: #DDDDDD;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
 .text-area {
-    -fx-background-color: #f100ff;
-    -fx-control-inner-background: #f100ff;
-    -fx-text-fill: #DDDDDD;
+    -fx-background-color: #dddddc;
+    -fx-control-inner-background: #dddddc;
+    -fx-text-fill: #384145;
+    -fx-border-color: #4e535c;
+    -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
 }
 
 .grid-pane {
-    -fx-background-color: #4D4D4D;
+    -fx-background-color: #2e2d2c;
     -fx-border-color: #000000;
     -fx-border-width: 2px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 20px;
 }

@@ -86,12 +86,12 @@
          <GridPane.margin>
             <Insets left="20.0" />
          </GridPane.margin></Button>
-      <Canvas fx:id="canvas" height="245.0" width="470.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <Canvas fx:id="canvas" height="245.0" width="470.0" GridPane.columnIndex="2" GridPane.rowIndex="3" styleClass="canvas">
          <GridPane.margin>
             <Insets left="40.0" />
          </GridPane.margin>
       </Canvas>
-      <TextArea fx:id="consoleLogTextArea" prefHeight="115.0" prefWidth="516.0" GridPane.columnIndex="2" GridPane.rowSpan="2" styleClass="text-area">
+      <TextArea fx:id="consoleLogTextArea" prefHeight="115.0" prefWidth="516.0" GridPane.columnIndex="2" GridPane.rowSpan="2">
          <GridPane.margin>
             <Insets left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
