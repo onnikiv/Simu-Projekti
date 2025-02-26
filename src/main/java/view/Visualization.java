@@ -45,7 +45,7 @@ public class Visualization extends Canvas implements IVisualization {
 
     public void removeCustomer() {
         gc.setFill(Color.DARKGRAY);
-        gc.fillOval(a,b,10,10);
+        gc.fillRect(a,b,10,10);
         a = (a + 10) % gc.getCanvas().getWidth();
         //j = (j + 12) % this.getHeight();
         if (a==0) b+=10;
