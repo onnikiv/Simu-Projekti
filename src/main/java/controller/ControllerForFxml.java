@@ -132,13 +132,85 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         });
     }
 
-
     @Override
     public void visualizeRemoveCustomers () {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 getVisualization().removeCustomer();
+            }
+        });
+    }
+    @Override
+    public void visualizeCustomer1() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getVisualization().newCustomer1();
+
+
+            }
+        });
+    }
+
+    @Override
+    public void visualizeRemoveCustomers1 () {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getVisualization().removeCustomer1();
+            }
+        });
+    }
+    @Override
+    public void visualizeCustomer2() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getVisualization().newCustomer2();
+
+
+
+            }
+        });
+    }
+
+    @Override
+    public void visualizeRemoveCustomers2 () {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getVisualization().removeCustomer2();
+            }
+        });
+    }
+    @Override
+    public void visualizeCustomer3() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getVisualization().newCustomer3();
+
+                customerAmount.setText(String.valueOf(getVisualization().getCustomerAmount()));
+            }
+        });
+    }
+
+    @Override
+    public void visualizeRemoveCustomers3() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getVisualization().removeCustomer3();
+            }
+        });
+    }
+    @Override
+    public void visualizeCustomer4() {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                getVisualization().newCustomer4();
             }
         });
     }

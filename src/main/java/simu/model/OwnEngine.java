@@ -55,30 +55,37 @@ public class OwnEngine extends Engine {
 
             case PÖYTIINOHJAUS:
                 a = (Customer) servicePoints[0].fetchFromQueue();
-                servicePoints[1].addToQueue(a); 
+                servicePoints[1].addToQueue(a);
+                controller.visualizeRemoveCustomers();
                 System.out.print("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n"); // ONNIN DEBUG
                 controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n");
+                controller.visualizeCustomer1();
                 break;
 
             case TILAAMINEN:
                 a = (Customer) servicePoints[1].fetchFromQueue();
+                controller.visualizeRemoveCustomers1();
                 servicePoints[2].addToQueue(a);
                 System.out.print("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n"); // ONNIN DEBUG
                 controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n");
+                controller.visualizeCustomer2();
                 break;
 
             case TARJOILU:
                 a = (Customer) servicePoints[2].fetchFromQueue();
+                controller.visualizeRemoveCustomers2();
                 servicePoints[3].addToQueue(a);
                 System.out.print("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n"); // ONNIN DEBUG
                 controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n");
+                controller.visualizeCustomer3();
                 break;
             
             case POISTUMINEN:
+                controller.visualizeRemoveCustomers3();
                 a = (Customer) servicePoints[3].fetchFromQueue();
+                controller.visualizeCustomer4();
                 a.setDepartTime(Clock.getInstance().getTime());
                 a.report(this.controllerFxml);
-                controller.visualizeRemoveCustomers();
         }
     }
 
