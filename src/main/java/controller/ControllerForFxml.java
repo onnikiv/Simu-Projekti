@@ -15,6 +15,7 @@ import simu.model.OwnEngine;
 import view.ISimulatorUI;
 import view.IVisualization;
 import view.Visualization;
+import javafx.scene.media.AudioClip;
 
 
 public class ControllerForFxml implements IControllerForM, IControllerForV, ISimulatorUI {
@@ -25,6 +26,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private Visualization visualization2;
     private Visualization visualization3;
     private ISimulatorUI ui;
+    private AudioClip customerSound;;
 
     @FXML
     private TextArea consoleLogTextArea;
@@ -73,6 +75,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         Visualization visualization = new Visualization(canvases, colors, types);
         setIVisualization(visualization);
         setUi(this);
+        customerSound = new AudioClip(getClass().getResource("/sounds/customer.mp3").toString());
     }
 
     public void setIVisualization(IVisualization screen) {
@@ -143,6 +146,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             @Override
             public void run() {
                 getVisualization().newCustomer(customer);
+                customerSound.play();
 
 
                 // LABEL - ASIAKAS MÄÄRÄ
