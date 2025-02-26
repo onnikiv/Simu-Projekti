@@ -35,7 +35,7 @@
             <Insets left="40.0" />
          </GridPane.margin>
       </Label>
-      <TextField fx:id="timeTextField" alignment="CENTER" onAction="#getTime" prefHeight="39.0" prefWidth="283.0" promptText="Inser Time" GridPane.columnIndex="1">
+      <TextField fx:id="timeTextField" alignment="CENTER" onAction="#getTime" prefHeight="39.0" prefWidth="283.0" promptText="Insert Time" GridPane.columnIndex="1">
          <font>
             <Font name="System Bold Italic" size="18.0" />
          </font>
