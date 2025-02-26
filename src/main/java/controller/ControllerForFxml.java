@@ -1,20 +1,19 @@
 package controller;
 
+import java.text.DecimalFormat;
+
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Label;
-import simu.framework.IEngine;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import simu.framework.IEngine;
 import simu.model.OwnEngine;
 import view.ISimulatorUI;
 import view.IVisualization;
 import view.Visualization;
-import javafx.scene.control.TextArea;
-
-import java.text.DecimalFormat;
 
 
 public class ControllerForFxml implements IControllerForM, IControllerForV, ISimulatorUI {
@@ -43,6 +42,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     @FXML
     private Button startButton;
+
+    @FXML
+    private Label customerAmount;
 
 
     @FXML
@@ -102,7 +104,11 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                getVisualization().newCustomer();
+            getVisualization().newCustomer();
+            
+            // LABEL - ASIAKAS MÄÄRÄ
+            customerAmount.setText(String.valueOf(visualization.getCustomerAmount()));
+
             }
         });
     }
