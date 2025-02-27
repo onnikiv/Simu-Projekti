@@ -51,7 +51,9 @@ public class Visualization extends Canvas implements IVisualization {
     }
 
     public void newCustomer(int customer) {
-        customerCount++;
+        if (customer == 1) {
+            customerCount++;
+        }
         gcs[customer].setFill(Color.LIGHTGRAY);
         gcs[customer].fillOval(i[customer], j[customer], 10, 10);
         i[customer] = (i[customer] + 10) % (gcs[customer].getCanvas().getWidth()-180);
