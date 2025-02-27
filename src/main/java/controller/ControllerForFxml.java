@@ -3,6 +3,7 @@ package controller;
 import java.text.DecimalFormat;
 
 import javafx.application.Platform;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
@@ -69,6 +70,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private Canvas canvas5;
 
     @FXML
+    private Button muteButton;
+
+    @FXML
     public void initialize() {
         Canvas[] canvases = {canvas, canvas1, canvas2, canvas3, canvas4, canvas5};
         Color[] colors = {Color.DARKGRAY, Color.DARKBLUE, Color.DARKCYAN, Color.DARKGOLDENROD, Color.DARKGREEN, Color.DARKMAGENTA};
@@ -109,6 +113,8 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     public IVisualization getVisualization() {
         return screen;
     }
+
+    boolean mute = false;
     @Override
     public void startSimulation() {
 
@@ -125,6 +131,8 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             engine.setSimulationTime(time);
             engine.setDelay(delay);
             ((Thread) engine).start();
+
+            muteButton.setOnAction(event -> {if (mute) {mute = false;} else if (!mute) { mute = true;}});
 
         } catch (NumberFormatException e) {
             updateTextArea("ERROR // Time and delay must be numbers!\n");
@@ -147,7 +155,10 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             @Override
             public void run() {
                 getVisualization().newCustomer(customer);
-                customerSound.play();
+                if (!mute) {
+                    customerSound.play();
+                }
+
 
 
                 // LABEL - ASIAKAS MÄÄRÄ
