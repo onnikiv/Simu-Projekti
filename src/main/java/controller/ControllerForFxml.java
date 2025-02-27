@@ -1,16 +1,21 @@
 package controller;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 import javafx.application.Platform;
 import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import simu.framework.IEngine;
 import simu.model.OwnEngine;
 import view.ISimulatorUI;
@@ -69,6 +74,10 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private Button muteButton;
 
     @FXML
+    private Button settingsButton;
+
+
+    @FXML
     public void initialize() {
         Canvas[] canvases = {canvas, canvas1, canvas2, canvas3, canvas4, canvas5};
         Color[] colors = {Color.DARKGRAY, Color.DARKBLUE, Color.DARKCYAN, Color.DARKGOLDENROD, Color.DARKGREEN, Color.DARKMAGENTA};
@@ -77,7 +86,11 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         setIVisualization(visualization);
         setUi(this);
         customerSound = new AudioClip(getClass().getResource("/sounds/customer.mp3").toString());
+        settingsButton.setOnAction(event -> openSettings());
+        muteButton.setOnAction(event -> {if (mute) {mute = false;} else if (!mute) { mute = true;}});
+
     }
+
 
     public void setIVisualization(IVisualization screen) {
         this.screen = screen;
@@ -128,7 +141,6 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             engine.setDelay(delay);
             ((Thread) engine).start();
 
-            muteButton.setOnAction(event -> {if (mute) {mute = false;} else if (!mute) { mute = true;}});
 
         } catch (NumberFormatException e) {
             updateTextArea("ERROR // Time and delay must be numbers!\n");
@@ -192,4 +204,18 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             System.err.println("TextArea is not initialized.");
         }
     }
+    @FXML
+    private void openSettings() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settings.fxml"));
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Settings");
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

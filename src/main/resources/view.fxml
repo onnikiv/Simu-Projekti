@@ -132,7 +132,7 @@
       </VBox>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1">
          <children>
-            <Button mnemonicParsing="false" text="Settings" />
+            <Button fx:id="settingsButton"  mnemonicParsing="false" text="Settings" />
             <Button mnemonicParsing="false" text="Database" />
             <Button fx:id="muteButton"  mnemonicParsing="false" text="Mute" />
          </children>

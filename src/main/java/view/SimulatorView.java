@@ -22,6 +22,7 @@ public class SimulatorView extends Application {
     @FXML
     private Canvas canvas;
 
+
     @Override
     public void init() {
         Trace.setTraceLevel(Trace.Level.INFO);
