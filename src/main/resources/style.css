@@ -1,59 +1,66 @@
-
 .root {
-    -fx-font-family: "Arial";
+    -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    -fx-background-color: #4A4A4A;
 }
 
 .label {
     -fx-font-size: 20px;
-    -fx-text-fill: #DDDDDD;
+    -fx-text-fill: #FFFFFF;
 }
 
 .text-field {
     -fx-font-size: 18px;
-    -fx-prompt-text-fill: derive(-fx-control-inner-background, -30%);
-    -fx-background-color: #94939a;
-    -fx-text-fill: #384145;
-    -fx-border-color: #4e535c;
+    -fx-prompt-text-fill: #AAAAAA;
+    -fx-background-color: #2A2A2A;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #4A4A4A;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
-    -fx-background-radius: 5px
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
 }
 
 .button {
-    -fx-font-size: 16px;
-    -fx-background-color: #838994;
-    -fx-text-fill: #384145;
-    -fx-border-color: #4e535c;
+    -fx-font-size: 14px;
+    -fx-background-color: #4A4A4A;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #6A6A6A;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
-    -fx-padding: 10px 20px;
+    -fx-padding: 5px 8px;
+    -fx-cursor: hand;
 }
 
+.button:hover {
+    -fx-background-color: #6A6A6A;
+}
 
-.consoleLogTextArea{
-    -fx-background-color: #30475E;
-    -fx-border-color: #B46060;
-    -fx-progress-color: #B46060;
-    -fx-text-fill: #DDDDDD;
+.consoleLogTextArea {
+    -fx-background-color: #1E1E1E;
+    -fx-border-color: #4A4A4A;
+    -fx-text-fill: #FFFFFF;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
+    -fx-padding: 10px;
 }
 
 .text-area {
-    -fx-background-color: #dddddc;
-    -fx-control-inner-background: #dddddc;
-    -fx-text-fill: #384145;
-    -fx-border-color: #4e535c;
+    -fx-background-color: #2A2A2A;
+    -fx-control-inner-background: #2A2A2A;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #4A4A4A;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
+    -fx-padding: 10px;
 }
 
 .grid-pane {
-    -fx-background-color: #2e2d2c;
-    -fx-border-color: #000000;
+    -fx-background-color: #1A1A1A;
+    -fx-border-color: #3A3A3A;
+    -fx-control-inner-background: #2A2A2A;
     -fx-border-width: 2px;
     -fx-border-radius: 5px;
     -fx-background-radius: 5px;
