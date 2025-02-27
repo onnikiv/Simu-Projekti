@@ -22,10 +22,6 @@ import javafx.scene.media.AudioClip;
 public class ControllerForFxml implements IControllerForM, IControllerForV, ISimulatorUI {
     private IEngine engine;
     private IVisualization screen;
-    private Visualization visualization;
-    private Visualization visualization1;
-    private Visualization visualization2;
-    private Visualization visualization3;
     private ISimulatorUI ui;
     private AudioClip customerSound;;
 

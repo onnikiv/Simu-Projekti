@@ -38,8 +38,10 @@ public class SimulatorView extends Application {
                 }
             });
             stage.setTitle("Simulator");
+
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view.fxml"));
             Parent root = fxmlLoader.load();
+            root.getStylesheets().add(getClass().getResource("/style.css").toExternalForm());
             stage.setScene(new Scene(root));
             stage.show();
 
