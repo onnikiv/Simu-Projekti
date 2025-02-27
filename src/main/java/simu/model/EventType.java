@@ -5,6 +5,6 @@ import simu.framework.IEventType;
 // TODO:
 // Tapahtumien tyypit määritellään simulointimallin vaatimusten perusteella
 public enum EventType implements IEventType {
-	SAAPUMINEN, PÖYTIINOHJAUS, TILAAMINEN, TARJOILU, POISTUMINEN;
+	SAAPUMINEN, PÖYTIINOHJAUS, TILAAMINEN, TARJOILU, SAFKAAMINEN, POISTUMINEN;
 
 }

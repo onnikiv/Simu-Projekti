@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="575.0" prefWidth="1118.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerForFxml">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="625.0" prefWidth="1185.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerForFxml">
   <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="283.0" />
@@ -88,7 +88,7 @@
          </GridPane.margin></Button>
       <TextArea fx:id="consoleLogTextArea" editable="false" prefHeight="115.0" prefWidth="516.0" GridPane.columnIndex="2" GridPane.rowSpan="2">
          <GridPane.margin>
-            <Insets left="10.0" right="10.0" top="30.0" bottom="30" />
+            <Insets bottom="30" left="10.0" right="10.0" top="30.0" />
          </GridPane.margin>
       </TextArea>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
@@ -121,10 +121,11 @@
             <Canvas fx:id="canvas3" height="53.0" layoutX="10.0" layoutY="10.0" width="470.0" />
          </children>
       </VBox>
-      <VBox layoutX="573.0" layoutY="380.0" prefHeight="202.0" prefWidth="555.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
+      <VBox layoutX="573.0" layoutY="380.0" prefHeight="109.0" prefWidth="561.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
          <GridPane.margin><Insets left="10" /></GridPane.margin>
          <children>
             <Canvas fx:id="canvas4" height="51.0" width="470.0" />
+            <Canvas fx:id="canvas5" height="51.0" layoutX="10.0" layoutY="10.0" width="470.0" />
          </children>
       </VBox>
    </children>

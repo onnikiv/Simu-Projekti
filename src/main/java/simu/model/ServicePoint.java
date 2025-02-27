@@ -48,6 +48,7 @@ public class ServicePoint {
 
 		reserved = true;
 		double serviceTime = generator.sample();
+		Trace.out(Trace.Level.INFO, "Service time: " + serviceTime + " for event: " + scheduledEventType);
 		eventList.add(new Event(scheduledEventType,Clock.getInstance().getTime()+serviceTime));
 	}
 

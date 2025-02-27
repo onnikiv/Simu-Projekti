@@ -52,7 +52,6 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     @FXML
     private Label customerAmount;
 
-
     @FXML
     private Canvas canvas;
 
@@ -66,12 +65,14 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private Canvas canvas3;
     @FXML
     private Canvas canvas4;
+    @FXML
+    private Canvas canvas5;
 
     @FXML
     public void initialize() {
-        Canvas[] canvases = {canvas, canvas1, canvas2, canvas3, canvas4};
-        Color[] colors = {Color.DARKGRAY, Color.DARKBLUE, Color.DARKCYAN, Color.DARKGOLDENROD, Color.DARKGREEN};
-        String[] types = {"SAAPUMINEN", "PÖYTIINOHJAUS", "TILAAMINEN", "TARJOILU", "POISTUMINEN"};
+        Canvas[] canvases = {canvas, canvas1, canvas2, canvas3, canvas4, canvas5};
+        Color[] colors = {Color.DARKGRAY, Color.DARKBLUE, Color.DARKCYAN, Color.DARKGOLDENROD, Color.DARKGREEN, Color.DARKMAGENTA};
+        String[] types = {"SAAPUMINEN", "PÖYTIINOHJAUS", "TILAAMINEN", "TARJOILU", "SAFKAAMINEN", "POISTUMINEN"};
         Visualization visualization = new Visualization(canvases, colors, types);
         setIVisualization(visualization);
         setUi(this);
