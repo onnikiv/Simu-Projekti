@@ -155,7 +155,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             @Override
             public void run() {
                 getVisualization().newCustomer(customer);
-                if (!mute) {
+                if (!mute && customer == 0) {
                     customerSound.play();
                 }
 
