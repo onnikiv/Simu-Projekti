@@ -34,7 +34,7 @@ public class MenuDAO {
 
     public MenuItem getItem(int id) {
         Connection conn = MariaDbConnection.getConnection();
-        String query = "SELECT * FROM menu_items WHERE id = ?";
+        String query = "SELECT * FROM menu_items WHERE category_id = ?";
         String itemName = null;
         int itemCategory = 0;
         double itemPrepTime = 0.0;
