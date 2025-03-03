@@ -13,7 +13,12 @@ category_id INT NOT NULL,
 prep_time_minutes INT NOT NULL,
 FOREIGN KEY (category_id) REFERENCES categories(id)
 );
-
+--- Tämä lisätty ---------
+INSERT INTO categories (name) VALUES
+      ('Appetizers'),
+      ('Main Courses'),
+      ('Desserts');
+--------------------------
 INSERT INTO menu_items (name, category_id, prep_time_minutes) VALUES
       ('Garlic Bread', 1, 5),
       ('Bruschetta', 1, 7),
