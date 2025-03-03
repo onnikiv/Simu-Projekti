@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 
 import javafx.application.Platform;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -14,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import simu.framework.IEngine;
@@ -21,7 +21,6 @@ import simu.model.OwnEngine;
 import view.ISimulatorUI;
 import view.IVisualization;
 import view.Visualization;
-import javafx.scene.media.AudioClip;
 
 
 public class ControllerForFxml implements IControllerForM, IControllerForV, ISimulatorUI {
@@ -123,7 +122,8 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         return screen;
     }
 
-    boolean mute = false;
+    boolean mute = true;
+    
     @Override
     public void startSimulation() {
 
@@ -159,30 +159,23 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     @Override
     public void visualizeCustomer(int customer) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                getVisualization().newCustomer(customer);
-                if (!mute && customer == 0) {
-                    customerSound.play();
-                }
-
-
-
-                // LABEL - ASIAKAS MÄÄRÄ
-                customerAmount.setText(String.valueOf(getVisualization().getCustomerAmount()));
-
+        Platform.runLater(() -> {
+            getVisualization().newCustomer(customer);
+            if (!mute && customer == 0) {
+                customerSound.play();
             }
+            
+            
+            
+            // LABEL - ASIAKAS MÄÄRÄ
+            customerAmount.setText(String.valueOf(getVisualization().getCustomerAmount()));
         });
     }
 
     @Override
     public void visualizeRemoveCustomers(int customer) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                getVisualization().removeCustomer(customer);
-            }
+        Platform.runLater(() -> {
+            getVisualization().removeCustomer(customer);
         });
     }
 
@@ -214,7 +207,6 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
