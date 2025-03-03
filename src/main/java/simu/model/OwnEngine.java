@@ -17,6 +17,10 @@ public class OwnEngine extends Engine {
     private final ControllerForFxml controllerFxml;
     private final Table table;
 
+    private boolean paused = false;
+    private final Object pauseLock = new Object();
+
+
 
     public OwnEngine(IControllerForM controller, ControllerForFxml controllerFxml) {
 
@@ -39,6 +43,20 @@ public class OwnEngine extends Engine {
     }
 
 
+
+    public void pauseSimulation() {
+        synchronized (pauseLock) {
+            paused = true;
+        }
+    }
+
+    public void resumeSimulation() {
+        synchronized (pauseLock) {
+            paused = false;
+            pauseLock.notifyAll();
+        }
+    }
+
     @Override
     protected void init() {
         arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
@@ -46,6 +64,15 @@ public class OwnEngine extends Engine {
 
     @Override
     protected void runEvent(Event t) {  // B-vaiheen tapahtumat
+        synchronized (pauseLock) {
+            while (paused) {
+                try {
+                    pauseLock.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
         Customer a;
         switch ((EventType) t.getType()) {
@@ -115,6 +142,16 @@ public class OwnEngine extends Engine {
 
     @Override
     protected void attemptCEvents() {
+        synchronized (pauseLock) {
+            while (paused) {
+                try {
+                    pauseLock.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         for (ServicePoint p : servicePoints) {
             if (!p.isReserved() && p.isInQueue()) {
                 p.beginService();

@@ -210,4 +210,19 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         }
     }
 
+
+    @FXML
+    private void pauseSimulation() {
+        if (engine != null) {
+            ((OwnEngine) engine).pauseSimulation();
+        }
+    }
+
+    @FXML
+    private void resumeSimulation() {
+        if (engine != null) {
+            ((OwnEngine) engine).resumeSimulation();
+        }
+    }
+
 }
