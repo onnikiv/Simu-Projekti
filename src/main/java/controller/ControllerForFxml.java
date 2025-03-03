@@ -181,12 +181,16 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     @Override
     public void speedUp() {
+        if (engine != null) {
         engine.setDelay((long) (engine.getDelay() * 0.9));
+        }
     }
 
     @Override
     public void slowDown() {
+        if (engine != null) {
         engine.setDelay((long) (engine.getDelay() * 1.1));
+        }
 
     }
 
