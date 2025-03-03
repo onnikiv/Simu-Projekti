@@ -1,9 +1,5 @@
 package simu.model;
 
-import simu.Dao.MenuDao;
-import simu.datasource.MariaDbConnection;
-import simu.model.MenuItem;
-
 import controller.ControllerForFxml;
 import controller.IControllerForM;
 import eduni.distributions.Negexp;
@@ -12,15 +8,14 @@ import simu.framework.ArrivalProcess;
 import simu.framework.Clock;
 import simu.framework.Engine;
 import simu.framework.Event;
-import simu.model.Table;
 
 public class OwnEngine extends Engine {
 
-    private ArrivalProcess arrivalProcess;
+    private final ArrivalProcess arrivalProcess;
 
-    private ServicePoint[] servicePoints;
-    private ControllerForFxml controllerFxml;
-    private Table table;
+    private final ServicePoint[] servicePoints;
+    private final ControllerForFxml controllerFxml;
+    private final Table table;
 
 
     public OwnEngine(IControllerForM controller, ControllerForFxml controllerFxml) {
@@ -55,13 +50,13 @@ public class OwnEngine extends Engine {
         Customer a;
         switch ((EventType) t.getType()) {
 
-            case SAAPUMINEN:
+            case SAAPUMINEN -> {
                 servicePoints[0].addToQueue(new Customer());
                 arrivalProcess.generateNext();
                 controller.visualizeCustomer(0);
-                break;
+            }
 
-            case PÖYTIINOHJAUS:
+            case PÖYTIINOHJAUS -> {
                 a = (Customer) servicePoints[0].fetchFromQueue();
                 if (table.getFreeTables() == true) { // Tsekkaa onko vapaita pöytiä tarjolla
                     table.addCustomersToTable(a);
@@ -76,36 +71,36 @@ public class OwnEngine extends Engine {
                     controllerFxml.updateTextArea("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
 
                 }
-                break;
+            }
 
-            case TILAAMINEN:
+            case TILAAMINEN -> {
                 a = (Customer) servicePoints[1].fetchFromQueue();
                 controller.visualizeRemoveCustomers(1);
                 servicePoints[2].addToQueue(a);
                 System.out.print("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n"); // ONNIN DEBUG
                 controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n");
                 controller.visualizeCustomer(2);
-                break;
+            }
 
-            case TARJOILU:
+            case TARJOILU -> {
                 a = (Customer) servicePoints[2].fetchFromQueue();
                 controller.visualizeRemoveCustomers(2);
                 servicePoints[3].addToQueue(a);
                 System.out.print("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n"); // ONNIN DEBUG
                 controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n");
                 controller.visualizeCustomer(3);
-                break;
+            }
 
-            case SAFKAAMINEN:
+            case SAFKAAMINEN -> {
                 a = (Customer) servicePoints[3].fetchFromQueue();
                 controller.visualizeRemoveCustomers(3);
                 servicePoints[4].addToQueue(a);
                 System.out.print("Asiakas: " + a.getId() + " -> SYÖ PIHVIN\n");
                 controllerFxml.updateTextArea("Asiakas: " + a.getId() + " -> SYÖ PIHVIN\n");
                 controller.visualizeCustomer(4);
-                break;
+            }
 
-            case POISTUMINEN:
+            case POISTUMINEN -> {
                 controller.visualizeRemoveCustomers(4);
                 a = (Customer) servicePoints[4].fetchFromQueue();
                 table.removeCustomerFromTable(a);
@@ -114,6 +109,7 @@ public class OwnEngine extends Engine {
                 controller.visualizeCustomer(5);
                 a.setDepartTime(Clock.getInstance().getTime());
                 a.report(this.controllerFxml);
+            }
         }
     }
 
