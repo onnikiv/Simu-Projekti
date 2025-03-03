@@ -206,10 +206,15 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settings.fxml"));
             Parent root = fxmlLoader.load();
+            SettingsController settingsController  = fxmlLoader.getController();
+            settingsController.setEngine(engine);
+            settingsController.setMainController(this);
+            settingsController.initialize();
             Stage stage = new Stage();
             stage.setTitle("Settings");
             stage.setScene(new Scene(root));
             stage.show();
+            pauseSimulation();
         } catch (IOException e) {
         }
     }
@@ -223,7 +228,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     }
 
     @FXML
-    private void resumeSimulation() {
+    public void resumeSimulation() {
         if (engine != null) {
             ((OwnEngine) engine).resumeSimulation();
         }

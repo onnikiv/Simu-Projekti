@@ -12,6 +12,7 @@ public class Kitchen {
 
         List<MenuItem> items = dao.getAllItems();
 
+
         for (MenuItem item : items) {
             System.out.println(item.getName() + " " + item.getPrepTimeMinutes());
         }

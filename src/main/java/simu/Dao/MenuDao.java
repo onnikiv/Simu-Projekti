@@ -25,9 +25,8 @@ public class MenuDao {
     private List<MenuItem> getMenuItemsByCategory(int categoryId) {
         List<MenuItem> menuItems = new ArrayList<>();
         String query = "SELECT id, name, prep_time_minutes FROM menu_items WHERE category_id = '" + categoryId + "'";
-        try (
-                Statement s = conn.prepareStatement(query);) {
-            ResultSet rs = s.executeQuery(query);
+        try (Statement s = conn.createStatement();
+             ResultSet rs = s.executeQuery(query)) {
             while (rs.next()) {
                 MenuItem item = new MenuItem(rs.getInt("id"), rs.getString("name"), rs.getInt("prep_time_minutes"));
                 menuItems.add(item);
