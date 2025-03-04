@@ -1,5 +1,6 @@
 package controller;
 
+import controller.SettingsController;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
@@ -27,7 +28,8 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private IEngine engine;
     private IVisualization screen;
     private ISimulatorUI ui;
-    private AudioClip customerSound;;
+    private AudioClip customerSound;
+    private SettingsController settingsController;
 
     @FXML
     private TextArea consoleLogTextArea;
@@ -83,6 +85,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         String[] types = {"SAAPUMINEN", "PÖYTIINOHJAUS", "TILAAMINEN", "TARJOILU", "SAFKAAMINEN", "POISTUMINEN"};
         Visualization visualization = new Visualization(canvases, colors, types);
         setIVisualization(visualization);
+        settingsController = new SettingsController();
         setUi(this);
         customerSound = new AudioClip(getClass().getResource("/sounds/customer.mp3").toString());
         settingsButton.setOnAction(event -> openSettings());
@@ -136,7 +139,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             throw new IllegalArgumentException("ERROR // Time and delay can't be negative\n");
             }
 
-            engine = new OwnEngine(this, ControllerForFxml.this);
+            engine = new OwnEngine(this, ControllerForFxml.this, settingsController);
             engine.setSimulationTime(time);
             engine.setDelay(delay);
             ((Thread) engine).start();

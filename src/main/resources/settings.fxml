@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -10,9 +9,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="controller.SettingsController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingsController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -23,7 +23,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <BorderPane prefHeight="156.0" prefWidth="334.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <center>
             <Slider BorderPane.alignment="CENTER" />
          </center>
@@ -40,60 +40,84 @@
       <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <center>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Distributions" wrappingWidth="126.13671875" BorderPane.alignment="CENTER" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Distributions" textAlignment="CENTER" wrappingWidth="126.13671875" BorderPane.alignment="CENTER_LEFT">
+               <BorderPane.margin>
+                  <Insets bottom="60.0" left="60.0" />
+               </BorderPane.margin>
+               <font>
+                  <Font size="20.0" />
+               </font></Text>
          </center>
       </BorderPane>
       <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
          <left>
-            <VBox prefHeight="133.0" prefWidth="144.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="155.0" prefWidth="214.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <ChoiceBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin>
-                  </ChoiceBox>
-                  <ChoiceBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin>
-                  </ChoiceBox>
-                  <ChoiceBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin>
-                  </ChoiceBox>
-                  <ChoiceBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin>
-                  </ChoiceBox>
-                  <ChoiceBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin>
-                  </ChoiceBox>
-                  <ChoiceBox prefWidth="150.0">
-                     <VBox.margin>
-                        <Insets left="5.0" right="5.0" />
-                     </VBox.margin>
-                  </ChoiceBox>
+                  <Slider fx:id="arrivalSlider" blockIncrement="1.0" majorTickUnit="10.0" max="60.0" min="10.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" value="30.0" />
+                  <Slider fx:id="seatingSlider" layoutX="10.0" layoutY="10.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+                  <Slider fx:id="orderingSlider" layoutX="10.0" layoutY="10.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+                  <Slider fx:id="serviceSlider" layoutX="10.0" layoutY="86.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+                  <Slider fx:id="eatingSlider" layoutX="10.0" layoutY="86.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+                  <Slider fx:id="exitingSlider" layoutX="10.0" layoutY="124.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
                </children>
+               <BorderPane.margin>
+                  <Insets left="10.0" top="10.0" />
+               </BorderPane.margin>
             </VBox>
          </left>
          <center>
-            <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+            <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Saapuminen" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pöytiinohjaus" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tilaaminen" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tarjoilu" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Safkaaminen" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Poistuminen" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Saapuminen">
+                     <VBox.margin>
+                        <Insets top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pöytiinohjaus">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tilaaminen">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tarjoilu">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Safkaaminen">
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font></Text>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Poistuminen">
+                     <VBox.margin>
+                        <Insets top="5.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font></Text>
+                  <BorderPane prefHeight="200.0" prefWidth="200.0" />
                </children>
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
             </VBox>
          </center>
       </BorderPane>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2" />
       <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
          <children>
             <Button fx:id="backButton" layoutX="248.0" layoutY="2.0" mnemonicParsing="false" text="Exit" />

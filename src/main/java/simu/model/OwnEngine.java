@@ -1,6 +1,7 @@
 package simu.model;
 
 import controller.ControllerForFxml;
+import controller.SettingsController;
 import controller.IControllerForM;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
@@ -15,33 +16,41 @@ public class OwnEngine extends Engine {
 
     private final ServicePoint[] servicePoints;
     private final ControllerForFxml controllerFxml;
+    private SettingsController settingsController;
     private final Table table;
 
     private boolean paused = false;
     private final Object pauseLock = new Object();
 
+    //Default arvot Distributions Normal meanille
+    private double meanArrival = 30;
+    private double meanSeating = 5;
+    private double meanOrdering = 15;
+    private double meanService = 25;
+    private double meanEating = 45;
+    private double meanExiting = 5;
 
 
-    public OwnEngine(IControllerForM controller, ControllerForFxml controllerFxml) {
+    public OwnEngine(IControllerForM controller, ControllerForFxml controllerFxml, SettingsController settingsController) {
 
         super(controller);
         this.controllerFxml = controllerFxml;
+        this.settingsController = settingsController;
         table = new Table(10);
 
 
         servicePoints = new ServicePoint[5];
 
-        servicePoints[0] = new ServicePoint(new Normal(5, 2), eventList, EventType.PÖYTIINOHJAUS);
-        servicePoints[1] = new ServicePoint(new Normal(15, 5), eventList, EventType.TILAAMINEN);
-        servicePoints[2] = new ServicePoint(new Normal(25, 10), eventList, EventType.TARJOILU);
-        servicePoints[3] = new ServicePoint(new Normal(45, 15), eventList, EventType.SAFKAAMINEN);
-        servicePoints[4] = new ServicePoint(new Normal(5, 2), eventList, EventType.POISTUMINEN);
+        servicePoints[0] = new ServicePoint(new Normal(meanSeating, 2), eventList, EventType.PÖYTIINOHJAUS);
+        servicePoints[1] = new ServicePoint(new Normal(meanOrdering, 5), eventList, EventType.TILAAMINEN);
+        servicePoints[2] = new ServicePoint(new Normal(meanService, 10), eventList, EventType.TARJOILU);
+        servicePoints[3] = new ServicePoint(new Normal(meanEating, 15), eventList, EventType.SAFKAAMINEN);
+        servicePoints[4] = new ServicePoint(new Normal(meanExiting, 2), eventList, EventType.POISTUMINEN);
 
-        arrivalProcess = new ArrivalProcess(new Negexp(30, 10), eventList, EventType.SAAPUMINEN);
+        arrivalProcess = new ArrivalProcess(new Negexp(meanArrival, 10), eventList, EventType.SAAPUMINEN);
 
         // SAAPUMINEN, PÖYTIINOHJAUS, TILAAMINEN, TARJOILU, POISTUMINEN;
     }
-
 
 
     public void pauseSimulation() {
@@ -56,6 +65,41 @@ public class OwnEngine extends Engine {
             pauseLock.notifyAll();
         }
     }
+
+
+    //Service  Pointtien meanien vaihto (Vielä ei vaihda mitään mutta  printtaa  consoliin tuloksia)
+    public void changeArrivalMean(double mean) {
+        this.meanArrival = mean;
+        System.out.println("Arrival mean changed  to: " + mean);
+    }
+
+    public void changeEatingMean(double mean) {
+        this.meanEating = mean;
+        System.out.println("Eating mean changed  to: " + mean);
+    }
+
+    public void changeExitingMean(double mean) {
+        this.meanExiting = mean;
+        System.out.println("Exiting  mean change  to: " + mean);
+    }
+
+    public void changeOrderingMean(double mean) {
+        this.meanOrdering = mean;
+        System.out.println("Ordering  mean change  to: " + mean);
+    }
+
+    public void changeSeatingMean(double mean) {
+        this.meanSeating = mean;
+        System.out.println("Seating  mean change  to: " + mean);
+    }
+
+    public void changeServiceMean(double mean) {
+        this.meanService = mean;
+        System.out.println("Service  mean change  to: " + mean);
+    }
+
+
+
 
     @Override
     protected void init() {
@@ -92,7 +136,7 @@ public class OwnEngine extends Engine {
                     System.out.print("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n"); // ONNIN DEBUG
                     controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n");
                     controller.visualizeCustomer(1);
-                }else {
+                } else {
                     servicePoints[0].addToQueue(a);
                     System.out.print("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
                     controllerFxml.updateTextArea("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
@@ -130,7 +174,7 @@ public class OwnEngine extends Engine {
             case POISTUMINEN -> {
                 controller.visualizeRemoveCustomers(4);
                 a = (Customer) servicePoints[4].fetchFromQueue();
-                table.removeCustomerFromTable(a);
+                table.removeCustomerFromTable(a);  //  Poistaa asiakkaan pöytä listasta
                 System.out.print("Asiakas: " + a.getId() + " -> POISTUU PÖYDÄSTÄ\n");
                 table.getFreeTables();
                 controller.visualizeCustomer(5);
