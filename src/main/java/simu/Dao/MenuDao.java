@@ -22,6 +22,10 @@ public class MenuDao {
         return getMenuItemsByCategory(3);
     }
 
+    public MenuItem getRandomStarter() {
+        return randomStarter();
+    }
+
     private List<MenuItem> getMenuItemsByCategory(int categoryId) {
         List<MenuItem> menuItems = new ArrayList<>();
         String query = "SELECT id, name, prep_time_minutes FROM menu_items WHERE category_id = '" + categoryId + "'";
@@ -35,6 +39,19 @@ public class MenuDao {
             e.printStackTrace();
         }
         return menuItems;
+    }
+
+    private MenuItem randomStarter() {
+        String query = "SELECT id, name, prep_time_minutes FROM menu_items WHERE category_id = '1' ORDER BY RAND() LIMIT 1";
+        try (Statement s = conn.createStatement();
+             ResultSet rs = s.executeQuery(query)) {
+            if (rs.next()) {
+                return new MenuItem(rs.getInt("id"), rs.getString("name"), rs.getInt("prep_time_minutes"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 
