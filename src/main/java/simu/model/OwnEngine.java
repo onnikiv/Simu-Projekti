@@ -99,8 +99,6 @@ public class OwnEngine extends Engine {
     }
 
 
-
-
     @Override
     protected void init() {
         arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
@@ -122,26 +120,25 @@ public class OwnEngine extends Engine {
         switch ((EventType) t.getType()) {
 
             case SAAPUMINEN -> {
-                servicePoints[0].addToQueue(new Customer());
-                arrivalProcess.generateNext();
-                controller.visualizeCustomer(0);
+                a = new Customer();
+                if (table.getFreeTables()) { // Tsekkaa onko vapaita pöytiä tarjolla
+                    servicePoints[0].addToQueue(a);
+                    arrivalProcess.generateNext();
+                    controller.visualizeCustomer(0);
+                } else {
+                    System.out.print("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
+                    controllerFxml.updateTextArea("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
+                }
             }
 
             case PÖYTIINOHJAUS -> {
                 a = (Customer) servicePoints[0].fetchFromQueue();
-                if (table.getFreeTables() == true) { // Tsekkaa onko vapaita pöytiä tarjolla
-                    table.addCustomersToTable(a);
-                    servicePoints[1].addToQueue(a);
-                    controller.visualizeRemoveCustomers(0);
-                    System.out.print("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n"); // ONNIN DEBUG
-                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n");
-                    controller.visualizeCustomer(1);
-                } else {
-                    servicePoints[0].addToQueue(a);
-                    System.out.print("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
-                    controllerFxml.updateTextArea("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
-
-                }
+                table.addCustomersToTable(a);
+                servicePoints[1].addToQueue(a);
+                controller.visualizeRemoveCustomers(0);
+                System.out.print("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n"); // ONNIN DEBUG
+                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n");
+                controller.visualizeCustomer(1);
             }
 
             case TILAAMINEN -> {
