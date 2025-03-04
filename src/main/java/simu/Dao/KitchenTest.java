@@ -31,13 +31,13 @@ public class KitchenTest {
 
     }
 
-    public void orderDeserts() {
+    public void orderDesserts() {
         MenuDao dao = new MenuDao();
-        List<MenuItem> getAllDeserts = dao.getAllDesserts();
+        List<MenuItem> getAllDesserts = dao.getAllDesserts();
 
 
-        for (MenuItem deserts : getAllDeserts) {
-            System.out.println(deserts.getName() + " " + deserts.getPrepTimeMinutes());
+        for (MenuItem desserts : getAllDesserts) {
+            System.out.println(desserts.getName() + " " + desserts.getPrepTimeMinutes());
         }
 
     }

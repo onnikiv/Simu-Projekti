@@ -41,6 +41,10 @@ public class ServicePoint {
 		return queue.poll();
 	}
 
+	public int getQueueSize() {
+		return queue.size();
+	}
+
 
 	public void beginService(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 

@@ -15,8 +15,7 @@ public class ArrivalProcess {
     }
 
     public void generateNext(){
-        Event t = new Event(type, Clock.getInstance().getTime()+generator.sample());
+        Event t = new Event(type, Clock.getInstance().getTime() + generator.sample());
         eventList.add(t);
     }
-
 }

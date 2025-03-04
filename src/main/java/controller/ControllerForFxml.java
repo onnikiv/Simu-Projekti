@@ -1,6 +1,5 @@
 package controller;
 
-import controller.SettingsController;
 import java.io.IOException;
 import java.text.DecimalFormat;
 
@@ -130,14 +129,17 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     @Override
     public void startSimulation() {
 
+        
         // ERROR HANDLÄYSTÄ
         try {
             double time = ui.getTime();
             long delay = ui.getDelay();
-
+            
             if (time < 0 || delay < 0) {
-            throw new IllegalArgumentException("ERROR // Time and delay can't be negative\n");
+                throw new IllegalArgumentException("ERROR // Time and delay can't be negative\n");
             }
+            // testings :)))
+            startButton.setVisible(false);
 
             engine = new OwnEngine(this, ControllerForFxml.this, settingsController);
             engine.setSimulationTime(time);

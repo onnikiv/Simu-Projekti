@@ -16,26 +16,12 @@ public class SettingsController {
     private Button backButton;
 
     @FXML
-    private Slider arrivalSlider;
-
-    @FXML
-    private Slider eatingSlider;
-
-    @FXML
-    private Slider exitingSlider;
-
-    @FXML
-    private Slider orderingSlider;
-
-    @FXML
-    private Slider seatingSlider;
-
-    @FXML
-    private Slider serviceSlider;
-
+    private Slider seatingSlider, serviceSlider, orderingSlider, exitingSlider,  arrivalSlider,  eatingSlider;
 
     @FXML
     public void initialize() {
+
+        backButton.setOnAction(event -> handleBackButtonAction());
         backButton.setOnAction(event -> handleBackButtonAction());
         arrivalSlider.setOnMouseReleased(event -> updateSliderValue(arrivalSlider, "arrival"));
         eatingSlider.setOnMouseReleased(event -> updateSliderValue(eatingSlider, "eating"));
@@ -73,24 +59,12 @@ public class SettingsController {
         OwnEngine ownEngine = (OwnEngine) engine;
 
         switch (type) {
-            case "arrival":
-                ownEngine.changeArrivalMean(value);
-                break;
-            case "eating":
-                ownEngine.changeEatingMean(value);
-                break;
-            case "exiting":
-                ownEngine.changeExitingMean(value);
-                break;
-            case "ordering":
-                ownEngine.changeOrderingMean(value);
-                break;
-            case "seating":
-                ownEngine.changeSeatingMean(value);
-                break;
-            case "service":
-                ownEngine.changeServiceMean(value);
-                break;
+            case "arrival": ownEngine.changeArrivalMean(value); break;
+            case "eating": ownEngine.changeEatingMean(value);  break;
+            case "exiting": ownEngine.changeExitingMean(value);break;
+            case "ordering": ownEngine.changeOrderingMean(value);break;
+            case "seating": ownEngine.changeSeatingMean(value);break;
+            case "service": ownEngine.changeServiceMean(value);break;
         }
     }
 }

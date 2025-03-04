@@ -1,3 +1,4 @@
+DROP  DATABASE IF EXISTS menu;
 CREATE DATABASE menu;
 USE menu;
 
