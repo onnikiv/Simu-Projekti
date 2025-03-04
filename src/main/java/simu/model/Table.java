@@ -1,6 +1,7 @@
 package simu.model;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class Table {
     private HashMap<Integer, Customer> tables;
@@ -14,15 +15,24 @@ public class Table {
         }
     }
 
-    public boolean addCustomersToTable(Customer customer) {
+    public boolean addCustomersToTable(List<Customer> customers) {
+        int freeTables = 0;
         for (int i = 1; i <= tableAmount; i++) {
             if (tables.get(i) == null) {
-                tables.put(i, customer);
-                return true;
+                freeTables++;
             }
         }
+        if (freeTables >= customers.size()) {
+            int customerIndex = 0;
+            for (int i = 1; i <= tableAmount && customerIndex < customers.size(); i++) {
+                if (tables.get(i) == null) {
+                    tables.put(i, customers.get(customerIndex));
+                    customerIndex++;
+                }
+            }
+            return true;
+        }
         return false;
-
     }
 
     public boolean getFreeTables() {

@@ -10,6 +10,9 @@ import simu.framework.Clock;
 import simu.framework.Engine;
 import simu.framework.Event;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class OwnEngine extends Engine {
 
     private final ArrivalProcess arrivalProcess;
@@ -104,6 +107,15 @@ public class OwnEngine extends Engine {
         arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
     }
 
+    private List<Customer> generateCustomerGroup() {
+        int groupSize = 1 + (int) (Math.random() * 4); // Generate a group size between 1 and 4
+        List<Customer> group = new ArrayList<>();
+        for (int i = 0; i < groupSize; i++) {
+            group.add(new Customer());
+        }
+        return group;
+    }
+
     @Override
     protected void runEvent(Event t) {  // B-vaiheen tapahtumat
         synchronized (pauseLock) {
@@ -120,25 +132,36 @@ public class OwnEngine extends Engine {
         switch ((EventType) t.getType()) {
 
             case SAAPUMINEN -> {
-                servicePoints[0].addToQueue(new Customer());
+                List<Customer> group = generateCustomerGroup();
+                for (Customer customer : group) {
+                    servicePoints[0].addToQueue(customer);
+                }
                 arrivalProcess.generateNext();
                 controller.visualizeCustomer(0);
             }
 
             case PÖYTIINOHJAUS -> {
-                a = (Customer) servicePoints[0].fetchFromQueue();
-                if (table.getFreeTables() == true) { // Tsekkaa onko vapaita pöytiä tarjolla
-                    table.addCustomersToTable(a);
-                    servicePoints[1].addToQueue(a);
-                    controller.visualizeRemoveCustomers(0);
-                    System.out.print("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n"); // ONNIN DEBUG
-                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> OHJATAAN PÖYTÄÄN\n");
-                    controller.visualizeCustomer(1);
+                List<Customer> group = new ArrayList<>();
+                int maxGroupSize = 4;
+                for (int i = 0; i < maxGroupSize && i < servicePoints[0].getQueueSize(); i++) {
+                    group.add((Customer) servicePoints[0].fetchFromQueue());
+                }
+                System.out.println(table.getFreeTables());
+                if (table.getFreeTables()) {
+                    table.addCustomersToTable(group);
+                    for (Customer customer : group) {
+                        servicePoints[1].addToQueue(customer);
+                        controller.visualizeRemoveCustomers(0);
+                        System.out.print("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN\n");
+                        controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN\n");
+                        controller.visualizeCustomer(1);
+                    }
                 } else {
-                    servicePoints[0].addToQueue(a);
-                    System.out.print("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
-                    controllerFxml.updateTextArea("Asiakas: " + a.getId() + " -> EI VAPAITA PÖYTIÄ\n");
-
+                    for (Customer customer : group) {
+                        servicePoints[0].addToQueue(customer);
+                    }
+                    System.out.print("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
+                    controllerFxml.updateTextArea("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
                 }
             }
 
