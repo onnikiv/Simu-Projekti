@@ -1,4 +1,6 @@
-package view;
+
+
+import view.SimulatorView;
 
 public class Main {
     // JavaFX-sovelluksen (käyttöliittymän) käynnistäminen
