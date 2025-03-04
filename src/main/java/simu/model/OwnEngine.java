@@ -5,6 +5,7 @@ import controller.SettingsController;
 import controller.IControllerForM;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
+import simu.Dao.MenuDao;
 import simu.framework.ArrivalProcess;
 import simu.framework.Clock;
 import simu.framework.Engine;
@@ -21,6 +22,10 @@ public class OwnEngine extends Engine {
     private final ControllerForFxml controllerFxml;
     private SettingsController settingsController;
     private final Table table;
+    private final MenuDao dao = new MenuDao();
+    private final Kitchen kitchen = new Kitchen();
+    private final Waiter waiter = new Waiter(kitchen);
+
 
     private boolean paused = false;
     private final Object pauseLock = new Object();
@@ -169,8 +174,10 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[1].fetchFromQueue();
                 controller.visualizeRemoveCustomers(1);
                 servicePoints[2].addToQueue(a);
-                System.out.print("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n"); // ONNIN DEBUG
-                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TILAA RUOKAA\n");
+                MenuItem item = dao.getRandomStarter();
+                a.order(waiter, item);
+                System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + item.getName() + "\n"); // ONNIN DEBUG
+                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + item.getName() + "\n");
                 controller.visualizeCustomer(2);
             }
 
@@ -178,8 +185,14 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[2].fetchFromQueue();
                 controller.visualizeRemoveCustomers(2);
                 servicePoints[3].addToQueue(a);
-                System.out.print("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n"); // ONNIN DEBUG
-                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> TARJOILLAAN PIHVI\n");
+                MenuItem readyMeal = kitchen.getReadyMeal();
+                if (readyMeal != null) {
+                    controllerFxml.updateTextArea("ASIAKKAALLE: " + a.getId() + " -> TARJOILLAAN: " + readyMeal.getName() + "\n");
+                    System.out.print("ASIAKKAALLE: " + a.getId() + " -> TARJOILLAAN: " + readyMeal.getName() + "\n"); // ONNIN DEBUG
+                    waiter.getOrder();
+                } else {
+                    System.out.println("No ready meals");
+                }
                 controller.visualizeCustomer(3);
             }
 
