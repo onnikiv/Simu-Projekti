@@ -13,6 +13,7 @@ import simu.framework.Event;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class OwnEngine extends Engine {
 
@@ -22,7 +23,7 @@ public class OwnEngine extends Engine {
     private final ControllerForFxml controllerFxml;
     private SettingsController settingsController;
     private final Table table;
-    private final MenuDao dao = new MenuDao();
+    private final OrderService orderService;
     private final Kitchen kitchen = new Kitchen();
     private final Waiter waiter = new Waiter(kitchen);
 
@@ -57,6 +58,8 @@ public class OwnEngine extends Engine {
 
         arrivalProcess = new ArrivalProcess(new Negexp(meanArrival, 10), eventList, EventType.SAAPUMINEN);
 
+        this.orderService = new OrderService(new MenuDao());
+
         // SAAPUMINEN, PÖYTIINOHJAUS, TILAAMINEN, TARJOILU, POISTUMINEN;
     }
 
@@ -72,6 +75,10 @@ public class OwnEngine extends Engine {
             paused = false;
             pauseLock.notifyAll();
         }
+    }
+
+    public static int randChance(int chance) {
+        return new Random().nextInt(chance);
     }
 
 
@@ -181,10 +188,36 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[1].fetchFromQueue();
                 controller.visualizeRemoveCustomers(1);
                 servicePoints[2].addToQueue(a);
-                MenuItem item = dao.getRandomStarter();
-                a.order(waiter, item);
-                System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + item.getName() + "\n"); // ONNIN DEBUG
-                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + item.getName() + "\n");
+                if (waiter.isAvailable() && randChance(100) >= 33) {
+                    MenuItem starter = orderService.getRandomStarter();
+                    a.order(waiter, starter);
+                    System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + starter.getName() + "\n"); // ONNIN DEBUG
+                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + starter.getName() + "\n");
+                } else {
+                    MenuItem starter2 = orderService.getRandomStarter();
+                    waiter.takeOrder(starter2, a);
+                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> ODOTTAA PALVELUA ALKUPALOILLE " + starter2.getName() +"\n");
+                }
+                if (waiter.isAvailable()) {
+                    MenuItem mainMeal = orderService.getRandomMainMeal();
+                    a.order(waiter, mainMeal);
+                    System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + mainMeal.getName() + "\n"); // ONNIN DEBUG
+                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
+                } else {
+                    waiter.takeOrder(orderService.getRandomMainMeal(), a);
+                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> ODOTTAA PALVELUA PÄÄRUOALLE\n");
+                }
+
+                if (waiter.isAvailable() && randChance(100) >= 66) {
+                    MenuItem dessert = orderService.getRandomDessert();
+                    a.order(waiter, dessert);
+                    System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + dessert.getName() + "\n"); // ONNIN DEBUG
+                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + dessert.getName() + "\n");
+                } else {
+                    MenuItem dessert2 = orderService.getRandomDessert();
+                    waiter.takeOrder(dessert2, a);
+                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> ODOTTAA PALVELUA JÄLKKÄREILLE " + dessert2.getName() + "\n");
+                }
                 controller.visualizeCustomer(2);
             }
 
@@ -192,13 +225,15 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[2].fetchFromQueue();
                 controller.visualizeRemoveCustomers(2);
                 servicePoints[3].addToQueue(a);
-                MenuItem readyMeal = kitchen.getReadyMeal();
-                if (readyMeal != null) {
-                    controllerFxml.updateTextArea("ASIAKKAALLE: " + a.getId() + " -> TARJOILLAAN: " + readyMeal.getName() + "\n");
-                    System.out.print("ASIAKKAALLE: " + a.getId() + " -> TARJOILLAAN: " + readyMeal.getName() + "\n"); // ONNIN DEBUG
-                    waiter.getOrder();
+                if (waiter.isAvailable()) {
+                    List<MenuItem> order = waiter.deliverOrder(a);
+                    System.out.println(order);
+                    for (MenuItem item : order) {
+                        System.out.print("ASIAKAS: " + a.getId() + " -> RUOKA: " + item.getName() + "\n");
+                        controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> RUOKA: " + item.getName() + "\n");
+                    }
                 } else {
-                    System.out.println("No ready meals");
+                    waiter.queueForDelivery(a);
                 }
                 controller.visualizeCustomer(3);
             }
@@ -207,8 +242,6 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[3].fetchFromQueue();
                 controller.visualizeRemoveCustomers(3);
                 servicePoints[4].addToQueue(a);
-                System.out.print("Asiakas: " + a.getId() + " -> SYÖ PIHVIN\n");
-                controllerFxml.updateTextArea("Asiakas: " + a.getId() + " -> SYÖ PIHVIN\n");
                 controller.visualizeCustomer(4);
             }
 
