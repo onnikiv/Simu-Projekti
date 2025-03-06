@@ -60,11 +60,11 @@ public class SettingsController {
 
         switch (type) {
             case "arrival": ownEngine.changeArrivalMean(value); break;
+            case "seating": ownEngine.changeSeatingMean(value);break;
+            case "ordering": ownEngine.changeOrderingMean(value);break;
+            case "service": ownEngine.changeServiceMean(value);break;
             case "eating": ownEngine.changeEatingMean(value);  break;
             case "exiting": ownEngine.changeExitingMean(value);break;
-            case "ordering": ownEngine.changeOrderingMean(value);break;
-            case "seating": ownEngine.changeSeatingMean(value);break;
-            case "service": ownEngine.changeServiceMean(value);break;
         }
     }
 }

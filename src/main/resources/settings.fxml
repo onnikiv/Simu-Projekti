@@ -53,12 +53,12 @@
          <left>
             <VBox prefHeight="155.0" prefWidth="214.0" spacing="15.0" BorderPane.alignment="CENTER">
                <children>
-                  <Slider fx:id="arrivalSlider" blockIncrement="1.0" majorTickUnit="10.0" max="60.0" min="10.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" value="30.0" />
-                  <Slider fx:id="seatingSlider" layoutX="10.0" layoutY="10.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
-                  <Slider fx:id="orderingSlider" layoutX="10.0" layoutY="10.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
-                  <Slider fx:id="serviceSlider" layoutX="10.0" layoutY="86.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
-                  <Slider fx:id="eatingSlider" layoutX="10.0" layoutY="86.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
-                  <Slider fx:id="exitingSlider" layoutX="10.0" layoutY="124.0" majorTickUnit="1.0" max="10.0" showTickLabels="true" showTickMarks="true" value="5.0" />
+                  <Slider fx:id="arrivalSlider" blockIncrement="1.0" majorTickUnit="10.0" max="60.0" min="10.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="35.0" />
+                  <Slider fx:id="seatingSlider" layoutX="10.0" layoutY="10.0" majorTickUnit="1.0" max="10.0" min="3.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="6.5" />
+                  <Slider fx:id="orderingSlider" blockIncrement="5.0" layoutX="10.0" layoutY="10.0" majorTickUnit="5.0" max="20.0" min="5.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="12.5" />
+                  <Slider fx:id="serviceSlider" layoutX="10.0" layoutY="86.0" majorTickUnit="5.0" max="40.0" min="10.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="25.0" />
+                  <Slider fx:id="eatingSlider" layoutX="10.0" layoutY="86.0" majorTickUnit="5.0" max="60.0" min="15.0" minorTickCount="5" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="37.5" />
+                  <Slider fx:id="exitingSlider" layoutX="10.0" layoutY="124.0" majorTickUnit="1.0" max="10.0" min="3.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="6.5" />
                </children>
                <BorderPane.margin>
                   <Insets left="10.0" top="10.0" />

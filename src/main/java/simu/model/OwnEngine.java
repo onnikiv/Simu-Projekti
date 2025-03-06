@@ -16,7 +16,7 @@ import java.util.List;
 
 public class OwnEngine extends Engine {
 
-    private final ArrivalProcess arrivalProcess;
+    private ArrivalProcess arrivalProcess;
 
     private final ServicePoint[] servicePoints;
     private final ControllerForFxml controllerFxml;
@@ -78,33 +78,40 @@ public class OwnEngine extends Engine {
     //Service  Pointtien meanien vaihto (Vielä ei vaihda mitään mutta  printtaa  consoliin tuloksia)
     public void changeArrivalMean(double mean) {
         this.meanArrival = mean;
+        this.arrivalProcess = new ArrivalProcess(new Negexp(mean, 10), eventList, EventType.SAAPUMINEN);
         System.out.println("Arrival mean changed  to: " + mean);
+    }
+
+    public void changeSeatingMean(double mean) {
+        this.meanSeating = mean;
+        servicePoints[0].updateDistribution(new Normal(mean, 2));
+        System.out.println("Seating  mean change  to: " + mean);
+    }
+
+    public void changeOrderingMean(double mean) {
+        this.meanOrdering = mean;
+        servicePoints[1].updateDistribution(new Normal(mean, 5));
+        System.out.println("Ordering  mean change  to: " + mean);
+    }
+
+    public void changeServiceMean(double mean) {
+        this.meanService = mean;
+        servicePoints[2].updateDistribution(new Normal(mean, 10));
+        System.out.println("Service mean change  to: " + mean);
     }
 
     public void changeEatingMean(double mean) {
         this.meanEating = mean;
+        servicePoints[3].updateDistribution(new Normal(mean, 15));
         System.out.println("Eating mean changed  to: " + mean);
     }
 
     public void changeExitingMean(double mean) {
         this.meanExiting = mean;
+        servicePoints[4].updateDistribution(new Normal(mean, 2));
         System.out.println("Exiting  mean change  to: " + mean);
     }
 
-    public void changeOrderingMean(double mean) {
-        this.meanOrdering = mean;
-        System.out.println("Ordering  mean change  to: " + mean);
-    }
-
-    public void changeSeatingMean(double mean) {
-        this.meanSeating = mean;
-        System.out.println("Seating  mean change  to: " + mean);
-    }
-
-    public void changeServiceMean(double mean) {
-        this.meanService = mean;
-        System.out.println("Service  mean change  to: " + mean);
-    }
 
 
     @Override
