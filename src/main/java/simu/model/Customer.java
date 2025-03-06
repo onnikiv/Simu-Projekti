@@ -36,8 +36,8 @@ public class Customer {
         this.arrivalTime = arrivalTime;
     }
 
-    public void order(Waiter waiter, MenuItem menuItem) {
-        waiter.takeOrder(menuItem, this);
+    public void order(Waiter waiter, MenuItem item) {
+        waiter.takeOrder(item, this);
     }
 
 
