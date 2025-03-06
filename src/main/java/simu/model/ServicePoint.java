@@ -13,7 +13,7 @@ import simu.framework.Trace;
 public class ServicePoint {
 
 	private final LinkedList<Customer> queue = new LinkedList<>(); // Tietorakennetoteutus
-	private final ContinuousGenerator generator;
+	private  ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
 
@@ -66,6 +66,10 @@ public class ServicePoint {
 
 	public boolean isInQueue(){
 		return queue.size() != 0;
+	}
+
+	public void updateDistribution(ContinuousGenerator newGenerator) {
+		this.generator = newGenerator;
 	}
 
 }
