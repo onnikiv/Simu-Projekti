@@ -6,33 +6,27 @@ import java.util.Map;
 import java.util.Queue;
 
 public class Kitchen {
-    private final Queue<MenuItem> orderQueue = new LinkedList<>();
-    private final Queue<MenuItem> readyMeals = new LinkedList<>();
-    private final Map<MenuItem, Customer> orderMap = new HashMap<>();
+    private final Map<Customer, Queue<MenuItem>> orderMap = new HashMap<>();
 
     public void receiveOrder(MenuItem item, Customer customer) {
-        orderQueue.add(item);
-        orderMap.put(item, customer);
-        prepareMeal();
+        orderMap.computeIfAbsent(customer, k -> new LinkedList<>()).add(item);
+
+        getPrepTime(item);
     }
 
-    public void prepareMeal() {
-        if (!orderQueue.isEmpty()) {
-            MenuItem item = orderQueue.poll();
-            readyMeals.add(item);
-            System.out.println("Meal prepared " + item.getName());
-        }
+    public Queue<MenuItem> getReadyMeal(Customer customer) {
+        return orderMap.getOrDefault(customer, new LinkedList<>());
     }
 
-    public MenuItem getReadyMeal() {
-        return readyMeals.poll();
+    public boolean hasReadyMeals(Customer customer) {
+        return orderMap.containsKey(customer) && !orderMap.get(customer).isEmpty();
     }
 
-    public boolean hasReadyMeals() {
-        return !readyMeals.isEmpty();
+    public boolean customerHasOrders(Customer customer) {
+        return orderMap.containsKey(customer) && !orderMap.get(customer).isEmpty();
     }
 
-    public Customer getMatchingMeal(MenuItem item) {
-        return orderMap.get(item);
+    public double getPrepTime(MenuItem item) {
+        return item.getPrepTimeMinutes();
     }
 }
