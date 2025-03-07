@@ -120,7 +120,6 @@ public class OwnEngine extends Engine {
     }
 
 
-
     @Override
     protected void init() {
         arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
@@ -188,35 +187,24 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[1].fetchFromQueue();
                 controller.visualizeRemoveCustomers(1);
                 servicePoints[2].addToQueue(a);
-                if (waiter.isAvailable() && randChance(100) >= 33) {
+
+                if (randChance(100) >= 33) {
                     MenuItem starter = orderService.getRandomStarter();
                     a.order(waiter, starter);
                     System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + starter.getName() + "\n"); // ONNIN DEBUG
                     controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + starter.getName() + "\n");
-                } else {
-                    MenuItem starter2 = orderService.getRandomStarter();
-                    waiter.takeOrder(starter2, a);
-                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> ODOTTAA PALVELUA ALKUPALOILLE " + starter2.getName() +"\n");
-                }
-                if (waiter.isAvailable()) {
-                    MenuItem mainMeal = orderService.getRandomMainMeal();
-                    a.order(waiter, mainMeal);
-                    System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + mainMeal.getName() + "\n"); // ONNIN DEBUG
-                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
-                } else {
-                    waiter.takeOrder(orderService.getRandomMainMeal(), a);
-                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> ODOTTAA PALVELUA PÄÄRUOALLE\n");
                 }
 
-                if (waiter.isAvailable() && randChance(100) >= 66) {
+                MenuItem mainMeal = orderService.getRandomMainMeal();
+                a.order(waiter, mainMeal);
+                System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + mainMeal.getName() + "\n"); // ONNIN DEBUG
+                controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
+
+                if (randChance(100) >= 66) {
                     MenuItem dessert = orderService.getRandomDessert();
                     a.order(waiter, dessert);
                     System.out.print("ASIAKAS: " + a.getId() + " -> ´Tilaus: " + dessert.getName() + "\n"); // ONNIN DEBUG
                     controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> Tilaus: " + dessert.getName() + "\n");
-                } else {
-                    MenuItem dessert2 = orderService.getRandomDessert();
-                    waiter.takeOrder(dessert2, a);
-                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> ODOTTAA PALVELUA JÄLKKÄREILLE " + dessert2.getName() + "\n");
                 }
                 controller.visualizeCustomer(2);
             }
@@ -225,15 +213,10 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[2].fetchFromQueue();
                 controller.visualizeRemoveCustomers(2);
                 servicePoints[3].addToQueue(a);
-                if (waiter.isAvailable()) {
-                    List<MenuItem> order = waiter.deliverOrder(a);
-                    System.out.println(order);
-                    for (MenuItem item : order) {
-                        System.out.print("ASIAKAS: " + a.getId() + " -> RUOKA: " + item.getName() + "\n");
-                        controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> RUOKA: " + item.getName() + "\n");
-                    }
-                } else {
-                    waiter.queueForDelivery(a);
+                List<MenuItem> order = waiter.deliverOrder(a);
+                for (MenuItem item : order) {
+                    System.out.print("ASIAKAS: " + a.getId() + " -> RUOKA: " + item.getName() + "\n");
+                    controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> RUOKA: " + item.getName() + "\n");
                 }
                 controller.visualizeCustomer(3);
             }

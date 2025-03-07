@@ -7,26 +7,22 @@ import java.util.*;
 
 public class Waiter {
     private final Kitchen kitchen;  // Instance of Kitchen
-    private boolean available;
     private final PriorityQueue<CustomerOrder> orderQueue;
 
     public Waiter(Kitchen kitchen) {
         this.kitchen = kitchen;
-        this.available = true;
         this.orderQueue = new PriorityQueue<>(Comparator.comparingInt(o -> o.getCustomer().getId()));
     }
 
-    private void processOrder(MenuItem item, Customer customer) {
-        available = false;
+    public void takeOrder(MenuItem item, Customer customer) {
         kitchen.receiveOrder(item, customer);
         Clock.getInstance().setTime(Clock.getInstance().getTime() + OwnEngine.randChance(3));
         System.out.println("Order received: " + item.getName());
-        available = true;
         serveNextCustomer();
     }
 
-    private void processDelivery(Customer customer, List<MenuItem> deliveredItems) {
-        available = false;
+    public List<MenuItem> deliverOrder(Customer customer) {
+        List<MenuItem> deliveredItems = new ArrayList<>();
         if (kitchen.hasReadyMeals(customer)) {
             Queue<MenuItem> order = kitchen.getReadyMeal(customer);
             while (!order.isEmpty()) {
@@ -38,28 +34,7 @@ public class Waiter {
         } else {
             System.out.println("No orders available for customer: " + customer.getId());
         }
-        available = true;
         serveNextCustomer();
-    }
-
-    public void takeOrder(MenuItem item, Customer customer) {
-        if (available) {
-            processOrder(item, customer);
-        } else {
-            orderQueue.add(new CustomerOrder(customer, item));
-            System.out.println("Waiter unavailable");
-        }
-    }
-
-    public List<MenuItem> deliverOrder(Customer customer) {
-        List<MenuItem> deliveredItems = new ArrayList<>();
-        if (available) {
-            processDelivery(customer, deliveredItems);
-        } else {
-            orderQueue.add(new CustomerOrder(customer, null));
-            System.out.println("Waiter unavailable");
-        }
-
         return deliveredItems;
     }
 
@@ -72,13 +47,5 @@ public class Waiter {
                 deliverOrder(nextOrder.getCustomer());
             }
         }
-    }
-
-    public void queueForDelivery(Customer customer) {
-        orderQueue.add(new CustomerOrder(customer, null));
-    }
-
-    public boolean isAvailable() {
-        return available;
     }
 }
