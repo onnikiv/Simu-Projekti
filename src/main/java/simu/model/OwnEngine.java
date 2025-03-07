@@ -213,7 +213,7 @@ public class OwnEngine extends Engine {
                 a = (Customer) servicePoints[2].fetchFromQueue();
                 controller.visualizeRemoveCustomers(2);
                 servicePoints[3].addToQueue(a);
-                List<MenuItem> order = waiter.deliverOrder(a);
+                List<MenuItem> order = waiter.deliverOrder(a);  // Uses the returned MenuItem list to print out the order
                 for (MenuItem item : order) {
                     System.out.print("ASIAKAS: " + a.getId() + " -> RUOKA: " + item.getName() + "\n");
                     controllerFxml.updateTextArea("ASIAKAS: " + a.getId() + " -> RUOKA: " + item.getName() + "\n");
