@@ -6,9 +6,6 @@ import javafx.scene.paint.Color;
 
 public class Visualization extends Canvas implements IVisualization {
 
-
-    private static int customerCount = 0;
-    private static int customerCountServed = 0;
     private final GraphicsContext[] gcs;
     private final Color[] backgroundColors;
     private final String[] types;
@@ -46,19 +43,9 @@ public class Visualization extends Canvas implements IVisualization {
             gcs[d].fillRect(0, 0, gcs[d].getCanvas().getWidth(), gcs[d].getCanvas().getHeight());
         }
     }
-    @Override
-    public synchronized int getCustomerAmount() {
-        return customerCount;
-    }
-    @Override
-    public synchronized int getCustomerAmountServed() {
-        return customerCountServed;
-    }
 
     @Override
     public synchronized void newCustomer(int customer) {
-        if (customer == 1) {customerCount++;}
-        if (customer == 4) {customerCountServed++;} 
 
         gcs[customer].setFill(Color.LIGHTGRAY);
         gcs[customer].fillOval(i[customer], j[customer], 10, 10);
