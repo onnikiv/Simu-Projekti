@@ -1,8 +1,12 @@
 package simu.model;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import controller.ControllerForFxml;
-import controller.SettingsController;
 import controller.IControllerForM;
+import controller.SettingsController;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
 import simu.Dao.MenuDao;
@@ -10,10 +14,6 @@ import simu.framework.ArrivalProcess;
 import simu.framework.Clock;
 import simu.framework.Engine;
 import simu.framework.Event;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class OwnEngine extends Engine {
 
@@ -153,9 +153,9 @@ public class OwnEngine extends Engine {
                 List<Customer> group = generateCustomerGroup();
                 for (Customer customer : group) {
                     servicePoints[0].addToQueue(customer);
+                    controller.visualizeCustomer(0);
                 }
                 arrivalProcess.generateNext();
-                controller.visualizeCustomer(0);
             }
 
             case PÖYTIINOHJAUS -> {
