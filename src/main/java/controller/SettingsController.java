@@ -1,9 +1,9 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
-import javafx.scene.control.Button;
 import simu.framework.IEngine;
 import simu.model.OwnEngine;
 
