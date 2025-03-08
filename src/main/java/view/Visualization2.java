@@ -1,3 +1,4 @@
+/*
 package view;
 
 import javafx.scene.canvas.Canvas;
@@ -60,3 +61,4 @@ public class Visualization2 extends Canvas implements IVisualization {
 
 
 }
+ */
