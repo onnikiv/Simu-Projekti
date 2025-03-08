@@ -52,10 +52,23 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private Button startButton;
 
     @FXML
-    private Label customerAmount;
+    private Label countC0;
 
     @FXML
-    private Label customerAmountServed;
+    private Label countC1;
+
+    @FXML
+    private Label countC2;
+
+    @FXML
+    private Label countC3;
+
+    @FXML
+    private Label countC4;
+
+    @FXML
+    private Label countC5;
+
 
     @FXML
     private Canvas canvas;
@@ -174,11 +187,34 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             }
             
             
-            
             // LABEL - ASIAKAS MÄÄRÄ
-            customerAmount.setText(String.valueOf(getVisualization().getCustomerAmount()));
-
-            customerAmountServed.setText(String.valueOf(getVisualization().getCustomerAmountServed()));
+            switch (customer) {
+                case 0 -> {
+                    int c0 = Integer.parseInt(countC0.getText()) + 1;
+                    countC0.setText(String.valueOf(c0));
+                }
+                case 1 -> {
+                    int c1 = Integer.parseInt(countC1.getText()) + 1;
+                    countC1.setText(String.valueOf(c1));
+                }
+                case 2 -> {
+                    int c2 = Integer.parseInt(countC2.getText()) + 1;
+                    countC2.setText(String.valueOf(c2));
+                }
+                case 3 -> {
+                    int c3 = Integer.parseInt(countC3.getText()) + 1;
+                    countC3.setText(String.valueOf(c3));
+                }
+                case 4 -> {
+                    int c4 = Integer.parseInt(countC4.getText()) + 1;
+                    countC4.setText(String.valueOf(c4));
+                }
+                case 5 -> {
+                    int c5 = Integer.parseInt(countC5.getText()) + 1;
+                    countC5.setText(String.valueOf(c5));
+                }
+                default -> throw new AssertionError();
+            }
         });
     }
 
