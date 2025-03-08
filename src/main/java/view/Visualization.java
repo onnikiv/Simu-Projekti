@@ -8,6 +8,7 @@ public class Visualization extends Canvas implements IVisualization {
 
 
     private static int customerCount = 0;
+    private static int customerCountServed = 0;
     private final GraphicsContext[] gcs;
     private final Color[] backgroundColors;
     private final String[] types;
@@ -37,30 +38,36 @@ public class Visualization extends Canvas implements IVisualization {
             gcs[y].fillText(types[y], 300, 25);
         }
     }
-
-    public void clearScreen() {
+    @Override
+    public synchronized void clearScreen() {
 
         for (int d = 0; d<gcs.length; d++) {
             gcs[d].setFill(backgroundColors[d]);
             gcs[d].fillRect(0, 0, gcs[d].getCanvas().getWidth(), gcs[d].getCanvas().getHeight());
         }
     }
-
-    public int getCustomerAmount() {
+    @Override
+    public synchronized int getCustomerAmount() {
         return customerCount;
     }
+    @Override
+    public synchronized int getCustomerAmountServed() {
+        return customerCountServed;
+    }
 
-    public void newCustomer(int customer) {
-        if (customer == 1) {
-            customerCount++;
-        }
+    @Override
+    public synchronized void newCustomer(int customer) {
+        if (customer == 1) {customerCount++;}
+        if (customer == 4) {customerCountServed++;} 
+
         gcs[customer].setFill(Color.LIGHTGRAY);
         gcs[customer].fillOval(i[customer], j[customer], 10, 10);
         i[customer] = (i[customer] + 10) % (gcs[customer].getCanvas().getWidth()-180);
         if (i[customer] == 0) j[customer] += 10;
     }
 
-    public void removeCustomer(int customer) {
+    @Override
+    public synchronized void removeCustomer(int customer) {
         gcs[customer].setFill(backgroundColors[customer]);
         gcs[customer].fillRect(a[customer], b[customer], 10, 10);
         a[customer] = (a[customer] + 10) % (gcs[customer].getCanvas().getWidth()-180);
