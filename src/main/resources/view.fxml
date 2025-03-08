@@ -66,7 +66,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="resultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="177.0" text="1234" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3">
+      <Label fx:id="resultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="177.0" text="0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -88,14 +88,14 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="28.0" prefWidth="191.0" text="Total Amount of Customers" />
-                  <Label fx:id="customerAmount" prefHeight="17.0" prefWidth="178.0" text="[ ]" />
+                  <Label prefHeight="28.0" prefWidth="201.0" text="Total Customers: " />
+                  <Label fx:id="customerAmount" prefHeight="30.0" prefWidth="86.0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="28.0" prefWidth="320.0" text="Total Amount of Customers Served" />
-                  <Label fx:id="customerAmountServed" prefHeight="17.0" prefWidth="178.0" />
+                  <Label prefHeight="28.0" prefWidth="204.0" text="Customers Served: " />
+                  <Label fx:id="customerAmountServed" prefHeight="30.0" prefWidth="79.0" />
                </children>
             </HBox>
          </children>
