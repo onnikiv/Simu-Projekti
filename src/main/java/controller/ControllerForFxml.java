@@ -204,7 +204,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     }
 
-    public void updateTextArea(String message) {
+    public synchronized void updateTextArea(String message) {
         if (consoleLogTextArea != null) {
             Platform.runLater(() -> consoleLogTextArea.appendText(message));
         } else {
