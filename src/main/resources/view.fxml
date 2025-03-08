@@ -59,19 +59,19 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="170.0" text="TARJOILU" />
+                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="170.0" text="TARJOILTU" />
                   <Label fx:id="countC3" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="28.0" prefWidth="172.0" text="SAFKAAMINEN" />
+                  <Label prefHeight="28.0" prefWidth="172.0" text="SAFKANNUT" />
                   <Label fx:id="countC4" prefHeight="30.0" prefWidth="86.0" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="28.0" prefWidth="171.0" text="POISTUMINEN" />
+                  <Label prefHeight="28.0" prefWidth="171.0" text="POISTUNUT" />
                   <Label fx:id="countC5" prefHeight="30.0" prefWidth="87.0" text="0" />
                </children>
             </HBox>
@@ -149,23 +149,28 @@
          <children>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="168.0" text="SAAPUMINEN" />
+                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="168.0" text="SAAPUNUT" />
                   <Label fx:id="countC0" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="170.0" text="PÖYTIINOHJAUS" />
+                  <Label contentDisplay="CENTER" prefHeight="17.0" prefWidth="170.0" text="PÖYTIINOHJATTU" />
                   <Label fx:id="countC1" text="0" />
                </children>
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="170.0" text="TILAAMINEN" />
+                  <Label prefHeight="17.0" prefWidth="170.0" text="TILANNUT" />
                   <Label fx:id="countC2" text="0" />
                </children>
             </HBox>
          </children>
       </VBox>
+      <Label prefHeight="17.0" prefWidth="334.0" text="//DEBUG - SUMMAT" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <GridPane.margin>
+            <Insets top="70.0" />
+         </GridPane.margin>
+      </Label>
    </children>
 </GridPane>
