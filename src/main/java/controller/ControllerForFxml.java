@@ -55,6 +55,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private Label customerAmount;
 
     @FXML
+    private Label customerAmountServed;
+
+    @FXML
     private Canvas canvas;
 
     @FXML
@@ -163,7 +166,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     }
 
     @Override
-    public void visualizeCustomer(int customer) {
+    public synchronized void visualizeCustomer(int customer) {
         Platform.runLater(() -> {
             getVisualization().newCustomer(customer);
             if (!mute && customer == 0) {
@@ -174,11 +177,13 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             
             // LABEL - ASIAKAS MÄÄRÄ
             customerAmount.setText(String.valueOf(getVisualization().getCustomerAmount()));
+
+            customerAmountServed.setText(String.valueOf(getVisualization().getCustomerAmountServed()));
         });
     }
 
     @Override
-    public void visualizeRemoveCustomers(int customer) {
+    public synchronized void visualizeRemoveCustomers(int customer) {
         Platform.runLater(() -> {
             getVisualization().removeCustomer(customer);
         });
