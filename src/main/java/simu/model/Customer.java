@@ -9,9 +9,11 @@ import simu.framework.Trace;
 public class Customer {
     private double arrivalTime;
     private double departTime;
-    private int id;
+    private final int id;
     private static int i = 1;
     private static long sum = 0;
+    private boolean hasOrdered = false;
+    private boolean isLeaving = false;
 
     public Customer() {
         id = i++;
@@ -63,4 +65,19 @@ public class Customer {
 
     }
 
+    public boolean hasOrdered() {
+        return hasOrdered;
+    }
+
+    public void setHasOrdered(boolean hasOrdered) {
+        this.hasOrdered = hasOrdered;
+    }
+
+    public boolean isLeaving() {
+        return isLeaving;
+    }
+
+    public void setLeaving(boolean leaving) {
+        isLeaving = leaving;
+    }
 }
