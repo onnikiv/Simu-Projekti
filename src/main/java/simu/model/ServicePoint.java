@@ -1,6 +1,8 @@
 package simu.model;
 
+import java.util.Collection;
 import java.util.LinkedList;
+import java.util.List;
 
 import eduni.distributions.ContinuousGenerator;
 import simu.framework.Clock;
@@ -12,7 +14,7 @@ import simu.framework.Trace;
 // Palvelupistekohtaiset toiminnallisuudet, laskutoimitukset (+ tarvittavat muuttujat) ja raportointi koodattava
 public class ServicePoint {
 
-	private final LinkedList<Customer> queue = new LinkedList<>(); // Tietorakennetoteutus
+	private final LinkedList<List<Customer>> queue = new LinkedList<>(); // Tietorakennetoteutus jonolle (FIFO) (sisältää listan asiakkaita)
 	private  ContinuousGenerator generator;
 	private final EventList eventList;
 	private final EventType scheduledEventType;
@@ -30,13 +32,14 @@ public class ServicePoint {
 	}
 
 
-	public void addToQueue(Customer a){   // Jonon 1. asiakas aina palvelussa
+	public void addToQueue(List<Customer> a){   // Jonon 1. asiakas aina palvelussa
 		queue.add(a);
-
 	}
 
 
-	public Customer fetchFromQueue(){  // Poistetaan palvelussa ollut
+
+
+	public List<Customer> fetchFromQueue(){  // Poistetaan palvelussa ollut
 		reserved = false;
 		return queue.poll();
 	}
@@ -48,7 +51,7 @@ public class ServicePoint {
 
 	public void beginService(){  //Aloitetaan uusi palvelu, asiakas on jonossa palvelun aikana
 
-		Trace.out(Trace.Level.INFO, "ALOITETAAN UUSI SERVICE, ASIAKAS: " + queue.peek().getId() + " --> " + scheduledEventType); // lisätty mihin eventtiin asiakas siirtyy
+		Trace.out(Trace.Level.INFO, "ALOITETAAN UUSI SERVICE, ASIAKAS: " + queue.peek().size() + " --> " + scheduledEventType); // lisätty mihin eventtiin asiakas siirtyy
 
 		reserved = true;
 		double serviceTime = generator.sample();
@@ -65,11 +68,14 @@ public class ServicePoint {
 
 
 	public boolean isInQueue(){
-		return queue.size() != 0;
+		return !queue.isEmpty();
 	}
 
 	public void updateDistribution(ContinuousGenerator newGenerator) {
 		this.generator = newGenerator;
 	}
 
+    public Collection<List<Customer>> getQueue() {
+		return queue;
+    }
 }
