@@ -149,6 +149,9 @@ public class OwnEngine extends Engine {
         List<Customer> group;
         switch ((EventType) t.getType()) {
 
+            // Homma kusee tässä kun pitäs jotenki ylläpitää ryhmiä ja yksittäisiä customereja
+            
+
             case SAAPUMINEN -> {
                 // luodaan group olio , joka sisältää 1-4 customer oliota
 
