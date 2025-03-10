@@ -150,19 +150,23 @@ public class OwnEngine extends Engine {
         switch ((EventType) t.getType()) {
 
             case SAAPUMINEN -> {
+                // luodaan group olio , joka sisältää 1-4 customer oliota
+
                 group = generateCustomerGroup();
-                System.out.println("DEBUG ---------" + group.size());
+                System.out.println(">>DEBUG --------- RYHMÄKOKO:" + group.size());
                 
+                // iteroidaan kaikki 
                 for (Customer c : group) {
                     servicePoints[0].addToQueue(c);
                     controller.visualizeCustomer(0);
                     arrivalProcess.generateNext();
                 }
-                
             }
 
+
             case PÖYTIINOHJAUS -> {
-                    
+                // Tääkään ei ihan paras idea et nappaa sen määrän paljon queassa on 
+                
                 int customersQueue = servicePoints[0].getQueueSize();
 
                 List<Customer> customerGroup = new ArrayList<>();
@@ -178,19 +182,25 @@ public class OwnEngine extends Engine {
                 }
 
                 if (table.getFreeTables() > 0) {
+
                     int tableNumber = table.addCustomersToTable(customerGroup);
 
                     if (tableNumber > 0) {
-                        System.out.print("ASIAKAS: " + customerGroup + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                        System.out.print("ASIAKASJOUKKO: " + customerGroup + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
                         controllerFxml.updateTextArea("ASIAKAS: " + customerGroup + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
-                        
                         }
-                    } else {
-                        // servicePoints[0].addToQueue(a); EI LISÄTÄ TAKAS JONOON JOS ON JO PÖYTIINOHJAUS KOHDASSA!
-                        System.out.print("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
-                        controllerFxml.updateTextArea("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
-                        
-                    }
+
+                } else {
+            
+                TODO:   // Keksiä tapa miten järkevästi ylläpidetään jonoa, jos vapaita paikkoja tarpeeksi -> ohjataan pöytään
+                        // Tai laittaa tän checkin tonne SAAPUMINEN case 
+                        // Tää atm vaa jatkaa asiakkaiden tunkemista pöytiin
+
+                    // servicePoints[0].addToQueue(a); EI LISÄTÄ TAKAS JONOON JOS ON JO PÖYTIINOHJAUS KOHDASSA!
+                    System.out.print("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
+                    controllerFxml.updateTextArea("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
+                    
+                }
 
                     customerGroup.clear();
                 }
@@ -207,38 +217,42 @@ public class OwnEngine extends Engine {
 
                     Customer c = servicePoints[1].fetchFromQueue();
 
-                    servicePoints[2].addToQueue(c);
-
+                    
                     controller.visualizeRemoveCustomers(1);
                     controller.visualizeCustomer(2);
+                    
+                    System.out.println(" PERKELE PERKELE -------------- = > " + c.hasOrdered());
+                    // TÄÄKI PERKELE, JOS EI OLE TILANNUT NIIN TILATAAN 
 
-
-                    if (!c.hasOrdered()) {
-                        if (randChance(100) >= 33) {
-                            MenuItem starter = orderService.getRandomStarter();
-                            c.order(waiter, starter);
-                            System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + starter.getName() + "\n");
-                            controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + starter.getName() + "\n");
-                        }
-                        MenuItem mainMeal = orderService.getRandomMainMeal();
-                        c.order(waiter, mainMeal);
-                        System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
-                        controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
-                        if (randChance(100) >= 66) {
-                            MenuItem dessert = orderService.getRandomDessert();
-                            c.order(waiter, dessert);
-                            System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + dessert.getName() + "\n");
-                            controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + dessert.getName() + "\n");
-                        }
-                        
+                    if (randChance(100) >= 33) {
+                        MenuItem starter = orderService.getRandomStarter();
+                        c.order(waiter, starter);
+                        System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + starter.getName() + "\n");
+                        controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + starter.getName() + "\n");
                     }
+
+                    MenuItem mainMeal = orderService.getRandomMainMeal();
+                    c.order(waiter, mainMeal);
+                    System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
+                    controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
+                    
+                    if (randChance(100) >= 66) {
+                        MenuItem dessert = orderService.getRandomDessert();
+                        c.order(waiter, dessert);
+                        System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + dessert.getName() + "\n");
+                        controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + dessert.getName() + "\n");
+                    }
+                        
+                        c.setHasOrdered(true);
+                        servicePoints[2].addToQueue(c);
+                    }
+
                     // DEBUGGASIN 2H MIKS EI TOIMI JA TÄÄ OLI TUOL IF SISÄL SUATANA
-                    c.setHasOrdered(true);
-                }
             }
 
             case TARJOILU -> {
-                System.out.println("TARJOILUADSASDASDSDA");
+
+
                 int customersQueue = servicePoints[2].getQueueSize();
             
                 for (int i = 0; i < customersQueue; i++) {
@@ -310,7 +324,7 @@ public class OwnEngine extends Engine {
         for (ServicePoint p : servicePoints) {
             if (!p.isReserved() && p.isInQueue()) {
                 System.out.println(p.getClass());
-                System.out.println(!p.isReserved() && p.isInQueue());
+                System.out.println("VOIKO C-TAPAHTUMA? -> " + (!p.isReserved() && p.isInQueue()));
                 p.beginService();
             }
         }
