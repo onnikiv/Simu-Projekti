@@ -165,31 +165,40 @@ public class OwnEngine extends Engine {
                 a = generateCustomerGroup();
                 servicePoints[0].addToQueue(a);
                 controller.visualizeCustomer(0);
-                arrivalProcess.generateNext();
+
                 c0++;
+
+                arrivalProcess.generateNext();
+                
             }
 
             case PÖYTIINOHJAUS -> {
-                a = servicePoints[0].fetchFromQueue();
+
+                TODO: //JOKU FIXAA TÄN XD MUN PÄÄ HAJOO
+                
                 if (table.getFreeTables() > 0) {
-                    int tableNumber = table.addCustomersToTable(a);
-                    for (Customer customer : a) {
-                        servicePoints[1].addToQueue(a);
-                        controller.visualizeRemoveCustomers(0);
-                        if (tableNumber > 0) {
-                            System.out.print("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
-                            controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
-                            controller.visualizeCustomer(1);
-
-                            c1++;
+                    try {
+                        a = servicePoints[0].fetchFromQueue();
+                        int tableNumber = table.addCustomersToTable(a);
+                        for (Customer customer : a) {
+                            servicePoints[1].addToQueue(a);
+                            controller.visualizeRemoveCustomers(0);
+                            if (tableNumber > 0) {
+                                System.out.print("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                                controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                                controller.visualizeCustomer(1);
+                                c1++; 
+                            }
                         }
+                        
+                    } catch (Exception e) {
+                        System.out.println("EIMAHUEIMAHUEIMAHUEIMAHUEIMAHUEIMAHUEIMAHUEIMAHUEIMAHU");
                     }
-                } else {
-                    servicePoints[0].addToQueue(a);
-                    System.out.print("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
-                    controllerFxml.updateTextArea("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
-
+                    
                 }
+        
+                
+            
             }
 
             case TILAAMINEN -> {
@@ -217,8 +226,8 @@ public class OwnEngine extends Engine {
                         customer.setHasOrdered(true);
                     }
                 }
-                controller.visualizeCustomer(2);
                 c2++;
+                controller.visualizeCustomer(2);
             }
 
             case TARJOILU -> {
@@ -232,8 +241,9 @@ public class OwnEngine extends Engine {
                         controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> RUOKA: " + item.getName() + "\n");
                     }
                 }
-                controller.visualizeCustomer(3);
                 c3++;
+                controller.visualizeCustomer(3);
+                
             }
 
             case SAFKAAMINEN -> {
@@ -241,7 +251,7 @@ public class OwnEngine extends Engine {
                 controller.visualizeRemoveCustomers(3);
                 servicePoints[4].addToQueue(a);
                 controller.visualizeCustomer(4);
-                c4++;
+                c4 ++;
             }
 
             case POISTUMINEN -> {
