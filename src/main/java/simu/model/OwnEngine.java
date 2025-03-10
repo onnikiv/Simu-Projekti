@@ -1,7 +1,6 @@
 package simu.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -36,8 +35,8 @@ public class OwnEngine extends Engine {
     private double meanArrival = 30;
     private double meanSeating = 5;
     private double meanOrdering = 15;
-    private double meanService = 25;
-    private double meanEating = 45;
+    private double meanService = 5;
+    private double meanEating = 5;
     private double meanExiting = 5;
 
 
@@ -54,7 +53,7 @@ public class OwnEngine extends Engine {
         servicePoints[0] = new ServicePoint(new Normal(meanSeating, 2), eventList, EventType.PÖYTIINOHJAUS);
         servicePoints[1] = new ServicePoint(new Normal(meanOrdering, 5), eventList, EventType.TILAAMINEN);
         servicePoints[2] = new ServicePoint(new Normal(meanService, 10), eventList, EventType.TARJOILU);
-        servicePoints[3] = new ServicePoint(new Normal(meanEating, 15), eventList, EventType.SAFKAAMINEN);
+        servicePoints[3] = new ServicePoint(new Normal(meanEating, 2), eventList, EventType.SAFKAAMINEN);
         servicePoints[4] = new ServicePoint(new Normal(meanExiting, 2), eventList, EventType.POISTUMINEN);
 
         arrivalProcess = new ArrivalProcess(new Negexp(meanArrival, 10), eventList, EventType.SAAPUMINEN);
@@ -147,99 +146,150 @@ public class OwnEngine extends Engine {
             }
         }
 
-        List<Customer> a;
+        List<Customer> group;
         switch ((EventType) t.getType()) {
 
             case SAAPUMINEN -> {
-                a = generateCustomerGroup();
-                servicePoints[0].addToQueue(a);
-                controller.visualizeCustomer(0);
-                arrivalProcess.generateNext();
+                group = generateCustomerGroup();
+                System.out.println("DEBUG ---------" + group.size());
+                
+                for (Customer c : group) {
+                    servicePoints[0].addToQueue(c);
+                    controller.visualizeCustomer(0);
+                    arrivalProcess.generateNext();
+                }
+                
             }
 
             case PÖYTIINOHJAUS -> {
-                a = servicePoints[0].fetchFromQueue();
-                if (table.getFreeTables() > 0) {
-                    int tableNumber = table.addCustomersToTable(a);
-                    for (Customer customer : a) {
-                        servicePoints[1].addToQueue(a);
-                        controller.visualizeRemoveCustomers(0);
-                        if (tableNumber > 0) {
-                            System.out.print("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
-                            controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
-                            controller.visualizeCustomer(1);
-                        }
-                    }
-                } else {
-                    servicePoints[0].addToQueue(a);
-                    System.out.print("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
-                    controllerFxml.updateTextArea("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
+                    
+                int customersQueue = servicePoints[0].getQueueSize();
 
+                List<Customer> customerGroup = new ArrayList<>();
+
+                for (int i = 0; i < customersQueue; i++) {
+
+                    Customer c = servicePoints[0].fetchFromQueue();
+                    servicePoints[1].addToQueue(c);
+
+                    customerGroup.add(c);
+                    controller.visualizeRemoveCustomers(0);
+                    controller.visualizeCustomer(1);
                 }
-            }
 
-            case TILAAMINEN -> {
-                a = servicePoints[1].fetchFromQueue();
-                controller.visualizeRemoveCustomers(1);
-                servicePoints[2].addToQueue(a);
-                for (Customer customer : a) {
-                    if (!customer.hasOrdered()) {
+                if (table.getFreeTables() > 0) {
+                    int tableNumber = table.addCustomersToTable(customerGroup);
+
+                    if (tableNumber > 0) {
+                        System.out.print("ASIAKAS: " + customerGroup + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                        controllerFxml.updateTextArea("ASIAKAS: " + customerGroup + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                        
+                        }
+                    } else {
+                        // servicePoints[0].addToQueue(a); EI LISÄTÄ TAKAS JONOON JOS ON JO PÖYTIINOHJAUS KOHDASSA!
+                        System.out.print("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
+                        controllerFxml.updateTextArea("Asiakasryhmä -> EI VAPAITA PÖYTIÄ\n");
+                        
+                    }
+
+                    customerGroup.clear();
+                }
+                
+                
+                
+                case TILAAMINEN -> {
+                
+                int customersQueue = servicePoints[1].getQueueSize();
+
+
+                
+                for (int i = 0; i < customersQueue; i++) {
+
+                    Customer c = servicePoints[1].fetchFromQueue();
+
+                    servicePoints[2].addToQueue(c);
+
+                    controller.visualizeRemoveCustomers(1);
+                    controller.visualizeCustomer(2);
+
+
+                    if (!c.hasOrdered()) {
                         if (randChance(100) >= 33) {
                             MenuItem starter = orderService.getRandomStarter();
-                            customer.order(waiter, starter);
-                            System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + starter.getName() + "\n");
-                            controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + starter.getName() + "\n");
+                            c.order(waiter, starter);
+                            System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + starter.getName() + "\n");
+                            controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + starter.getName() + "\n");
                         }
                         MenuItem mainMeal = orderService.getRandomMainMeal();
-                        customer.order(waiter, mainMeal);
-                        System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
-                        controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
+                        c.order(waiter, mainMeal);
+                        System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
+                        controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
                         if (randChance(100) >= 66) {
                             MenuItem dessert = orderService.getRandomDessert();
-                            customer.order(waiter, dessert);
-                            System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
-                            controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
+                            c.order(waiter, dessert);
+                            System.out.print("ASIAKAS: " + c.getId() + " -> Tilaus: " + dessert.getName() + "\n");
+                            controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> Tilaus: " + dessert.getName() + "\n");
                         }
-                        customer.setHasOrdered(true);
+                        
                     }
+                    // DEBUGGASIN 2H MIKS EI TOIMI JA TÄÄ OLI TUOL IF SISÄL SUATANA
+                    c.setHasOrdered(true);
                 }
-                controller.visualizeCustomer(2);
             }
 
             case TARJOILU -> {
-                a = servicePoints[2].fetchFromQueue();
-                controller.visualizeRemoveCustomers(2);
-                servicePoints[3].addToQueue(a);
-                for (Customer customer : a) {
-                    List<MenuItem> order = waiter.deliverOrder(customer);
+                System.out.println("TARJOILUADSASDASDSDA");
+                int customersQueue = servicePoints[2].getQueueSize();
+            
+                for (int i = 0; i < customersQueue; i++) {
+
+                    Customer c = servicePoints[2].fetchFromQueue();
+                    
+                    
+                    List<MenuItem> order = waiter.deliverOrder(c);
                     for (MenuItem item : order) {
-                        System.out.print("ASIAKAS: " + customer.getId() + " -> RUOKA: " + item.getName() + "\n");
-                        controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> RUOKA: " + item.getName() + "\n");
+                        System.out.print("ASIAKAS: " + c.getId() + " -> RUOKA: " + item.getName() + "\n");
+                        controllerFxml.updateTextArea("ASIAKAS: " + c.getId() + " -> RUOKA: " + item.getName() + "\n");
                     }
+                    controller.visualizeRemoveCustomers(2);
+                    controller.visualizeCustomer(3);
+                    servicePoints[3].addToQueue(c);
                 }
-                controller.visualizeCustomer(3);
             }
 
             case SAFKAAMINEN -> {
-                a = servicePoints[3].fetchFromQueue();
-                controller.visualizeRemoveCustomers(3);
-                servicePoints[4].addToQueue(a);
-                controller.visualizeCustomer(4);
+                int customersQueue = servicePoints[3].getQueueSize();
+                System.out.println("SAFKAAMINEN: ----> " + customersQueue + " koko");
+            
+                for (int i = 0; i < customersQueue; i++) {
+                    Customer c = servicePoints[3].fetchFromQueue();
+                    servicePoints[4].addToQueue(c);
+            
+                    controller.visualizeRemoveCustomers(3); // Poistetaan asiakas SAFKAAMINEN jonosta
+                    controller.visualizeCustomer(4); // Visualisoidaan asiakas SAFKAAMINEN vaiheessa
+                }
             }
 
             case POISTUMINEN -> {
-                controller.visualizeRemoveCustomers(4);
-                a = servicePoints[4].fetchFromQueue();
-                for (Customer customer : a) {
-                    if (!customer.isLeaving()) {
-                        table.removeCustomerFromTable(customer);
-                        System.out.print("Asiakas: " + customer.getId() + " -> POISTUU PÖYDÄSTÄ\n");
-                        System.out.println(table.getFreeTables());
-                        controller.visualizeCustomer(5);
-                        customer.setDepartTime(Clock.getInstance().getTime());
-                        customer.report(this.controllerFxml);
-                        customer.setLeaving(true);
-                    }
+
+                int customersQueue = servicePoints[4].getQueueSize();
+                List<Customer> customerGroup = new ArrayList<>();
+
+                for (int i = 0; i < customersQueue; i++) {
+                    Customer c = servicePoints[4].fetchFromQueue();
+            
+                    controller.visualizeRemoveCustomers(4); // Poistetaan asiakas POISTUMINEN jonosta
+                    controller.visualizeCustomer(5); // Visualisoidaan asiakas POISTUMINEN vaiheessa
+            
+                    table.removeCustomerFromTable(c);
+                    System.out.println("PÖYTÄMÄÄRÄ: " + table.getTableAmount() + ", VAPAITA PÖYTIÄ: " + table.getFreeTables());
+            
+                    System.out.print("Asiakas: " + c.getId() + " -> POISTUU PÖYDÄSTÄ\n");
+                    System.out.println(table.getFreeTables());
+            
+                    c.setDepartTime(Clock.getInstance().getTime());
+                    c.report(this.controllerFxml);
+                    c.setLeaving(true);
                 }
             }
         }
@@ -259,6 +309,8 @@ public class OwnEngine extends Engine {
 
         for (ServicePoint p : servicePoints) {
             if (!p.isReserved() && p.isInQueue()) {
+                System.out.println(p.getClass());
+                System.out.println(!p.isReserved() && p.isInQueue());
                 p.beginService();
             }
         }

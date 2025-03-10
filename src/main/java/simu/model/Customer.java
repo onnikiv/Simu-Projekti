@@ -78,6 +78,6 @@ public class Customer {
     }
 
     public void setLeaving(boolean leaving) {
-        isLeaving = leaving;
+        this.isLeaving = leaving;
     }
 }

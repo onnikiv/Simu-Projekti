@@ -182,6 +182,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     public synchronized void visualizeCustomer(int customer) {
         Platform.runLater(() -> {
             getVisualization().newCustomer(customer);
+            System.out.println("UUSI ASIAKAS VISUALISOITU   " + customer);
             if (!mute && customer == 0) {
                 customerSound.play();
             }
