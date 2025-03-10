@@ -1,7 +1,6 @@
 package simu.model;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
@@ -39,6 +38,14 @@ public class OwnEngine extends Engine {
     private double meanService = 25;
     private double meanEating = 45;
     private double meanExiting = 5;
+
+    private int c0 = 0;
+    private int c1 = 0;
+    private int c2 = 0;
+    private int c3 = 0;
+    private int c4 = 0;
+    private int c5 = 0;
+    
 
 
     public OwnEngine(IControllerForM controller, ControllerForFxml controllerFxml, SettingsController settingsController) {
@@ -147,7 +154,11 @@ public class OwnEngine extends Engine {
             }
         }
 
+        // lähettää kontrollerille arvot
+        controller.updateServicePointSums(c0,c1,c2,c3,c4,c5);
+
         List<Customer> a;
+
         switch ((EventType) t.getType()) {
 
             case SAAPUMINEN -> {
@@ -155,6 +166,7 @@ public class OwnEngine extends Engine {
                 servicePoints[0].addToQueue(a);
                 controller.visualizeCustomer(0);
                 arrivalProcess.generateNext();
+                c0++;
             }
 
             case PÖYTIINOHJAUS -> {
@@ -168,6 +180,8 @@ public class OwnEngine extends Engine {
                             System.out.print("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
                             controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
                             controller.visualizeCustomer(1);
+
+                            c1++;
                         }
                     }
                 } else {
@@ -204,6 +218,7 @@ public class OwnEngine extends Engine {
                     }
                 }
                 controller.visualizeCustomer(2);
+                c2++;
             }
 
             case TARJOILU -> {
@@ -218,6 +233,7 @@ public class OwnEngine extends Engine {
                     }
                 }
                 controller.visualizeCustomer(3);
+                c3++;
             }
 
             case SAFKAAMINEN -> {
@@ -225,11 +241,12 @@ public class OwnEngine extends Engine {
                 controller.visualizeRemoveCustomers(3);
                 servicePoints[4].addToQueue(a);
                 controller.visualizeCustomer(4);
+                c4++;
             }
 
             case POISTUMINEN -> {
-                controller.visualizeRemoveCustomers(4);
                 a = servicePoints[4].fetchFromQueue();
+                controller.visualizeRemoveCustomers(4);
                 for (Customer customer : a) {
                     if (!customer.isLeaving()) {
                         table.removeCustomerFromTable(customer);
@@ -239,6 +256,7 @@ public class OwnEngine extends Engine {
                         customer.setDepartTime(Clock.getInstance().getTime());
                         customer.report(this.controllerFxml);
                         customer.setLeaving(true);
+                        c5++;
                     }
                 }
             }
