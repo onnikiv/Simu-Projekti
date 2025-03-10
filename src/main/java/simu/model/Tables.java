@@ -22,6 +22,9 @@ public class Tables {
     }
 
     public int addCustomersToTable(List<Customer> customers) {  // Add a group of customers to a table (returns int for indexing the table numbers)
+
+        // ehkä void metodiks ja sit joku for.each Customer customer lisätään siihe pöytään 
+
         for (Map.Entry<Integer, List<Customer>> entry : tables.entrySet()) {    // Iterate through the tables
             if (entry.getValue().isEmpty()) {   // If the table is empty, add a group of customers to it
                 if (customers.size() <= seatsPerTable) {    // If the group of customers fits the table
