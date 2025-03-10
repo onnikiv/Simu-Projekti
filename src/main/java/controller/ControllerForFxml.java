@@ -185,36 +185,6 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             if (!mute && customer == 0) {
                 customerSound.play();
             }
-            
-            
-            // LABEL - ASIAKAS MÄÄRÄ
-            switch (customer) {
-                case 0 -> {
-                    int c0 = Integer.parseInt(countC0.getText()) + 1;
-                    countC0.setText(String.valueOf(c0));
-                }
-                case 1 -> {
-                    int c1 = Integer.parseInt(countC1.getText()) + 1;
-                    countC1.setText(String.valueOf(c1));
-                }
-                case 2 -> {
-                    int c2 = Integer.parseInt(countC2.getText()) + 1;
-                    countC2.setText(String.valueOf(c2));
-                }
-                case 3 -> {
-                    int c3 = Integer.parseInt(countC3.getText()) + 1;
-                    countC3.setText(String.valueOf(c3));
-                }
-                case 4 -> {
-                    int c4 = Integer.parseInt(countC4.getText()) + 1;
-                    countC4.setText(String.valueOf(c4));
-                }
-                case 5 -> {
-                    int c5 = Integer.parseInt(countC5.getText()) + 1;
-                    countC5.setText(String.valueOf(c5));
-                }
-                default -> throw new AssertionError();
-            }
         });
     }
 
@@ -222,6 +192,18 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     public synchronized void visualizeRemoveCustomers(int customer) {
         Platform.runLater(() -> {
             getVisualization().removeCustomer(customer);
+        });
+    }
+
+    @Override
+    public synchronized void updateServicePointSums(int c0, int c1,int c2,int c3,int c4,int c5) {
+        Platform.runLater(() -> {
+            countC0.setText(String.valueOf(c0));
+            countC1.setText(String.valueOf(c1));
+            countC2.setText(String.valueOf(c2));
+            countC3.setText(String.valueOf(c3));
+            countC4.setText(String.valueOf(c4));
+            countC5.setText(String.valueOf(c5));
         });
     }
 
@@ -239,7 +221,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         }
 
     }
-
+    @FXML
     public synchronized void updateTextArea(String message) {
         if (consoleLogTextArea != null) {
             Platform.runLater(() -> consoleLogTextArea.appendText(message));
