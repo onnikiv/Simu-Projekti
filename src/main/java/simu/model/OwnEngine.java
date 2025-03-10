@@ -190,7 +190,7 @@ public class OwnEngine extends Engine {
 
                     if (tableNumber > 0) {
                         System.out.print("ASIAKASJOUKKO: " + customerGroup + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
-                        controllerFxml.updateTextArea("ASIAKAS: " + customerGroup + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                        controllerFxml.updateTextArea("ASIAKASJOUKKO: " + customerGroup + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
                         }
 
                 } else {
