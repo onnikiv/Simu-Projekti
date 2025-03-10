@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Tables {
     private final HashMap<Integer, List<Customer>> tables;
+    private final Map<Customer, Integer> customerTableMap; // Map to track customer seating
     private final int tableAmount;
     private int freeTables;
     private final int seatsPerTable;
@@ -16,17 +17,21 @@ public class Tables {
         this.freeTables = tableAmount;
         this.seatsPerTable = seatsPerTable;
         this.tables = new HashMap<>();
+        this.customerTableMap = new HashMap<>(); // Initialize the map
         for (int i = 1; i <= tableAmount; i++) {
             tables.put(i, new ArrayList<>());
         }
     }
 
-    public int addCustomersToTable(List<Customer> customers) {  // Add a group of customers to a table (returns int for indexing the table numbers)
-        for (Map.Entry<Integer, List<Customer>> entry : tables.entrySet()) {    // Iterate through the tables
-            if (entry.getValue().isEmpty()) {   // If the table is empty, add a group of customers to it
-                if (customers.size() <= seatsPerTable) {    // If the group of customers fits the table
-                    entry.getValue().addAll(customers); // Add all customers of a group to the table
-                    freeTables--;   // Decrease the amount of free tables
+    public int addCustomersToTable(List<Customer> customers) {
+        for (Map.Entry<Integer, List<Customer>> entry : tables.entrySet()) {
+            if (entry.getValue().isEmpty()) {
+                if (customers.size() <= seatsPerTable) {
+                    entry.getValue().addAll(customers);
+                    for (Customer customer : customers) {
+                        customerTableMap.put(customer, entry.getKey()); // Track the table for each customer
+                    }
+                    freeTables--;
                     return entry.getKey();
                 }
             }
@@ -34,15 +39,17 @@ public class Tables {
         return -1; // No free table found
     }
 
-    public void removeCustomerFromTable(Customer customer) {
-        for (Map.Entry<Integer, List<Customer>> entry : tables.entrySet()) {    // Iterate through the tables
-            if (entry.getValue().remove(customer)) {    // If the group of customers is found, remove them
-                if (entry.getValue().isEmpty()) {   // If the table is empty, increase the amount of free tables
-                    freeTables++;
-                }
-                break;  // Break the loop after the group of customers is found
+    public boolean removeCustomerFromTable(Customer customer) {
+        Integer tableNumber = customerTableMap.remove(customer); // Get the table number from the map
+        if (tableNumber != null) {
+            List<Customer> tableCustomers = tables.get(tableNumber);
+            tableCustomers.remove(customer);
+            if (tableCustomers.isEmpty()) {
+                freeTables++;
+                return true;
             }
         }
+        return false;
     }
 
     public int getFreeTables() {
@@ -51,6 +58,10 @@ public class Tables {
 
     public int getTableAmount() {
         return tableAmount;
+    }
+
+    public void freeTables() {
+
     }
 }
 
