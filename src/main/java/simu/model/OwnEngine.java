@@ -1,6 +1,7 @@
 package simu.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -27,6 +28,9 @@ public class OwnEngine extends Engine {
     private final Kitchen kitchen = new Kitchen();
     private final Waiter waiter = new Waiter(kitchen);
 
+    private int groupId = 0;
+
+
 
     private boolean paused = false;
     private final Object pauseLock = new Object();
@@ -45,7 +49,6 @@ public class OwnEngine extends Engine {
     private int c3 = 0;
     private int c4 = 0;
     private int c5 = 0;
-    
 
 
     public OwnEngine(IControllerForM controller, ControllerForFxml controllerFxml, SettingsController settingsController) {
@@ -53,7 +56,7 @@ public class OwnEngine extends Engine {
         super(controller);
         this.controllerFxml = controllerFxml;
         this.settingsController = settingsController;
-        table = new Tables(40, 4);
+        table = new Tables(20, 4);
 
 
         servicePoints = new ServicePoint[5];
@@ -85,7 +88,7 @@ public class OwnEngine extends Engine {
         }
     }
 
-    public static int randChance(int chance) {
+    public int randChance(int chance) {
         return new Random().nextInt(chance);
     }
 
@@ -139,31 +142,15 @@ public class OwnEngine extends Engine {
         for (int i = 0; i < groupSize; i++) {
             group.add(new Customer());
         }
+        groupId++;
+
+        for (Customer customer : group) {
+            customer.setGroupId(groupId);
+        }
+
         return group;
     }
 
-    private void attemptSeating() {
-        if (table.getFreeTables() > 0) {
-            try {
-                List<Customer> a = servicePoints[0].fetchFromQueue();
-                int tableNumber = table.addCustomersToTable(a);
-                if (tableNumber > 0) {
-                    for (Customer customer : a) {
-                        controller.visualizeRemoveCustomers(0);
-                        System.out.print("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
-                        controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
-                        controller.visualizeCustomer(1);
-                        c1++;
-                    }
-                    servicePoints[1].addToQueue(a);
-                } else {
-                    servicePoints[0].addToQueue(a);
-                }
-            } catch (Exception e) {
-                System.out.println("EIMAHUEIMAHUEIMAHUEIMAHUEIMAHUEIMAHUEIMAHUEIMAHUEIMAHU");
-            }
-        }
-    }
 
     @Override
     protected void runEvent(Event t) {  // B-vaiheen tapahtumat
@@ -178,7 +165,7 @@ public class OwnEngine extends Engine {
         }
 
         // lähettää kontrollerille arvot
-        controller.updateServicePointSums(c0,c1,c2,c3,c4,c5);
+        controller.updateServicePointSums(c0, c1, c2, c3, c4, c5);
 
         List<Customer> a;
 
@@ -192,13 +179,32 @@ public class OwnEngine extends Engine {
                 c0++;
 
                 arrivalProcess.generateNext();
-                
+
             }
 
             case PÖYTIINOHJAUS -> {
-
-                TODO: //JOKU FIXAA TÄN XD MUN PÄÄ HAJOO
-                attemptSeating();
+                if (table.getFreeTables() > 0) {
+                    try {
+                        a = servicePoints[0].fetchFromQueue();
+                        int tableNumber = table.addCustomersToTable(a);
+                        if (tableNumber > 0) {
+                            controller.visualizeRemoveCustomers(0);
+                            int id = a.get(0).getGroupId();
+                            System.out.print("GROUP: " + id + " (" + a.size() + " Customers)" + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                            controllerFxml.updateTextArea("GROUP: " + id + " (" + a.size() + " Customers)" + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                            for (Customer customer : a) {
+                                customer.setSeated(true);
+                            }
+                            controller.visualizeCustomer(1);
+                            servicePoints[1].addToQueue(a);
+                            c1++;
+                        } else {
+                            servicePoints[0].addToQueue(a);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("Error in PÖYTIINOHJAUS");
+                    }
+                }
             }
 
             case TILAAMINEN -> {
@@ -243,7 +249,7 @@ public class OwnEngine extends Engine {
                 servicePoints[3].addToQueue(a);
                 c3++;
                 controller.visualizeCustomer(3);
-                
+
             }
 
             case SAFKAAMINEN -> {
@@ -255,13 +261,14 @@ public class OwnEngine extends Engine {
                 controller.visualizeRemoveCustomers(3);
                 servicePoints[4].addToQueue(a);
                 controller.visualizeCustomer(4);
-                c4 ++;
+                c4++;
             }
 
             case POISTUMINEN -> {
                 a = servicePoints[4].fetchFromQueue();
                 controller.visualizeRemoveCustomers(4);
                 boolean tableFreed = false;
+                int id = a.get(0).getGroupId();
                 for (Customer customer : a) {
                     if (!customer.isLeaving()) {
                         tableFreed = table.removeCustomerFromTable(customer);
@@ -269,12 +276,13 @@ public class OwnEngine extends Engine {
                         customer.setDepartTime(Clock.getInstance().getTime());
                         customer.report(this.controllerFxml);
                         customer.setLeaving(true);
+                        customer.setSeated(false);
                         c5++;
                     }
                 }
                 if (tableFreed) {
-                    System.out.println("Table freed up. Free tables: " + table.getFreeTables());
-                    attemptSeating();
+                    System.out.println("Table freed up by group: " + id);
+                    System.out.println("Free tables: " + table.getFreeTables());
                 }
                 controller.visualizeCustomer(5);
             }

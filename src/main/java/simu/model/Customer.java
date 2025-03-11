@@ -12,8 +12,10 @@ public class Customer {
     private final int id;
     private static int i = 1;
     private static long sum = 0;
+    private int groupId;
     private boolean hasOrdered = false;
     private boolean isLeaving = false;
+    private boolean isSeated = false;
 
     public Customer() {
         id = i++;
@@ -79,5 +81,21 @@ public class Customer {
 
     public void setLeaving(boolean leaving) {
         isLeaving = leaving;
+    }
+
+    public boolean isSeated() {
+        return isSeated;
+    }
+
+    public void setSeated(boolean seated) {
+        isSeated = seated;
+    }
+
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 }
