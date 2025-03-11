@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="1195.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerForFxml">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="688.0" prefWidth="1208.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerForFxml">
   <columnConstraints>
       <ColumnConstraints />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -96,7 +96,7 @@
             </TextField>
          </children>
       </VBox>
-      <Label prefHeight="17.0" prefWidth="334.0" text="//DEBUG - SUMMAT" GridPane.columnIndex="2" GridPane.rowIndex="2">
+      <Label prefHeight="17.0" prefWidth="334.0" text="SUMMAT" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets top="70.0" />
          </GridPane.margin>
@@ -151,25 +151,25 @@
             <Button fx:id="resumeButton" mnemonicParsing="false" onAction="#resumeSimulation" prefHeight="25.0" prefWidth="159.0" text="RESUME" />
          </children>
       </VBox>
-      <VBox prefHeight="202.0" prefWidth="555.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
+      <VBox prefHeight="200.0" prefWidth="555.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
          <GridPane.margin><Insets left="10" /></GridPane.margin>
          <children>
-            <Canvas fx:id="canvas" height="51.0" width="470.0" />
-            <Canvas fx:id="canvas1" height="53.0" layoutX="10.0" layoutY="10.0" width="470.0" />
+            <Canvas fx:id="canvas" height="50.0" width="470.0" />
+            <Canvas fx:id="canvas1" height="50.0" width="470.0" />
          </children>
       </VBox>
-      <VBox layoutX="573.0" layoutY="278.0" prefHeight="202.0" prefWidth="555.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
+      <VBox prefHeight="200.0" prefWidth="555.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
          <GridPane.margin><Insets left="10" /></GridPane.margin>
          <children>
-            <Canvas fx:id="canvas2" height="51.0" width="470.0" />
-            <Canvas fx:id="canvas3" height="53.0" layoutX="10.0" layoutY="10.0" width="470.0" />
+            <Canvas fx:id="canvas2" height="50.0" width="470.0" />
+            <Canvas fx:id="canvas3" height="50.0" width="470.0" />
          </children>
       </VBox>
-      <VBox layoutX="573.0" layoutY="380.0" prefHeight="109.0" prefWidth="561.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
+      <VBox prefHeight="200.0" prefWidth="555.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
          <GridPane.margin><Insets left="10" /></GridPane.margin>
          <children>
-            <Canvas fx:id="canvas4" height="51.0" width="470.0" />
-            <Canvas fx:id="canvas5" height="51.0" layoutX="10.0" layoutY="10.0" width="470.0" />
+            <Canvas fx:id="canvas4" height="50.0" width="470.0" />
+            <Canvas fx:id="canvas5" height="50.0" width="470.0" />
          </children>
       </VBox>
    </children>
