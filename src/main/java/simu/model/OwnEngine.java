@@ -303,7 +303,9 @@ public class OwnEngine extends Engine {
     @Override
     protected void results() {
         System.out.println("Simulation ended at " + Clock.getInstance().getTime());
-        System.out.println("Results ... are not yet here");
+        System.out.println("Results ... are not yet here\n");
+
+        orderService.getAllMealResults();
 
         controller.showEndTime(Clock.getInstance().getTime());
     }
