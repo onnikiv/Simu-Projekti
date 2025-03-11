@@ -227,12 +227,6 @@ public class OwnEngine extends Engine {
 
             case TILAAMINEN -> {
                 a = servicePoints[1].fetchFromQueue();
-                for (Customer customer : a) {
-                    double serviceTime = currentTime - customer.getArrivalTime();
-                    totalServiceTime += serviceTime;
-                    if (serviceTime > maxServiceTime) maxServiceTime = serviceTime;
-                    if (serviceTime < minServiceTime) minServiceTime = serviceTime;
-                }
                 controller.visualizeRemoveCustomers(1);
                 for (Customer customer : a) {
                     if (!customer.hasOrdered()) {
@@ -264,6 +258,12 @@ public class OwnEngine extends Engine {
                 a = servicePoints[2].fetchFromQueue();
                 controller.visualizeRemoveCustomers(2);
                 double prepTime = waiter.calculatePrepTime(a);
+                for (Customer customer : a) {
+                    double serviceTime = currentTime - customer.getArrivalTime() + prepTime;
+                    totalServiceTime += serviceTime;
+                    if (serviceTime > maxServiceTime) maxServiceTime = serviceTime;
+                    if (serviceTime < minServiceTime) minServiceTime = serviceTime;
+                }
                 //System.out.println("Group prep time: " + prepTime);
                 int id = a.get(0).getGroupId();
                 groupPrepTimes.put(id, prepTime);
@@ -362,11 +362,11 @@ public class OwnEngine extends Engine {
             double averageQueueTime = totalQueueTime / totalCustomers;
             double averageServiceTime = totalServiceTime / totalCustomers;
 
-            System.out.println("Average Time in System: " + timeInSystem / totalCustomers);
-            System.out.println("Average Queue Time: " + averageQueueTime);
-            System.out.println("Average Service Time: " + averageServiceTime);
+            System.out.println("\nAverage Time in System: " + timeInSystem / totalCustomers);
+            System.out.println("\nAverage Queue Time: " + averageQueueTime);
             System.out.println("Maximum Queue Time: " + maxQueueTime);
             System.out.println("Minimum Queue Time: " + minQueueTime);
+            System.out.println("\nAverage Service Time: " + averageServiceTime);
             System.out.println("Maximum Service Time: " + maxServiceTime);
             System.out.println("Minimum Service Time: " + minServiceTime);
         } else {
