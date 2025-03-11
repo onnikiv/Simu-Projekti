@@ -151,9 +151,14 @@ public class OwnEngine extends Engine {
         return group;
     }
 
+    private double timeInSystem = 0;
     private double totalQueueTime = 0;
     private double totalServiceTime = 0;
     private int totalCustomers = 0;
+    private double maxQueueTime = Double.MIN_VALUE;
+    private double minQueueTime = Double.MAX_VALUE;
+    private double maxServiceTime = Double.MIN_VALUE;
+    private double minServiceTime = Double.MAX_VALUE;
 
     @Override
     protected void runEvent(Event t) {  // B-vaiheen tapahtumat
@@ -194,8 +199,11 @@ public class OwnEngine extends Engine {
                     try {
                         a = servicePoints[0].fetchFromQueue();
                         for (Customer customer : a) {
+                            double queueTime = currentTime - customer.getArrivalTime();
                             totalQueueTime += currentTime - customer.getArrivalTime();
                             totalCustomers++;
+                            if (queueTime > maxQueueTime) maxQueueTime = queueTime;
+                            if (queueTime < minQueueTime) minQueueTime = queueTime;
                         }
                         int tableNumber = table.addCustomersToTable(a);
                         if (tableNumber > 0) {
@@ -221,7 +229,10 @@ public class OwnEngine extends Engine {
             case TILAAMINEN -> {
                 a = servicePoints[1].fetchFromQueue();
                 for (Customer customer : a) {
-                    totalServiceTime += currentTime - customer.getArrivalTime();
+                    double serviceTime = currentTime - customer.getArrivalTime();
+                    totalServiceTime += serviceTime;
+                    if (serviceTime > maxServiceTime) maxServiceTime = serviceTime;
+                    if (serviceTime < minServiceTime) minServiceTime = serviceTime;
                 }
                 controller.visualizeRemoveCustomers(1);
                 for (Customer customer : a) {
@@ -294,6 +305,10 @@ public class OwnEngine extends Engine {
                         c5++;
                     }
                 }
+                for (Customer customer : a) {
+                    double CustomerTime = customer.getDepartTime() - customer.getArrivalTime();
+                    timeInSystem += CustomerTime;
+                }
                 if (tableFreed) {
                     System.out.println("Table freed up by group: " + id);
                     System.out.println("Free tables: " + table.getFreeTables());
@@ -339,12 +354,16 @@ public class OwnEngine extends Engine {
             double averageQueueTime = totalQueueTime / totalCustomers;
             double averageServiceTime = totalServiceTime / totalCustomers;
 
+            System.out.println("Average Time in System: " + timeInSystem / totalCustomers);
             System.out.println("Average Queue Time: " + averageQueueTime);
             System.out.println("Average Service Time: " + averageServiceTime);
+            System.out.println("Maximum Queue Time: " + maxQueueTime);
+            System.out.println("Minimum Queue Time: " + minQueueTime);
+            System.out.println("Maximum Service Time: " + maxServiceTime);
+            System.out.println("Minimum Service Time: " + minServiceTime);
         } else {
             System.out.println("No customers processed.");
         }
     }
-
 
 }
