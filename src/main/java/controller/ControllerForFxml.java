@@ -174,7 +174,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     @Override
     public void showEndTime(double time) {
-        Platform.runLater(() -> setEndTime(time));
+        Platform.runLater(() -> {setEndTime(time);
+        consoleLogTextArea.appendText("\nSimulation has Ended...\n");        
+    });
 
     }
 
