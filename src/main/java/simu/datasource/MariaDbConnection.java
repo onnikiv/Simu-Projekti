@@ -4,9 +4,19 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * Class for managing the MariaDB database connection.
+ * Provides methods to establish and terminate the connection.
+ */
+
 public class MariaDbConnection {
 
     private static Connection conn = null;
+
+    /**
+     * Establishes and returns a connection to the MariaDB database.
+     * @return the database connection
+     */
 
     public static Connection getConnection() {
         if (conn == null) {
@@ -22,6 +32,11 @@ public class MariaDbConnection {
             return conn;
         }
     }
+
+    /**
+     * Terminates the database connection.
+     */
+
     public static void terminate() {
         try {
             getConnection().close();

@@ -33,7 +33,7 @@ public class Waiter {
 
     /**
      * Delivers the order from the Kitchen to the Customer.
-     * Adds the time it took to make the meal to the simulation time.
+     * Adds the time it took to make the meal for the simulation time.
      * @param customer Customer who needs to be served.
      * @return List of ordered MenuItems. Used if the Customer has multiple orders.
      */
@@ -44,7 +44,7 @@ public class Waiter {
             while (!order.isEmpty()) {  // Process all items in the order
                 MenuItem item = order.poll();   // Get the first item from the order
 
-                // Add the time it took to make the meal to the simulation time
+                // Add the time it took to make the meal for the simulation time
                 Clock.getInstance().setTime(Clock.getInstance().getTime() + kitchen.getPrepTime(item));
 
                 deliveredItems.add(item);   // Add the item to the list of delivered items

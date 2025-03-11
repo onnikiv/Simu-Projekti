@@ -7,6 +7,11 @@ import javafx.stage.Stage;
 import simu.framework.IEngine;
 import simu.model.OwnEngine;
 
+/**
+ * Controller class for handling the settings UI interactions.
+ * Provides methods to update simulation parameters through sliders.
+ */
+
 public class SettingsController {
 
     private IEngine engine;
@@ -17,6 +22,10 @@ public class SettingsController {
 
     @FXML
     private Slider seatingSlider, serviceSlider, orderingSlider, exitingSlider,  arrivalSlider,  eatingSlider;
+
+    /**
+     * Initializes the controller, setting up the event handlers for the sliders and back button.
+     */
 
     @FXML
     public void initialize() {
@@ -32,14 +41,27 @@ public class SettingsController {
 
     }
 
+    /**
+     * Sets the simulation engine.
+     * @param engine the simulation engine
+     */
+
     public void setEngine(IEngine engine) {
         this.engine = engine;
     }
+
+    /**
+     * Sets the main controller.
+     * @param mainController the main controller
+     */
 
     public void setMainController(ControllerForFxml mainController) {
         this.controller = mainController;
     }
 
+    /**
+     * Handles the action for the back button, closing the settings window and resuming the simulation.
+     */
 
     @FXML
     private void handleBackButtonAction() {
@@ -49,6 +71,12 @@ public class SettingsController {
             controller.resumeSimulation();
         }
     }
+
+    /**
+     * Updates the simulation parameter based on the slider value.
+     * @param slider the slider whose value has changed
+     * @param type the type of parameter to update
+     */
 
     // Ottaa Sliderista arvot ja printtaa tuloksen OwnEnginessä consoliin (Vielä ei muuta mitään Distributionin meaneja)
     public void updateSliderValue(Slider slider, String type) {

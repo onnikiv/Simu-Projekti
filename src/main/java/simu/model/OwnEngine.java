@@ -16,6 +16,17 @@ import simu.framework.Clock;
 import simu.framework.Engine;
 import simu.framework.Event;
 
+/**
+ * The OwnEngine class represents the simulation engine for the restaurant simulation.
+ * It extends the Engine class and contains the main logic for the simulation.
+ * The engine manages the simulation time, event list, and the execution of events.
+ * The engine also contains the service points and the arrival process for the simulation.
+ * The engine is responsible for generating events and running the simulation.
+ * The engine also calculates performance metrics for the simulation.
+ * The engine is used by the controller to manage the simulation.
+ *
+ */
+
 public class OwnEngine extends Engine {
 
     private ArrivalProcess arrivalProcess;
@@ -27,11 +38,7 @@ public class OwnEngine extends Engine {
     private final OrderService orderService;
     private final Kitchen kitchen = new Kitchen();
     private final Waiter waiter = new Waiter(kitchen);
-
     private int groupId = 0;
-
-
-
     private boolean paused = false;
     private final Object pauseLock = new Object();
 
@@ -50,6 +57,24 @@ public class OwnEngine extends Engine {
     private int c4 = 0;
     private int c5 = 0;
 
+    private double timeInSystem = 0;
+    private double totalQueueTime = 0;
+    private double totalServiceTime = 0;
+    private int totalCustomers = 0;
+    private double maxQueueTime = Double.MIN_VALUE;
+    private double minQueueTime = Double.MAX_VALUE;
+    private double maxServiceTime = Double.MIN_VALUE;
+    private double minServiceTime = Double.MAX_VALUE;
+
+
+    /**
+     * Constructs an OwnEngine with the specified controller, controller for FXML, and settings controller.
+     * The engine also creates the service points and the arrival process for the simulation.
+     *
+     * @param controller the controller used to manage the simulation
+     * @param controllerFxml the controller for FXML used to manage the simulation
+     * @param settingsController the settings controller used to manage the simulation settings
+     */
 
     public OwnEngine(IControllerForM controller, ControllerForFxml controllerFxml, SettingsController settingsController) {
 
@@ -74,12 +99,19 @@ public class OwnEngine extends Engine {
         // SAAPUMINEN, PÖYTIINOHJAUS, TILAAMINEN, TARJOILU, POISTUMINEN;
     }
 
+    /**
+     * Pauses the simulation.
+     */
 
     public void pauseSimulation() {
         synchronized (pauseLock) {
             paused = true;
         }
     }
+
+    /**
+     * Resumes the simulation.
+     */
 
     public void resumeSimulation() {
         synchronized (pauseLock) {
@@ -88,10 +120,22 @@ public class OwnEngine extends Engine {
         }
     }
 
+    /**
+     * Returns random number between 0 and chance.
+     *
+     * @param chance
+     * @return random number
+     */
+
     public int randChance(int chance) {
         return new Random().nextInt(chance);
     }
 
+    /**
+     * Changes the mean of the arrival process.
+     *
+     * @param mean
+     */
 
     //Service  Pointtien meanien vaihto (Vielä ei vaihda mitään mutta  printtaa  consoliin tuloksia)
     public void changeArrivalMean(double mean) {
@@ -100,11 +144,23 @@ public class OwnEngine extends Engine {
         System.out.println("Arrival mean changed  to: " + mean);
     }
 
+    /**
+     * Changes the mean of the seating process.
+     *
+     * @param mean
+     */
+
     public void changeSeatingMean(double mean) {
         this.meanSeating = mean;
         servicePoints[0].updateDistribution(new Normal(mean, 2));
         System.out.println("Seating  mean change  to: " + mean);
     }
+
+    /**
+     * Changes the mean of the ordering process.
+     *
+     * @param mean
+     */
 
     public void changeOrderingMean(double mean) {
         this.meanOrdering = mean;
@@ -112,11 +168,23 @@ public class OwnEngine extends Engine {
         System.out.println("Ordering  mean change  to: " + mean);
     }
 
+    /**
+     * Changes the mean of the service process.
+     *
+     * @param mean
+     */
+
     public void changeServiceMean(double mean) {
         this.meanService = mean;
         servicePoints[2].updateDistribution(new Normal(mean, 10));
         System.out.println("Service mean change  to: " + mean);
     }
+
+    /**
+     * Changes the mean of the eating process.
+     *
+     * @param mean
+     */
 
     public void changeEatingMean(double mean) {
         this.meanEating = mean;
@@ -124,17 +192,34 @@ public class OwnEngine extends Engine {
         System.out.println("Eating mean changed  to: " + mean);
     }
 
+    /**
+     * Changes the mean of the exiting process.
+     *
+     * @param mean
+     */
+
     public void changeExitingMean(double mean) {
         this.meanExiting = mean;
         servicePoints[4].updateDistribution(new Normal(mean, 2));
         System.out.println("Exiting  mean change  to: " + mean);
     }
 
+    /**
+     * Initializes the simulation.
+     * Generates the first arrival in the system.
+     */
+
 
     @Override
     protected void init() {
         arrivalProcess.generateNext(); // Ensimmäinen saapuminen järjestelmään
     }
+
+    /**
+     * Generates a group of customers.
+     *
+     * @return the group of customers
+     */
 
     private List<Customer> generateCustomerGroup() {
         int groupSize = 1 + (int) (Math.random() * 4); // Generate a group size between 1 and 4
@@ -151,14 +236,12 @@ public class OwnEngine extends Engine {
         return group;
     }
 
-    private double timeInSystem = 0;
-    private double totalQueueTime = 0;
-    private double totalServiceTime = 0;
-    private int totalCustomers = 0;
-    private double maxQueueTime = Double.MIN_VALUE;
-    private double minQueueTime = Double.MAX_VALUE;
-    private double maxServiceTime = Double.MIN_VALUE;
-    private double minServiceTime = Double.MAX_VALUE;
+
+    /**
+     * Runs the event.
+     *
+     * @param t the event to run
+     */
 
     @Override
     protected void runEvent(Event t) {  // B-vaiheen tapahtumat
@@ -318,6 +401,12 @@ public class OwnEngine extends Engine {
         }
     }
 
+    /**
+     * Attempts to run the C events.
+     * If the service point is not reserved and the customer is in the queue, the customer begins service.
+     *
+     */
+
     @Override
     protected void attemptCEvents() {
         synchronized (pauseLock) {
@@ -337,6 +426,10 @@ public class OwnEngine extends Engine {
         }
     }
 
+    /**
+     * Results of the simulation.
+     */
+
     @Override
     protected void results() {
         System.out.println("Simulation ended at " + Clock.getInstance().getTime());
@@ -348,6 +441,10 @@ public class OwnEngine extends Engine {
 
         calculatePerformanceMetrics();
     }
+
+    /**
+     * Calculates the performance metrics of the simulation.
+     */
 
     public void calculatePerformanceMetrics() {
         if (totalCustomers > 0) {

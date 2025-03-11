@@ -22,6 +22,10 @@ import view.ISimulatorUI;
 import view.IVisualization;
 import view.Visualization;
 
+/**
+ * Controller class for handling the FXML UI interactions.
+ * Implements interfaces for communication with the simulation engine and visualization.
+ */
 
 public class ControllerForFxml implements IControllerForM, IControllerForV, ISimulatorUI {
     private IEngine engine;
@@ -29,6 +33,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private ISimulatorUI ui;
     private AudioClip customerSound;
     private SettingsController settingsController;
+    private boolean mute = true;
 
     @FXML
     private TextArea consoleLogTextArea;
@@ -92,6 +97,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     @FXML
     private Button settingsButton;
 
+    /**
+     * Initializes the controller, setting up the visualization and event handlers.
+     */
 
     @FXML
     public void initialize() {
@@ -108,26 +116,49 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     }
 
+    /**
+     * Sets the visualization interface.
+     * @param screen the visualization interface
+     */
 
     public void setIVisualization(IVisualization screen) {
         this.screen = screen;
     }
 
+
+    /**
+     * Sets the simulator UI interface.
+     * @param ui the simulator UI interface
+     */
+
     public void setUi(ISimulatorUI ui) {
         this.ui = ui;
     }
+
+    /**
+     * Returns the time of the simulation.
+     * @return the time of the simulation
+     */
 
     @Override
     public double getTime() {
         return Double.parseDouble(timeTextField.getText());
     }
 
+    /**
+     * Returns the delay of the simulation.
+     * @return the delay of the simulation
+     */
 
     @Override
     public long getDelay() {
         return (long) Double.parseDouble(delayTextField.getText());
     }
 
+    /**
+     * Sets the end time of the simulation.
+     * @param time the end time of the simulation
+     */
 
     @Override
     public void setEndTime(double time) {
@@ -135,13 +166,22 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         resultLabel.setText(formatter.format(time));
     }
 
+    /**
+     * Returns the visualization interface.
+     * @return the visualization interface
+     */
+
     @Override
     public IVisualization getVisualization() {
         return screen;
     }
 
-    boolean mute = true;
-    
+
+
+    /**
+     * Starts the simulation with the specified time and delay.
+     */
+
     @Override
     public void startSimulation() {
 
@@ -172,6 +212,11 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         //((Thread)moottori).run(); // Ei missään tapauksessa näin. Miksi?
     }
 
+    /**
+     * Shows the end time of the simulation.
+     * @param time the end time of the simulation
+     */
+
     @Override
     public void showEndTime(double time) {
         Platform.runLater(() -> {setEndTime(time);
@@ -179,6 +224,11 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     });
 
     }
+
+    /**
+     * Visualizes the specified customer.
+     * @param customer the customer to visualize
+     */
 
     @Override
     public synchronized void visualizeCustomer(int customer) {
@@ -190,12 +240,27 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         });
     }
 
+    /**
+     * Removes the specified customer from the visualization.
+     * @param customer the customer to remove
+     */
+
     @Override
     public synchronized void visualizeRemoveCustomers(int customer) {
         Platform.runLater(() -> {
             getVisualization().removeCustomer(customer);
         });
     }
+
+    /**
+     * Updates the service point sums with the specified values.
+     * @param c0 the sum of customers at service point 0
+     * @param c1 the sum of customers at service point 1
+     * @param c2 the sum of customers at service point 2
+     * @param c3 the sum of customers at service point 3
+     * @param c4 the sum of customers at service point 4
+     * @param c5 the sum of customers at service point 5
+     */
 
     @Override
     public synchronized void updateServicePointSums(int c0, int c1,int c2,int c3,int c4,int c5) {
@@ -209,6 +274,10 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         });
     }
 
+    /**
+     * Speeds up the simulation.
+     */
+
     @Override
     public void speedUp() {
         if (engine != null) {
@@ -216,13 +285,22 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         }
     }
 
+    /**
+     * Slows down the simulation.
+     */
+
     @Override
     public void slowDown() {
         if (engine != null) {
         engine.setDelay((long) (engine.getDelay() * 1.1));
         }
-
     }
+
+    /**
+     * Updates the console log text area with the specified message.
+     * @param message the message to append to the console log
+     */
+
     @FXML
     public synchronized void updateTextArea(String message) {
         if (consoleLogTextArea != null) {
@@ -231,6 +309,11 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             System.err.println("TextArea is not initialized.");
         }
     }
+
+    /**
+     * Opens the settings window.
+     */
+
     @FXML
     private void openSettings() {
         try {
@@ -249,6 +332,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         }
     }
 
+    /**
+     * Pauses the simulation.
+     */
 
     @FXML
     private void pauseSimulation() {
@@ -256,6 +342,10 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             ((OwnEngine) engine).pauseSimulation();
         }
     }
+
+    /**
+     * Resumes the simulation.
+     */
 
     @FXML
     public void resumeSimulation() {
