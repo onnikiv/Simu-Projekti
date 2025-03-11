@@ -308,3 +308,6 @@ $RECYCLE.BIN/
 
 # Maven target directory
 target/
+
+# vscode settings.json
+.vscode
