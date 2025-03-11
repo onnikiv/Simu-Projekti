@@ -29,8 +29,7 @@ public class OwnEngine extends Engine {
     private final Waiter waiter = new Waiter(kitchen);
 
     private int groupId = 0;
-
-
+    private final HashMap<Integer, Double> groupPrepTimes = new HashMap<>();
 
     private boolean paused = false;
     private final Object pauseLock = new Object();
@@ -237,7 +236,7 @@ public class OwnEngine extends Engine {
                 controller.visualizeRemoveCustomers(1);
                 for (Customer customer : a) {
                     if (!customer.hasOrdered()) {
-                        if (randChance(100) >= 20) {
+                        if (randChance(100) < 20) {
                             MenuItem starter = orderService.getRandomMeal(1);
                             customer.order(waiter, starter);
                             System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + starter.getName() + "\n");
@@ -247,7 +246,7 @@ public class OwnEngine extends Engine {
                         customer.order(waiter, mainMeal);
                         System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
                         controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
-                        if (randChance(100) >= 50) {
+                        if (randChance(100) < 50) {
                             MenuItem dessert = orderService.getRandomMeal(3);
                             customer.order(waiter, dessert);
                             System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
@@ -264,6 +263,10 @@ public class OwnEngine extends Engine {
             case TARJOILU -> {
                 a = servicePoints[2].fetchFromQueue();
                 controller.visualizeRemoveCustomers(2);
+                double prepTime = waiter.calculatePrepTime(a);
+                //System.out.println("Group prep time: " + prepTime);
+                int id = a.get(0).getGroupId();
+                groupPrepTimes.put(id, prepTime);
                 for (Customer customer : a) {
                     List<MenuItem> order = waiter.deliverOrder(customer);
                     for (MenuItem item : order) {
@@ -294,11 +297,16 @@ public class OwnEngine extends Engine {
                 controller.visualizeRemoveCustomers(4);
                 boolean tableFreed = false;
                 int id = a.get(0).getGroupId();
+                Double prepTime = groupPrepTimes.get(id);
+                if (prepTime == null) {
+                    prepTime = 0.0;
+                }
+                System.out.println("Group: " + id + " -> Prep time: " + prepTime);
                 for (Customer customer : a) {
                     if (!customer.isLeaving()) {
                         tableFreed = table.removeCustomerFromTable(customer);
                         System.out.print("Asiakas: " + customer.getId() + " -> POISTUU PÖYDÄSTÄ\n");
-                        customer.setDepartTime(Clock.getInstance().getTime());
+                        customer.setDepartTime(Clock.getInstance().getTime() + prepTime);
                         customer.report(this.controllerFxml);
                         customer.setLeaving(true);
                         customer.setSeated(false);
@@ -306,7 +314,7 @@ public class OwnEngine extends Engine {
                     }
                 }
                 for (Customer customer : a) {
-                    double CustomerTime = customer.getDepartTime() - customer.getArrivalTime();
+                    double CustomerTime = (customer.getDepartTime() + prepTime) - customer.getArrivalTime();
                     timeInSystem += CustomerTime;
                 }
                 if (tableFreed) {

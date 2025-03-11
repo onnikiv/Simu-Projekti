@@ -45,7 +45,7 @@ public class Waiter {
                 MenuItem item = order.poll();   // Get the first item from the order
 
                 // Add the time it took to make the meal to the simulation time
-                Clock.getInstance().setTime(Clock.getInstance().getTime() + kitchen.getPrepTime(item));
+                //Clock.getInstance().setTime(Clock.getInstance().getTime() + kitchen.getPrepTime(item));
 
                 deliveredItems.add(item);   // Add the item to the list of delivered items
                 System.out.println("Delivered: " + item.getName());
@@ -54,5 +54,35 @@ public class Waiter {
             System.out.println("No orders available for customer: " + customer.getId());
         }
         return deliveredItems;  // Return the list of delivered items
+    }
+
+
+    /**
+     * Calculate the preparation time for the group of customers.
+     * Favours the groups with fewer customers, because of smaller chance of having to wait for extra orders.
+     * @param group List of customers in the group.
+     * @return Maximum preparation time for the group.
+     */
+    public double calculatePrepTime(List<Customer> group) {
+        double maxPrepTime = 0;
+
+        for (Customer customer : group) {
+            double customerPrepTime = 0;
+            if (kitchen.hasReadyMeals(customer)) {
+                Queue<MenuItem> order = kitchen.getReadyMeal(customer);
+                for (MenuItem item : order) {
+                    double prepTime = kitchen.getPrepTime(item);
+                    customerPrepTime += prepTime;
+                }
+            } else {
+                System.out.println("No ready meals for customer: " + customer.getId());
+            }
+            if (customerPrepTime > maxPrepTime) {
+                maxPrepTime = customerPrepTime;
+            }
+        }
+
+        //System.out.println("Max prep time for group: " + maxPrepTime);
+        return maxPrepTime;
     }
 }
