@@ -22,15 +22,22 @@ public class OrderService {
 
     public MenuItem getRandomMeal(int id) {
         MenuItem meal = dao.getRandomMealFromDb(id);
-        if (meal != null && id == 1) {
-            startersOrdered++;
-            addMealCount(listStarters, meal.getName());
-        } else if (meal != null && id == 2) {
-            mainOrdered++;
-            addMealCount(listMains, meal.getName());
-        } else if (meal != null && id == 3) {
-            dessertsOrdered++;
-            addMealCount(listDesserts, meal.getName());
+        if (meal != null) {
+            switch (id) {
+                case 1 -> {
+                    startersOrdered++;
+                    addMealCount(listStarters, meal.getName());
+                }
+                case 2 -> {
+                    mainOrdered++;
+                    addMealCount(listMains, meal.getName());
+                }
+                case 3 -> {
+                    dessertsOrdered++;
+                    addMealCount(listDesserts, meal.getName());
+                }
+                default -> System.out.println("Invalid meal category");
+            }
         } else {
             System.out.println("Meal not found");
         }
