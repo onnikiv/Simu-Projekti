@@ -20,32 +20,23 @@ public class OrderService {
         this.dao = dao;
     }
 
-    public MenuItem getRandomStarter() {
-        MenuItem starter = dao.getRandomStarter();
-        if (starter != null) {
+    public MenuItem getRandomMeal(int id) {
+        MenuItem meal = dao.getRandomMealFromDb(id);
+        if (meal != null && id == 1) {
             startersOrdered++;
-            addMealCount(listStarters, starter.getName());
-        }
-        return starter;
-    }
-
-    public MenuItem getRandomMainMeal() {
-        MenuItem mainMeal = dao.getRandomMainMeal();
-        if (mainMeal != null) {
+            addMealCount(listStarters, meal.getName());
+        } else if (meal != null && id == 2) {
             mainOrdered++;
-            addMealCount(listMains, mainMeal.getName());
+            addMealCount(listMains, meal.getName());
+        } else if (meal != null && id == 3) {
+            dessertsOrdered++;
+            addMealCount(listDesserts, meal.getName());
+        } else {
+            System.out.println("Meal not found");
         }
-        return mainMeal;
+        return meal;
     }
 
-    public MenuItem getRandomDessert() {
-        MenuItem dessert = dao.getRandomDessert();
-        if (dessert != null) {
-            dessertsOrdered++;
-            addMealCount(listDesserts, dessert.getName());
-        }
-        return dessert;
-    }
 
     private void addMealCount(Map<String, Integer> mealMap, String mealName) {
         mealMap.put(mealName, mealMap.getOrDefault(mealName, 0) + 1);

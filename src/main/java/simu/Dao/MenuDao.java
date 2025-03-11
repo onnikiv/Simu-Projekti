@@ -22,16 +22,8 @@ public class MenuDao {
         return getMenuItemsByCategory(3);
     }
 
-    public MenuItem getRandomStarter() {
-        return randomStarter();
-    }
-
-    public MenuItem getRandomMainMeal() {
-        return randomMainMeal();
-    }
-
-    public MenuItem getRandomDessert() {
-        return randomDessert();
+    public MenuItem getRandomMealFromDb(int id) {
+        return randomMealFromDb(id);
     }
 
     private List<MenuItem> getMenuItemsByCategory(int categoryId) {
@@ -49,38 +41,14 @@ public class MenuDao {
         return menuItems;
     }
 
-    private MenuItem randomStarter() {
-        String query = "SELECT id, name, prep_time_minutes FROM menu_items WHERE category_id = 1 ORDER BY RAND() LIMIT 1";
-        try (Statement s = conn.createStatement();
-             ResultSet rs = s.executeQuery(query)) {
-            if (rs.next()) {
-                return new MenuItem(rs.getInt("id"), rs.getString("name"), rs.getInt("prep_time_minutes"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private MenuItem randomMainMeal() {
-        String query = "SELECT id, name, prep_time_minutes FROM menu_items WHERE category_id = 2 ORDER BY RAND() LIMIT 1";
-        try (Statement s = conn.createStatement();
-             ResultSet rs = s.executeQuery(query)) {
-            if (rs.next()) {
-                return new MenuItem(rs.getInt("id"), rs.getString("name"), rs.getInt("prep_time_minutes"));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    private MenuItem randomDessert() {
-        String query = "SELECT id, name, prep_time_minutes FROM menu_items WHERE category_id = 3 ORDER BY RAND() LIMIT 1";
-        try (Statement s = conn.createStatement();
-             ResultSet rs = s.executeQuery(query)) {
-            if (rs.next()) {
-                return new MenuItem(rs.getInt("id"), rs.getString("name"), rs.getInt("prep_time_minutes"));
+    private MenuItem randomMealFromDb(int id) {
+        String query = "SELECT id, name, prep_time_minutes FROM menu_items WHERE category_id = ? ORDER BY RAND() LIMIT 1";
+        try (PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new MenuItem(rs.getInt("id"), rs.getString("name"), rs.getInt("prep_time_minutes"));
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

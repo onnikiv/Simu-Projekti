@@ -207,17 +207,17 @@ public class OwnEngine extends Engine {
                 for (Customer customer : a) {
                     if (!customer.hasOrdered()) {
                         if (randChance(100) >= 20) {
-                            MenuItem starter = orderService.getRandomStarter();
+                            MenuItem starter = orderService.getRandomMeal(1);
                             customer.order(waiter, starter);
                             System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + starter.getName() + "\n");
                             controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + starter.getName() + "\n");
                         }
-                        MenuItem mainMeal = orderService.getRandomMainMeal();
+                        MenuItem mainMeal = orderService.getRandomMeal(2);
                         customer.order(waiter, mainMeal);
                         System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
                         controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
                         if (randChance(100) >= 50) {
-                            MenuItem dessert = orderService.getRandomDessert();
+                            MenuItem dessert = orderService.getRandomMeal(3);
                             customer.order(waiter, dessert);
                             System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
                             controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
