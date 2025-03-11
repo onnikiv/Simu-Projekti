@@ -4,12 +4,25 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
+/**
+ * The Visualization class provides methods to visualize the simulation.
+ * It extends the Canvas class and implements the IVisualization interface.
+ */
+
 public class Visualization extends Canvas implements IVisualization {
 
     private final GraphicsContext[] gcs;
     private final Color[] backgroundColors;
     private final String[] types;
     private final double[] i, j, a, b;
+
+    /**
+     * Constructs a Visualization with the specified canvases, background colors, and types.
+     *
+     * @param canvases the canvases to visualize
+     * @param backgroundColors the background colors of the canvases
+     * @param types the types of the canvases
+     */
 
     public Visualization(Canvas[] canvases, Color[] backgroundColors, String[] types) {
         this.types = types;
@@ -35,6 +48,12 @@ public class Visualization extends Canvas implements IVisualization {
             gcs[y].fillText(types[y], 300, 25);
         }
     }
+
+    /**
+     * Clears the screen by filling the canvases with the background colors.
+     * The method is synchronized to prevent multiple threads from accessing the screen at the same time.
+     */
+
     @Override
     public synchronized void clearScreen() {
 
@@ -44,6 +63,13 @@ public class Visualization extends Canvas implements IVisualization {
         }
     }
 
+    /**
+     * Visualizes a new customer by filling a circle on the canvas.
+     * The method is synchronized to prevent multiple threads from accessing the screen at the same time.
+     *
+     * @param customer the customer to visualize
+     */
+
     @Override
     public synchronized void newCustomer(int customer) {
 
@@ -52,6 +78,13 @@ public class Visualization extends Canvas implements IVisualization {
         i[customer] = (i[customer] + 10) % (gcs[customer].getCanvas().getWidth()-180);
         if (i[customer] == 0) j[customer] += 10;
     }
+
+    /**
+     * Removes a customer by filling a rectangle on the canvas.
+     * The method is synchronized to prevent multiple threads from accessing the screen at the same time.
+     *
+     * @param customer the customer to remove
+     */
 
     @Override
     public synchronized void removeCustomer(int customer) {

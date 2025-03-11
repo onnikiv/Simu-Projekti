@@ -16,17 +16,30 @@ import view.Visualization;
 
 import java.io.IOException;
 
-
+/**
+ * The SimulatorView class represents the view of the simulator.
+ * It contains the main method for starting the simulator.
+ */
 
 public class SimulatorView extends Application {
     @FXML
     private Canvas canvas;
 
+    /**
+     * Sets the trace level to INFO.
+     */
 
     @Override
     public void init() {
         Trace.setTraceLevel(Trace.Level.INFO);
     }
+
+    /**
+     * Starts the simulator.
+     *
+     * @param stage the stage
+     * @throws Exception if an error occurs
+     */
 
     @Override
     public void start(Stage stage) throws Exception {
