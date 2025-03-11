@@ -151,6 +151,9 @@ public class OwnEngine extends Engine {
         return group;
     }
 
+    private double totalQueueTime = 0;
+    private double totalServiceTime = 0;
+    private int totalCustomers = 0;
 
     @Override
     protected void runEvent(Event t) {  // B-vaiheen tapahtumat
@@ -168,11 +171,15 @@ public class OwnEngine extends Engine {
         controller.updateServicePointSums(c0, c1, c2, c3, c4, c5);
 
         List<Customer> a;
+        double currentTime = Clock.getInstance().getTime();
 
         switch ((EventType) t.getType()) {
 
             case SAAPUMINEN -> {
                 a = generateCustomerGroup();
+                for (Customer customer : a) {
+                    customer.setArrivalTime(currentTime);
+                }
                 servicePoints[0].addToQueue(a);
                 controller.visualizeCustomer(0);
 
@@ -186,6 +193,10 @@ public class OwnEngine extends Engine {
                 if (table.getFreeTables() > 0) {
                     try {
                         a = servicePoints[0].fetchFromQueue();
+                        for (Customer customer : a) {
+                            totalQueueTime += currentTime - customer.getArrivalTime();
+                            totalCustomers++;
+                        }
                         int tableNumber = table.addCustomersToTable(a);
                         if (tableNumber > 0) {
                             controller.visualizeRemoveCustomers(0);
@@ -209,6 +220,9 @@ public class OwnEngine extends Engine {
 
             case TILAAMINEN -> {
                 a = servicePoints[1].fetchFromQueue();
+                for (Customer customer : a) {
+                    totalServiceTime += currentTime - customer.getArrivalTime();
+                }
                 controller.visualizeRemoveCustomers(1);
                 for (Customer customer : a) {
                     if (!customer.hasOrdered()) {
@@ -316,6 +330,20 @@ public class OwnEngine extends Engine {
         orderService.getAllMealResults();
 
         controller.showEndTime(Clock.getInstance().getTime());
+
+        calculatePerformanceMetrics();
+    }
+
+    public void calculatePerformanceMetrics() {
+        if (totalCustomers > 0) {
+            double averageQueueTime = totalQueueTime / totalCustomers;
+            double averageServiceTime = totalServiceTime / totalCustomers;
+
+            System.out.println("Average Queue Time: " + averageQueueTime);
+            System.out.println("Average Service Time: " + averageServiceTime);
+        } else {
+            System.out.println("No customers processed.");
+        }
     }
 
 
