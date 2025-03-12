@@ -269,11 +269,11 @@ public class OwnEngine extends Engine {
                 a = generateCustomerGroup();
                 for (Customer customer : a) {
                     customer.setArrivalTime(currentTime);
+                    c0++;
                 }
                 servicePoints[0].addToQueue(a);
                 controller.visualizeCustomer(0);
 
-                c0++;
 
                 arrivalProcess.generateNext();
 
@@ -287,6 +287,7 @@ public class OwnEngine extends Engine {
                             double queueTime = currentTime - customer.getArrivalTime();
                             totalQueueTime += currentTime - customer.getArrivalTime();
                             totalCustomers++;
+                            c1++;
                             if (queueTime > maxQueueTime) maxQueueTime = queueTime;
                             if (queueTime < minQueueTime) minQueueTime = queueTime;
                         }
@@ -301,7 +302,6 @@ public class OwnEngine extends Engine {
                             }
                             controller.visualizeCustomer(1);
                             servicePoints[1].addToQueue(a);
-                            c1++;
                         } else {
                             servicePoints[0].addToQueue(a);
                         }
@@ -333,10 +333,10 @@ public class OwnEngine extends Engine {
                             controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
                         }
                         customer.setHasOrdered(true);
+                        c2++;
                     }
                 }
                 servicePoints[2].addToQueue(a);
-                c2++;
                 controller.visualizeCustomer(2);
             }
 
@@ -349,6 +349,7 @@ public class OwnEngine extends Engine {
                     totalServiceTime += serviceTime;
                     if (serviceTime > maxServiceTime) maxServiceTime = serviceTime;
                     if (serviceTime < minServiceTime) minServiceTime = serviceTime;
+                    c3++;
                 }
                 //System.out.println("Group prep time: " + prepTime);
                 int id = a.get(0).getGroupId();
@@ -361,7 +362,6 @@ public class OwnEngine extends Engine {
                     }
                 }
                 servicePoints[3].addToQueue(a);
-                c3++;
                 controller.visualizeCustomer(3);
 
             }
@@ -371,11 +371,11 @@ public class OwnEngine extends Engine {
                 for (Customer customer : a) {
                     System.out.print("ASIAKAS: " + customer.getId() + " -> SYÖ\n");
                     //controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> SYÖ\n");
+                    c4++;
                 }
                 controller.visualizeRemoveCustomers(3);
                 servicePoints[4].addToQueue(a);
                 controller.visualizeCustomer(4);
-                c4++;
             }
 
             case POISTUMINEN -> {
