@@ -17,6 +17,7 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="SIMULATION HAS ENDED HERE ARE THE RESULTS:" GridPane.columnIndex="1" />
@@ -57,6 +58,12 @@
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <children>
             <Text fx:id="dessertsCount" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="260.32421875" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Performance Metrics" textAlignment="CENTER" wrappingWidth="263.294921875" />
+            <TextArea fx:id="performanceArea" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>
    </children>
