@@ -53,7 +53,6 @@ public class ResultsController {
 
                 ResultsController controller = fxmlLoader.getController();
                 controller.updateOutputAreas(allMeals, simulationTime, starter, main, dessert);
-                System.out.println(starter +" " +  main + " " + dessert);
 
                 stage.setScene(new Scene(root));
                 stage.show();
