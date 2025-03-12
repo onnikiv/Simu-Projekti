@@ -458,8 +458,7 @@ public class OwnEngine extends Engine {
             orderService.getStartersCount(),
             orderService.getMainsCount(),
             orderService.getDessertsCount(),
-                metrics.get("averageQueueTime"),
-                metrics.get("averageServiceTime"));
+                metrics);
         
     }
 
