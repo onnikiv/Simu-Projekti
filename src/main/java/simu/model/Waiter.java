@@ -43,12 +43,6 @@ public class Waiter {
             Queue<MenuItem> order = kitchen.getReadyMeal(customer); // Get the order from the kitchen
             while (!order.isEmpty()) {  // Process all items in the order
                 MenuItem item = order.poll();   // Get the first item from the order
-
-                // Add the time it took to make the meal for the simulation time
-                Clock.getInstance().setTime(Clock.getInstance().getTime() + kitchen.getPrepTime(item));
-                // Add the time it took to make the meal to the simulation time
-                //Clock.getInstance().setTime(Clock.getInstance().getTime() + kitchen.getPrepTime(item));
-
                 deliveredItems.add(item);   // Add the item to the list of delivered items
                 System.out.println("Delivered: " + item.getName());
             }
