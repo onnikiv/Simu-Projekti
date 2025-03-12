@@ -22,7 +22,6 @@ import simu.framework.Event;
  * The engine is responsible for generating events and running the simulation.
  * The engine also calculates performance metrics for the simulation.
  * The engine is used by the controller to manage the simulation.
- *
  */
 
 public class OwnEngine extends Engine {
@@ -34,9 +33,8 @@ public class OwnEngine extends Engine {
     private SettingsController settingsController;
     private final Tables table;
     private final OrderService orderService;
-    private final Kitchen kitchen = new Kitchen();
-    private final Waiter waiter = new Waiter(kitchen);
-    private int groupId = 0;
+    private final Waiter waiter;
+    private final GroupGenerator groups;
     private final HashMap<Integer, Double> groupPrepTimes = new HashMap<>();
 
     private boolean paused = false;
@@ -71,8 +69,8 @@ public class OwnEngine extends Engine {
      * Constructs an OwnEngine with the specified controller, controller for FXML, and settings controller.
      * The engine also creates the service points and the arrival process for the simulation.
      *
-     * @param controller the controller used to manage the simulation
-     * @param controllerFxml the controller for FXML used to manage the simulation
+     * @param controller         the controller used to manage the simulation
+     * @param controllerFxml     the controller for FXML used to manage the simulation
      * @param settingsController the settings controller used to manage the simulation settings
      */
 
@@ -81,7 +79,7 @@ public class OwnEngine extends Engine {
         super(controller);
         this.controllerFxml = controllerFxml;
         this.settingsController = settingsController;
-        table = new Tables(20, 4);
+        table = new Tables(settingsController.getTableAmount(), settingsController.getTableAmount());
 
 
         servicePoints = new ServicePoint[5];
@@ -94,7 +92,10 @@ public class OwnEngine extends Engine {
 
         arrivalProcess = new ArrivalProcess(new Negexp(meanArrival, 10), eventList, EventType.SAAPUMINEN);
 
+        Kitchen kitchen = new Kitchen();
+        this.waiter = new Waiter(kitchen);
         this.orderService = new OrderService(new MenuDao());
+        this.groups = new GroupGenerator();
 
         // SAAPUMINEN, PÖYTIINOHJAUS, TILAAMINEN, TARJOILU, POISTUMINEN;
     }
@@ -216,28 +217,6 @@ public class OwnEngine extends Engine {
     }
 
     /**
-     * Generates a group of customers.
-     *
-     * @return the group of customers
-     */
-
-    private List<Customer> generateCustomerGroup() {
-        int groupSize = 1 + (int) (Math.random() * 4); // Generate a group size between 1 and 4
-        List<Customer> group = new ArrayList<>();
-        for (int i = 0; i < groupSize; i++) {
-            group.add(new Customer());
-        }
-        groupId++;
-
-        for (Customer customer : group) {
-            customer.setGroupId(groupId);
-        }
-
-        return group;
-    }
-
-
-    /**
      * Runs the event.
      *
      * @param t the event to run
@@ -264,7 +243,8 @@ public class OwnEngine extends Engine {
         switch ((EventType) t.getType()) {
 
             case SAAPUMINEN -> {
-                a = generateCustomerGroup();
+                int size = settingsController.getMaxGroupSize();
+                a = groups.generateCustomerGroup(size);
                 for (Customer customer : a) {
                     customer.setArrivalTime(currentTime);
                 }
@@ -333,7 +313,7 @@ public class OwnEngine extends Engine {
                         customer.setHasOrdered(true);
                     }
                 }
-                c2+= a.size();
+                c2 += a.size();
                 servicePoints[2].addToQueue(a);
                 controller.visualizeCustomer(2);
             }
@@ -415,7 +395,6 @@ public class OwnEngine extends Engine {
     /**
      * Attempts to run the C events.
      * If the service point is not reserved and the customer is in the queue, the customer begins service.
-     *
      */
 
     @Override
@@ -453,13 +432,13 @@ public class OwnEngine extends Engine {
         Map<String, Double> metrics = calculatePerformanceMetrics();
 
         new ResultsController().openResultsWindow(
-            orderService.getAllMealResults(), 
-            Clock.getInstance().getTime(),
-            orderService.getStartersCount(),
-            orderService.getMainsCount(),
-            orderService.getDessertsCount(),
+                orderService.getAllMealResults(),
+                Clock.getInstance().getTime(),
+                orderService.getStartersCount(),
+                orderService.getMainsCount(),
+                orderService.getDessertsCount(),
                 metrics);
-        
+
     }
 
     /**

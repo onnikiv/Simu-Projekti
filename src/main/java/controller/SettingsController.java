@@ -181,15 +181,15 @@ public class SettingsController {
             int tableSize = Integer.parseInt(field.getText());
             settingsMap.put("tableSize", tableSize);
             if (tableSize < settingsMap.get("maxGroupSize")) {
-                setMaxGroupSize(tableSize);
+                setGroupSize(tableSize);
             }
         } else if (field == groupSizeField) {
-            setMaxGroupSize(Integer.parseInt(field.getText()));
+            setGroupSize(Integer.parseInt(field.getText()));
         }
         updateTextFields();
     }
 
-    public void setMaxGroupSize(int size) {
+    public void setGroupSize(int size) {
         settingsMap.put("maxGroupSize", size);
         if (size > settingsMap.get("tableSize")) {
             settingsMap.put("tableSize", size);
