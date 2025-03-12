@@ -58,7 +58,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1">
          <children>
             <Button fx:id="settingsButton" mnemonicParsing="false" text="Settings" />
-            <Button mnemonicParsing="false" text="Database" />
+            <Button fx:id="databaseButton" mnemonicParsing="false" onAction="#openDatabaseWindow" text="Database" />
             <Button fx:id="muteButton" mnemonicParsing="false" text="Mute" />
             <Button fx:id="aboutButton" layoutX="175.0" layoutY="10.0" mnemonicParsing="false" onAction="#openAboutWindow" text="About" />
          </children>
