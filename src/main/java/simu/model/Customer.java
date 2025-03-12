@@ -108,17 +108,16 @@ public class Customer {
         Trace.out(Trace.Level.INFO, "Customer " + id + " arrived at: " + arrivalTime);
         Trace.out(Trace.Level.INFO, "Customer " + id + " departed at: " + departTime);
         Trace.out(Trace.Level.INFO, "Customer " + id + " stayed for: " + (departTime - arrivalTime));
-        sum += (departTime - arrivalTime);
-        double average = sum / id;
-        System.out.println("Average time customers spent in the service:  " + average);
+        sum += (long) (departTime - arrivalTime);
+        double average = (double) sum / id;
+        System.out.println("Average time customers spent in the system:  " + average);
         //  Print the results to the text area
         controllerForFxml.updateTextArea("\nCustomer " + id + " done! ");
         controllerForFxml.updateTextArea("\nCustomer " + id + " arrived at: " + arrivalTime);
         controllerForFxml.updateTextArea("\nCustomer " + id + " departed at: " + departTime );
         controllerForFxml.updateTextArea("\nCustomer " + id + " stayed for: " + (departTime - arrivalTime));
-        controllerForFxml.updateTextArea("\nAverage time customers spent in the service:  " + average);
+        controllerForFxml.updateTextArea("\nAverage time customers spent in the system:  " + average);
         controllerForFxml.updateTextArea("\n");
-
     }
 
     /**

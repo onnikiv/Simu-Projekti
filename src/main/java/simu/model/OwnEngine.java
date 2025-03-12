@@ -27,6 +27,7 @@ import simu.framework.Event;
 public class OwnEngine extends Engine {
 
     private ArrivalProcess arrivalProcess;
+    public final static int MAX_CUSTOMERS = 1000;
 
     private final ServicePoint[] servicePoints;
     private final ControllerForFxml controllerFxml;
@@ -54,6 +55,12 @@ public class OwnEngine extends Engine {
     private int c3 = 0;
     private int c4 = 0;
     private int c5 = 0;
+    private int q0 = 0;
+    private int q1 = 0;
+    private int q2 = 0;
+    private int q3 = 0;
+    private int q4 = 0;
+    private int q5 = 0;
 
     private double timeInSystem = 0;
     private double totalQueueTime = 0;
@@ -235,7 +242,9 @@ public class OwnEngine extends Engine {
         }
 
         // lähettää kontrollerille arvot
-        controller.updateServicePointSums(c0, c1, c2, c3, c4, c5);
+        controller.updateServicePointSums(c0, c1, c2, c3, c4, c5, q0, q1, q2, q3, q4);
+        // Update the simulation time in the UI
+        controllerFxml.updateSimulationTime(Clock.getInstance().getTime());
 
         List<Customer> a;
         double currentTime = Clock.getInstance().getTime();
@@ -250,7 +259,8 @@ public class OwnEngine extends Engine {
                 }
                 c0 += a.size();
                 servicePoints[0].addToQueue(a);
-                controller.visualizeCustomer(0);
+                q0 += a.size();
+                controller.visualizeCustomer(0, a.size());
 
 
                 arrivalProcess.generateNext();
@@ -261,6 +271,7 @@ public class OwnEngine extends Engine {
                 if (table.getFreeTables() > 0) {
                     try {
                         a = servicePoints[0].fetchFromQueue();
+                        q0 -= a.size();
                         for (Customer customer : a) {
                             double queueTime = currentTime - customer.getArrivalTime();
                             totalQueueTime += currentTime - customer.getArrivalTime();
@@ -277,10 +288,12 @@ public class OwnEngine extends Engine {
                             for (Customer customer : a) {
                                 customer.setSeated(true);
                             }
-                            controller.visualizeCustomer(1);
+                            controller.visualizeCustomer(1, a.size());
                             servicePoints[1].addToQueue(a);
+                            q1 += a.size();
                         } else {
                             servicePoints[0].addToQueue(a);
+                            q0 += a.size();
                         }
                         c1 += a.size();
                     } catch (Exception e) {
@@ -291,6 +304,7 @@ public class OwnEngine extends Engine {
 
             case TILAAMINEN -> {
                 a = servicePoints[1].fetchFromQueue();
+                q1 -= a.size();
                 controller.visualizeRemoveCustomers(1);
                 for (Customer customer : a) {
                     if (!customer.hasOrdered()) {
@@ -314,12 +328,14 @@ public class OwnEngine extends Engine {
                     }
                 }
                 c2 += a.size();
+                q2 += a.size();
                 servicePoints[2].addToQueue(a);
-                controller.visualizeCustomer(2);
+                controller.visualizeCustomer(2, a.size());
             }
 
             case TARJOILU -> {
                 a = servicePoints[2].fetchFromQueue();
+                q2 -= a.size();
                 controller.visualizeRemoveCustomers(2);
                 double prepTime = waiter.calculatePrepTime(a);
                 for (Customer customer : a) {
@@ -339,13 +355,15 @@ public class OwnEngine extends Engine {
                     }
                 }
                 c3 += a.size();
+                q3 += a.size();
                 servicePoints[3].addToQueue(a);
-                controller.visualizeCustomer(3);
+                controller.visualizeCustomer(3, a.size());
 
             }
 
             case SAFKAAMINEN -> {
                 a = servicePoints[3].fetchFromQueue();
+                q3 -= a.size();
                 /*
                 for (Customer customer : a) {
                     System.out.print("ASIAKAS: " + customer.getId() + " -> SYÖ\n");
@@ -354,24 +372,23 @@ public class OwnEngine extends Engine {
                  */
                 c4 += a.size();
                 controller.visualizeRemoveCustomers(3);
+                q4 += a.size();
                 servicePoints[4].addToQueue(a);
-                controller.visualizeCustomer(4);
+                controller.visualizeCustomer(4, a.size());
             }
 
             case POISTUMINEN -> {
                 a = servicePoints[4].fetchFromQueue();
+                q4 -= a.size();
+                q5 += a.size();
                 controller.visualizeRemoveCustomers(4);
-                boolean tableFreed = false;
                 int id = a.get(0).getGroupId();
-                Double prepTime = groupPrepTimes.get(id);
-                if (prepTime == null) {
-                    prepTime = 0.0;
-                }
-                System.out.println("Group: " + id + " -> Prep time: " + prepTime);
+                Double prepTime = groupPrepTimes.getOrDefault(id, 0.0);
+                //System.out.println("Group: " + id + " -> Prep time: " + prepTime);
                 for (Customer customer : a) {
                     if (!customer.isLeaving()) {
-                        tableFreed = table.removeCustomerFromTable(customer);
-                        System.out.print("Asiakas: " + customer.getId() + " -> POISTUU PÖYDÄSTÄ\n");
+                        //System.out.print("Asiakas: " + customer.getId() + " -> POISTUU PÖYDÄSTÄ\n");
+                        table.removeCustomerFromTable(customer);
                         customer.setDepartTime(Clock.getInstance().getTime() + prepTime);
                         customer.report(this.controllerFxml);
                         customer.setLeaving(true);
@@ -383,11 +400,7 @@ public class OwnEngine extends Engine {
                     double CustomerTime = (customer.getDepartTime() + prepTime) - customer.getArrivalTime();
                     timeInSystem += CustomerTime;
                 }
-                if (tableFreed) {
-                    //System.out.println("Table freed up by group: " + id);
-                    //System.out.println("Free tables: " + table.getFreeTables());
-                }
-                controller.visualizeCustomer(5);
+                controller.visualizeCustomer(5, a.size());
             }
         }
     }

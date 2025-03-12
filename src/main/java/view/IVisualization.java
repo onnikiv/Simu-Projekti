@@ -18,7 +18,7 @@ public interface IVisualization {
 	 * @param customer the customer to add
 	 */
 
-	public void newCustomer(int customer);
+	public void newCustomer(int customer, int listSize);
 
 	/**
 	 * Removes a customer from the visualization.

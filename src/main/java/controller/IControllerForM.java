@@ -20,7 +20,7 @@ public interface IControllerForM {
      * @param customer the customer to visualize
      */
 
-    public void visualizeCustomer(int customer);;
+    public void visualizeCustomer(int customer, int listSize);;
 
     /**
      * Removes the specified customer from the visualization.
@@ -39,5 +39,5 @@ public interface IControllerForM {
      * @param c5 the sum of customers at service point 5
      */
 
-    public void updateServicePointSums(int c0, int c1, int c2, int c3,int c4,int c5);
+    void updateServicePointSums(int c0, int c1, int c2, int c3, int c4, int c5, int q0, int q1, int q2, int q3, int q4);
 }

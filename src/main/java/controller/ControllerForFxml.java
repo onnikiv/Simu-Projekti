@@ -58,22 +58,11 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     private Button startButton;
 
     @FXML
-    private Label countC0;
+    private Label countC0, countC1, countC2,
+            countC3, countC4, countC5;
 
     @FXML
-    private Label countC1;
-
-    @FXML
-    private Label countC2;
-
-    @FXML
-    private Label countC3;
-
-    @FXML
-    private Label countC4;
-
-    @FXML
-    private Label countC5;
+    private Label queue0, queue1, queue2, queue3, queue4;
 
 
     @FXML
@@ -110,7 +99,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     @FXML
     public void initialize() {
         Canvas[] canvases = {canvas, canvas1, canvas2, canvas3, canvas4, canvas5};
-        Color[] colors = {Color.DARKGRAY, Color.DARKBLUE, Color.DARKCYAN, Color.DARKGOLDENROD, Color.DARKGREEN, Color.DARKMAGENTA};
+        Color[] colors = {Color.DARKBLUE, Color.DARKCYAN, Color.DEEPSKYBLUE, Color.MEDIUMPURPLE, Color.PURPLE, Color.DARKMAGENTA};
         String[] types = {"SAAPUMINEN", "PÖYTIINOHJAUS", "TILAAMINEN", "TARJOILU", "SAFKAAMINEN", "POISTUMINEN"};
         Visualization visualization = new Visualization(canvases, colors, types);
         setIVisualization(visualization);
@@ -183,6 +172,13 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         resultLabel.setText(formatter.format(time));
     }
 
+    public void updateSimulationTime(double time) {
+        Platform.runLater(() -> {
+            DecimalFormat formatter = new DecimalFormat("#0.00");
+            resultLabel.setText(formatter.format(time));
+        });
+    }
+
     /**
      * Returns the visualization interface.
      *
@@ -251,9 +247,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
      */
 
     @Override
-    public synchronized void visualizeCustomer(int customer) {
+    public synchronized void visualizeCustomer(int customer, int listSize) {
         Platform.runLater(() -> {
-            getVisualization().newCustomer(customer);
+            getVisualization().newCustomer(customer, listSize);
             if (!mute && customer == 0) {
                 customerSound.play();
             }
@@ -285,7 +281,8 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
      */
 
     @Override
-    public synchronized void updateServicePointSums(int c0, int c1, int c2, int c3, int c4, int c5) {
+    public synchronized void updateServicePointSums(int c0, int c1, int c2, int c3, int c4, int c5,
+                                                    int q0, int q1, int q2, int q3, int q4) {
         Platform.runLater(() -> {
             countC0.setText(String.valueOf(c0));
             countC1.setText(String.valueOf(c1));
@@ -293,6 +290,11 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             countC3.setText(String.valueOf(c3));
             countC4.setText(String.valueOf(c4));
             countC5.setText(String.valueOf(c5));
+            queue0.setText(String.valueOf(q0));
+            queue1.setText(String.valueOf(q1));
+            queue2.setText(String.valueOf(q2));
+            queue3.setText(String.valueOf(q3));
+            queue4.setText(String.valueOf(q4));
         });
     }
 

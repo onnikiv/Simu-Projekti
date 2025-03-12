@@ -19,9 +19,9 @@ public class Visualization extends Canvas implements IVisualization {
     /**
      * Constructs a Visualization with the specified canvases, background colors, and types.
      *
-     * @param canvases the canvases to visualize
+     * @param canvases         the canvases to visualize
      * @param backgroundColors the background colors of the canvases
-     * @param types the types of the canvases
+     * @param types            the types of the canvases
      */
 
     public Visualization(Canvas[] canvases, Color[] backgroundColors, String[] types) {
@@ -57,7 +57,7 @@ public class Visualization extends Canvas implements IVisualization {
     @Override
     public synchronized void clearScreen() {
 
-        for (int d = 0; d<gcs.length; d++) {
+        for (int d = 0; d < gcs.length; d++) {
             gcs[d].setFill(backgroundColors[d]);
             gcs[d].fillRect(0, 0, gcs[d].getCanvas().getWidth(), gcs[d].getCanvas().getHeight());
         }
@@ -71,12 +71,24 @@ public class Visualization extends Canvas implements IVisualization {
      */
 
     @Override
-    public synchronized void newCustomer(int customer) {
-
-        gcs[customer].setFill(Color.LIGHTGRAY);
-        gcs[customer].fillOval(i[customer], j[customer], 10, 10);
-        i[customer] = (i[customer] + 10) % (gcs[customer].getCanvas().getWidth()-180);
-        if (i[customer] == 0) j[customer] += 10;
+    public synchronized void newCustomer(int customer, int listSize) {
+        clearCustomer(customer);
+        if (customer == 0 || customer == 5) {
+            gcs[customer].setFill(Color.LIGHTGRAY);
+            double canvasWidth = gcs[customer].getCanvas().getWidth();
+            double canvasHeight = gcs[customer].getCanvas().getHeight();
+            double ovalSize = 40;
+            double x = (canvasWidth - ovalSize) / 2;
+            double y = (canvasHeight - ovalSize) / 2;
+            gcs[customer].fillOval(x, y, ovalSize, ovalSize); // Draw a centered bigger oval
+        } else {
+            gcs[customer].setFill(Color.LIGHTGRAY);
+            for (int k = 0; k < listSize; k++) {
+                gcs[customer].fillOval(i[customer], j[customer], 10, 10);
+                j[customer] = (j[customer] + 10) % (gcs[customer].getCanvas().getHeight() - 180);
+                if (j[customer] == 0) i[customer] += 10;
+            }
+        }
     }
 
     /**
@@ -88,10 +100,29 @@ public class Visualization extends Canvas implements IVisualization {
 
     @Override
     public synchronized void removeCustomer(int customer) {
-        gcs[customer].setFill(backgroundColors[customer]);
-        gcs[customer].fillRect(a[customer], b[customer], 10, 10);
-        a[customer] = (a[customer] + 10) % (gcs[customer].getCanvas().getWidth()-180);
-        if (a[customer] == 0) b[customer] += 10;
+        clearCustomer(customer);
+        if (customer == 0 || customer == 5) {
+            clearCustomer(customer);
+        } else {
+            gcs[customer].setFill(backgroundColors[customer]);
+            gcs[customer].fillRect(a[customer], b[customer], 10, 10);
+            b[customer] = (b[customer] + 10) % (gcs[customer].getCanvas().getHeight() - 180);
+            if (b[customer] == 0) a[customer] += 10;
+        }
+        resetPositions();
     }
 
+    private synchronized void clearCustomer(int customer) {
+        gcs[customer].setFill(backgroundColors[customer]);
+        gcs[customer].fillRect(0, 0, gcs[customer].getCanvas().getWidth(), gcs[customer].getCanvas().getHeight());
+    }
+
+    public synchronized void resetPositions() {
+        for (int y = 0; y < gcs.length; y++) {
+            i[y] = 0;
+            j[y] = 10;
+            a[y] = 0;
+            b[y] = 10;
+        }
+    }
 }

@@ -65,17 +65,15 @@ public class Tables {
      * @return true if the customer was removed, false otherwise
      */
 
-    public boolean removeCustomerFromTable(Customer customer) {
+    public void removeCustomerFromTable(Customer customer) {
         Integer tableNumber = customerTableMap.remove(customer); // Get the table number from the map
         if (tableNumber != null) {
             List<Customer> tableCustomers = tables.get(tableNumber);
             tableCustomers.remove(customer);
             if (tableCustomers.isEmpty()) {
                 freeTables++;
-                return true;
             }
         }
-        return false;
     }
 
     /**

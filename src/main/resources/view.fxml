@@ -11,54 +11,21 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="742.0" prefWidth="1278.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerForFxml">
   <columnConstraints>
-      <ColumnConstraints />
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.0" minWidth="10.0" prefWidth="283.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="585.0" minWidth="10.0" prefWidth="427.0" />
+      <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1016.0" minWidth="0.0" prefWidth="282.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1018.0" minWidth="10.0" prefWidth="996.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="115.0" minHeight="105.0" prefHeight="115.0" />
-    <RowConstraints maxHeight="212.0" minHeight="10.0" prefHeight="160.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="146.0" minHeight="10.0" prefHeight="105.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="101.0" minHeight="10.0" prefHeight="94.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="93.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="107.0" minHeight="10.0" prefHeight="104.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="221.0" minHeight="105.0" prefHeight="221.0" />
+      <RowConstraints maxHeight="574.0" minHeight="10.0" prefHeight="521.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" text="Time:" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets left="80.0" />
-         </GridPane.margin>
-         <font>
-            <Font size="20.0" />
-         </font>
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </Label>
-      <Label fx:id="resultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="177.0" text="0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets />
-         </GridPane.margin>
-         <font>
-            <Font size="22.0" />
-         </font>
-      </Label>
-      <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#startSimulation" text="Start Simulation" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <GridPane.margin>
-            <Insets left="60.0" />
-         </GridPane.margin>
-      </Button>
-      <TextArea fx:id="consoleLogTextArea" editable="false" prefHeight="115.0" prefWidth="516.0" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.rowSpan="2">
-         <GridPane.margin>
-            <Insets bottom="30" left="10.0" right="10.0" top="30.0" />
-         </GridPane.margin>
-      </TextArea>
-      <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1">
+      <HBox prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1">
          <children>
             <Button fx:id="settingsButton" mnemonicParsing="false" text="Settings">
                <HBox.margin>
@@ -66,138 +33,275 @@
                </HBox.margin></Button>
             <Button fx:id="databaseButton" mnemonicParsing="false" onAction="#openDatabaseWindow" text="Database">
                <HBox.margin>
-                  <Insets left="20.0" top="20.0" />
+                  <Insets top="20.0" />
                </HBox.margin></Button>
             <Button fx:id="muteButton" mnemonicParsing="false" text="Mute">
                <HBox.margin>
-                  <Insets left="20.0" top="20.0" />
+                  <Insets top="20.0" />
                </HBox.margin></Button>
             <Button fx:id="aboutButton" layoutX="175.0" layoutY="10.0" mnemonicParsing="false" onAction="#openAboutWindow" text="About">
                <HBox.margin>
-                  <Insets left="20.0" top="20.0" />
+                  <Insets top="20.0" />
                </HBox.margin></Button>
          </children>
       </HBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2">
          <children>
-            <Button fx:id="slowDownButton" mnemonicParsing="false" onAction="#slowDown" text="Slowdown">
-               <VBox.margin>
-                  <Insets left="60.0" />
-               </VBox.margin></Button>
-            <Button fx:id="speedUpButton" mnemonicParsing="false" onAction="#speedUp" text="Increase Speed" textAlignment="CENTER">
-               <VBox.margin>
-                  <Insets left="60.0" />
-               </VBox.margin></Button>
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <Label prefHeight="43.0" prefWidth="162.0" text="Simulation Time:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets right="40.0" />
-               </VBox.margin>
-            </Label>
-            <Label prefHeight="45.0" prefWidth="158.0" text="Delay:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-               <VBox.margin>
-                  <Insets right="40.0" />
-               </VBox.margin>
-            </Label>
-         </children>
-      </VBox>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <children>
-            <TextField fx:id="timeTextField" alignment="CENTER" onAction="#getTime" prefHeight="39.0" prefWidth="283.0" promptText="Insert Time">
-               <font>
-                  <Font name="System Bold Italic" size="18.0" />
-               </font>
-            </TextField>
-            <TextField fx:id="delayTextField" alignment="CENTER" onAction="#getDelay" prefHeight="42.0" prefWidth="335.0" promptText="Insert  Delay">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </TextField>
-         </children>
-      </VBox>
-      <Label prefHeight="17.0" prefWidth="334.0" text="SUMMAT" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets top="70.0" />
-         </GridPane.margin>
-      </Label>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="232.0" prefWidth="996.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="SAAPUNUT" />
-                  <Label fx:id="countC0" text="0" />
+                  <TextArea fx:id="consoleLogTextArea" editable="false" prefHeight="186.0" prefWidth="641.0" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <HBox alignment="BOTTOM_CENTER" fillHeight="false" prefHeight="429.0" prefWidth="996.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+         <children>
+            <HBox alignment="CENTER" fillHeight="false" prefHeight="521.0" prefWidth="222.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="125.0" prefWidth="100.0" spacing="10.0">
+                     <children>
+                        <Label text="Arrived:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Seated:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Ordered:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Served:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Ate:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Left:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="125.0" prefWidth="100.0" spacing="10.0">
+                     <children>
+                        <Label fx:id="countC0" text="0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="countC1" text="0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="countC2" text="0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="countC3" text="0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="countC4" text="0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="countC5" text="0">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <HBox.margin>
+                        <Insets top="50.0" />
+                     </HBox.margin>
+                  </VBox>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
+            <VBox alignment="BOTTOM_CENTER" prefHeight="570.0" prefWidth="100.0">
                <children>
-                  <Label contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="PÖYTIINOHJATTU" />
-                  <Label fx:id="countC1" text="0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="In Queue" />
+                  <Label fx:id="queue0" text="0" />
+                  <Canvas fx:id="canvas" height="50.0" width="50.0">
+                     <VBox.margin>
+                        <Insets bottom="170.0" />
+                     </VBox.margin>
+                  </Canvas>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="410.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="queue1" text="0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKBLUE" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="PÖYTIINOHJATTU" />
+                  <Canvas fx:id="canvas1" height="350.0" width="100.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Canvas>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="410.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="queue2" text="0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKCYAN" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="200.0" text="TILANNUT" />
+                  <Canvas fx:id="canvas2" height="350.0" width="100.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Canvas>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="410.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="queue3" text="0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGOLDENROD" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="TARJOILTU" />
+                  <Canvas fx:id="canvas3" height="350.0" width="100.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Canvas>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="410.0" prefWidth="100.0">
+               <children>
+                  <Label fx:id="queue4" text="0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGREEN" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="SAFKANNUT" />
+                  <Canvas fx:id="canvas4" height="350.0" width="100.0">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Canvas>
+               </children>
+            </VBox>
+            <VBox alignment="BOTTOM_CENTER" prefHeight="560.0" prefWidth="100.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="200.0" text="Left" />
+                  <Label fx:id="countC5" alignment="CENTER" prefHeight="30.0" prefWidth="87.0" text="0" />
+                  <Canvas fx:id="canvas5" height="50.0" width="50.0">
+                     <VBox.margin>
+                        <Insets bottom="170.0" />
+                     </VBox.margin>
+                  </Canvas>
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+      <VBox fillWidth="false" GridPane.columnIndex="1" GridPane.rowIndex="1">
+         <children>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="106.0" prefWidth="282.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="43.0" prefWidth="291.0" text="Simulation Time:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="timeTextField" alignment="CENTER" onAction="#getTime" prefHeight="40.0" prefWidth="220.0" promptText="Insert Time">
+                     <font>
+                        <Font name="System Bold Italic" size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" fillWidth="false" prefHeight="106.0" prefWidth="282.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="45.0" prefWidth="254.0" text="Delay:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <TextField fx:id="delayTextField" alignment="CENTER" onAction="#getDelay" prefHeight="40.0" prefWidth="220.0" promptText="Insert  Delay">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </TextField>
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" prefHeight="197.0" prefWidth="292.0">
+               <children>
+                  <Button fx:id="startButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#startSimulation" prefHeight="44.0" prefWidth="101.0" text="Start Simulation">
+                     <VBox.margin>
+                        <Insets top="40.0" />
+                     </VBox.margin>
+                  </Button>
+                  <HBox alignment="CENTER" fillHeight="false" prefHeight="63.0" prefWidth="282.0" spacing="30.0">
+                     <children>
+                        <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#pauseSimulation" prefHeight="25.0" prefWidth="160.0" text="PAUSE">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="resumeButton" mnemonicParsing="false" onAction="#resumeSimulation" prefHeight="25.0" prefWidth="160.0" text="RESUME">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" fillHeight="false" layoutX="10.0" layoutY="75.0" prefHeight="63.0" prefWidth="282.0" spacing="30.0">
+                     <children>
+                        <Button fx:id="speedUpButton" mnemonicParsing="false" onAction="#speedUp" prefHeight="25.0" prefWidth="160.0" text="+ Speed Up" textAlignment="CENTER">
+                           <HBox.margin>
+                              <Insets left="20.0" />
+                           </HBox.margin>
+                        </Button>
+                        <Button fx:id="slowDownButton" mnemonicParsing="false" onAction="#slowDown" prefHeight="25.0" prefWidth="160.0" text="- Slow Down">
+                           <HBox.margin>
+                              <Insets right="20.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <HBox alignment="TOP_RIGHT" fillHeight="false" prefHeight="100.0" prefWidth="285.0">
+               <children>
+                  <Label fx:id="timeLabel" alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="45.0" prefWidth="142.0" text="Time:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="resultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="45.0" prefWidth="142.0" text="0" textAlignment="CENTER">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                     <padding>
+                        <Insets right="20.0" />
+                     </padding>
+                  </Label>
                </children>
             </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label prefHeight="20.0" prefWidth="200.0" text="TILANNUT" />
-                  <Label fx:id="countC2" text="0" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
-         <children>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="TARJOILTU" />
-                  <Label fx:id="countC3" text="0" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label prefHeight="20.0" prefWidth="200.0" text="SAFKANNUT" />
-                  <Label fx:id="countC4" prefHeight="30.0" prefWidth="86.0" text="0" />
-               </children>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label prefHeight="20.0" prefWidth="200.0" text="POISTUNUT" />
-                  <Label fx:id="countC5" prefHeight="30.0" prefWidth="87.0" text="0" />
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="5">
-         <children>
-            <Button fx:id="pauseButton" mnemonicParsing="false" onAction="#pauseSimulation" prefHeight="25.0" prefWidth="160.0" text="PAUSE" />
-            <Button fx:id="resumeButton" mnemonicParsing="false" onAction="#resumeSimulation" prefHeight="25.0" prefWidth="159.0" text="RESUME" />
-         </children>
-      </VBox>
-      <VBox prefHeight="200.0" prefWidth="555.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
-         <GridPane.margin><Insets left="10" /></GridPane.margin>
-         <children>
-            <Canvas fx:id="canvas" height="50.0" width="470.0" />
-            <Canvas fx:id="canvas1" height="50.0" width="470.0" />
-         </children>
-      </VBox>
-      <VBox prefHeight="200.0" prefWidth="555.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
-         <GridPane.margin><Insets left="10" /></GridPane.margin>
-         <children>
-            <Canvas fx:id="canvas2" height="63.0" width="470.0" />
-            <Canvas fx:id="canvas3" height="63.0" width="470.0" />
-         </children>
-      </VBox>
-      <VBox prefHeight="115.0" prefWidth="583.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
-         <GridPane.margin><Insets left="10" /></GridPane.margin>
-         <children>
-            <Canvas fx:id="canvas4" height="52.0" width="470.0" />
-            <Canvas fx:id="canvas5" height="50.0" width="470.0" />
          </children>
       </VBox>
    </children>
