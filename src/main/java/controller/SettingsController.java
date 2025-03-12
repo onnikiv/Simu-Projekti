@@ -10,36 +10,46 @@ import simu.model.OwnEngine;
 
 import javafx.event.ActionEvent;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Controller class for handling the settings UI interactions.
  * Provides methods to update simulation parameters through sliders.
  */
-
 public class SettingsController {
 
     private IEngine engine;
     private ControllerForFxml controller;
-    private int maxGroupSize = 4;
-    private int tableAmount = 15;
-    private int tableSize = 4;
+    private final Map<String, Integer> settingsMap;
 
     @FXML
     private Button backButton, decreaseGroupSize, increaseGroupSize, decreaseTableSize,
             increaseTableSize, decreaseTables, increaseTables;
 
     @FXML
-    private TextField tableAmountField, tableSizeField, groupSizeField;
+    public TextField tableAmountField;
+    @FXML
+    public TextField tableSizeField;
+    @FXML
+    private TextField groupSizeField;
 
     @FXML
     private Slider seatingSlider, serviceSlider, orderingSlider, exitingSlider, arrivalSlider, eatingSlider;
 
-    /**
-     * Initializes the controller, setting up the event handlers for the sliders and back button.
-     */
+    public SettingsController() {
+        settingsMap = new HashMap<>();
+        loadSettings();
+    }
+
+    private void loadSettings() {
+        settingsMap.put("maxGroupSize", 4);
+        settingsMap.put("tableAmount", 15);
+        settingsMap.put("tableSize", 4);
+    }
 
     @FXML
     public void initialize() {
-        backButton.setOnAction(event -> handleBackButtonAction());
         backButton.setOnAction(event -> handleBackButtonAction());
         decreaseGroupSize.setOnAction(event -> decrementValue(groupSizeField));
         increaseGroupSize.setOnAction(event -> incrementValue(groupSizeField));
@@ -53,31 +63,17 @@ public class SettingsController {
         orderingSlider.setOnMouseReleased(event -> updateSliderValue(orderingSlider, "ordering"));
         seatingSlider.setOnMouseReleased(event -> updateSliderValue(seatingSlider, "seating"));
         serviceSlider.setOnMouseReleased(event -> updateSliderValue(serviceSlider, "service"));
-    }
 
-    /**
-     * Sets the simulation engine.
-     *
-     * @param engine the simulation engine
-     */
+        updateTextFields();
+    }
 
     public void setEngine(IEngine engine) {
         this.engine = engine;
     }
 
-    /**
-     * Sets the main controller.
-     *
-     * @param mainController the main controller
-     */
-
     public void setMainController(ControllerForFxml mainController) {
         this.controller = mainController;
     }
-
-    /**
-     * Handles the action for the back button, closing the settings window and resuming the simulation.
-     */
 
     @FXML
     private void handleBackButtonAction() {
@@ -88,14 +84,6 @@ public class SettingsController {
         }
     }
 
-    /**
-     * Updates the simulation parameter based on the slider value.
-     *
-     * @param slider the slider whose value has changed
-     * @param type   the type of parameter to update
-     */
-
-    // Ottaa Sliderista arvot ja printtaa tuloksen OwnEnginessä consoliin (Vielä ei muuta mitään Distributionin meaneja)
     public void updateSliderValue(Slider slider, String type) {
         if (engine == null) {
             return;
@@ -126,15 +114,23 @@ public class SettingsController {
     }
 
     public int getMaxGroupSize() {
-        return maxGroupSize;
+        return settingsMap.get("maxGroupSize");
     }
 
     public int getTableAmount() {
-        return tableAmount;
+        return settingsMap.get("tableAmount");
     }
 
     public int getTableSize() {
-        return tableSize;
+        return settingsMap.get("tableSize");
+    }
+
+    public void setTableAmount(int tableAmount) {
+        settingsMap.put("tableAmount", tableAmount);
+    }
+
+    public void setTableSize(int tableSize) {
+        settingsMap.put("tableSize", tableSize);
     }
 
     public void decrementValue(TextField field) {
@@ -142,7 +138,7 @@ public class SettingsController {
         if (value > 1) {
             value--;
             field.setText(String.valueOf(value));
-            updateSettigns(field);
+            updateSettingsView(field);
         }
     }
 
@@ -150,7 +146,7 @@ public class SettingsController {
         int value = Integer.parseInt(field.getText());
         value++;
         field.setText(String.valueOf(value));
-        updateSettigns(field);
+        updateSettingsView(field);
     }
 
     @FXML
@@ -178,32 +174,32 @@ public class SettingsController {
         }
     }
 
-    public void updateSettigns(TextField field) {
+    public void updateSettingsView(TextField field) {
         if (field == tableAmountField) {
-            tableAmount = Integer.parseInt(field.getText());
-            System.out.println("Table amount: " + tableAmount);
+            settingsMap.put("tableAmount", Integer.parseInt(field.getText()));
         } else if (field == tableSizeField) {
-            tableSize = Integer.parseInt(field.getText());
-            System.out.println("Table size: " + tableSize);
+            int tableSize = Integer.parseInt(field.getText());
+            settingsMap.put("tableSize", tableSize);
+            if (tableSize < settingsMap.get("maxGroupSize")) {
+                setMaxGroupSize(tableSize);
+            }
         } else if (field == groupSizeField) {
             setMaxGroupSize(Integer.parseInt(field.getText()));
-            System.out.println("Group size: " + maxGroupSize);
         }
         updateTextFields();
     }
 
     public void setMaxGroupSize(int size) {
-        this.maxGroupSize = size;
-        if (this.maxGroupSize > this.tableSize) {
-            this.tableSize = this.maxGroupSize;
+        settingsMap.put("maxGroupSize", size);
+        if (size > settingsMap.get("tableSize")) {
+            settingsMap.put("tableSize", size);
         }
         updateTextFields();
     }
 
     public void updateTextFields() {
-        tableAmountField.setText(String.valueOf(tableAmount));
-        tableSizeField.setText(String.valueOf(tableSize));
-        groupSizeField.setText(String.valueOf(maxGroupSize));
-        System.out.println("Table amount: " + tableAmount + ", Table size: " + tableSize + ", Group size: " + maxGroupSize);
+        tableAmountField.setText(String.valueOf(settingsMap.get("tableAmount")));
+        tableSizeField.setText(String.valueOf(settingsMap.get("tableSize")));
+        groupSizeField.setText(String.valueOf(settingsMap.get("maxGroupSize")));
     }
 }
