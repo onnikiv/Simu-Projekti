@@ -27,7 +27,7 @@ public interface IControllerForM {
      * @param customer the customer to remove
      */
 
-    public void visualizeRemoveCustomers(int customer);
+    public void visualizeRemoveCustomers(int customer, int listSize);
 
     /**
      * Updates the service point sums with the specified values.

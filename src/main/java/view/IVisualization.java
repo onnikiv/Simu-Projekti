@@ -25,6 +25,6 @@ public interface IVisualization {
 	 * @param customer the customer to remove
 	 */
 
-	public void removeCustomer(int customer);
+	public void removeCustomer(int customer, int listSize);
 
 }

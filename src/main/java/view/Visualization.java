@@ -72,7 +72,6 @@ public class Visualization extends Canvas implements IVisualization {
 
     @Override
     public synchronized void newCustomer(int customer, int listSize) {
-        clearCustomer(customer);
         if (customer == 0 || customer == 5) {
             gcs[customer].setFill(Color.LIGHTGRAY);
             double canvasWidth = gcs[customer].getCanvas().getWidth();
@@ -99,15 +98,16 @@ public class Visualization extends Canvas implements IVisualization {
      */
 
     @Override
-    public synchronized void removeCustomer(int customer) {
-        clearCustomer(customer);
+    public synchronized void removeCustomer(int customer, int listSize) {
         if (customer == 0 || customer == 5) {
             clearCustomer(customer);
         } else {
             gcs[customer].setFill(backgroundColors[customer]);
-            gcs[customer].fillRect(a[customer], b[customer], 10, 10);
-            b[customer] = (b[customer] + 10) % (gcs[customer].getCanvas().getHeight() - 180);
-            if (b[customer] == 0) a[customer] += 10;
+            for (int k = 0; k < listSize; k++) {
+                gcs[customer].fillRect(a[customer], b[customer], 10, 10);
+                b[customer] = (b[customer] + 10) % (gcs[customer].getCanvas().getHeight() - 180);
+                if (b[customer] == 0) a[customer] += 10;
+            }
         }
         resetPositions();
     }

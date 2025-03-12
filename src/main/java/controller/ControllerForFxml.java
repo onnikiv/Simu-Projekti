@@ -263,9 +263,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
      */
 
     @Override
-    public synchronized void visualizeRemoveCustomers(int customer) {
+    public synchronized void visualizeRemoveCustomers(int customer, int listSize) {
         Platform.runLater(() -> {
-            getVisualization().removeCustomer(customer);
+            getVisualization().removeCustomer(customer, listSize);
         });
     }
 

@@ -281,7 +281,7 @@ public class OwnEngine extends Engine {
                         }
                         int tableNumber = table.addCustomersToTable(a);
                         if (tableNumber > 0) {
-                            controller.visualizeRemoveCustomers(0);
+                            controller.visualizeRemoveCustomers(0, a.size());
                             int id = a.get(0).getGroupId();
                             //System.out.print("GROUP: " + id + " (" + a.size() + " Customers)" + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
                             controllerFxml.updateTextArea("GROUP: " + id + " (" + a.size() + " Customers)" + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
@@ -305,7 +305,7 @@ public class OwnEngine extends Engine {
             case TILAAMINEN -> {
                 a = servicePoints[1].fetchFromQueue();
                 q1 -= a.size();
-                controller.visualizeRemoveCustomers(1);
+                controller.visualizeRemoveCustomers(1, a.size());
                 for (Customer customer : a) {
                     if (!customer.hasOrdered()) {
                         if (randChance(100) < 20) {
@@ -336,7 +336,7 @@ public class OwnEngine extends Engine {
             case TARJOILU -> {
                 a = servicePoints[2].fetchFromQueue();
                 q2 -= a.size();
-                controller.visualizeRemoveCustomers(2);
+                controller.visualizeRemoveCustomers(2, a.size());
                 double prepTime = waiter.calculatePrepTime(a);
                 for (Customer customer : a) {
                     double serviceTime = currentTime - customer.getArrivalTime() + prepTime;
@@ -371,7 +371,7 @@ public class OwnEngine extends Engine {
                 }
                  */
                 c4 += a.size();
-                controller.visualizeRemoveCustomers(3);
+                controller.visualizeRemoveCustomers(3, a.size());
                 q4 += a.size();
                 servicePoints[4].addToQueue(a);
                 controller.visualizeCustomer(4, a.size());
@@ -381,7 +381,7 @@ public class OwnEngine extends Engine {
                 a = servicePoints[4].fetchFromQueue();
                 q4 -= a.size();
                 q5 += a.size();
-                controller.visualizeRemoveCustomers(4);
+                controller.visualizeRemoveCustomers(4, a.size());
                 int id = a.get(0).getGroupId();
                 Double prepTime = groupPrepTimes.getOrDefault(id, 0.0);
                 //System.out.println("Group: " + id + " -> Prep time: " + prepTime);
