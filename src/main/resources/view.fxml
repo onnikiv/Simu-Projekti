@@ -64,7 +64,7 @@
                <HBox.margin>
                   <Insets left="20.0" top="20.0" />
                </HBox.margin></Button>
-            <Button mnemonicParsing="false" text="Database">
+            <Button fx:id="databaseButton" mnemonicParsing="false" onAction="#openDatabaseWindow" text="Database">
                <HBox.margin>
                   <Insets left="20.0" top="20.0" />
                </HBox.margin></Button>
