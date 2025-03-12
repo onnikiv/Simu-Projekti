@@ -356,6 +356,24 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         }
     }
 
+
+    @FXML
+    public void openDatabaseWindow() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/databaseView.fxml"));
+            Parent root = fxmlLoader.load();
+            root.getStylesheets().add(getClass().getResource("/aboutStyle.css").toExternalForm());
+            Stage stage = new Stage();
+            stage.setTitle("Menu  Items");
+            stage.setScene(new Scene(root));
+            pauseSimulation();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Opens the about window.
      */

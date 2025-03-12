@@ -7,6 +7,7 @@ import java.util.Random;
 
 import controller.ControllerForFxml;
 import controller.IControllerForM;
+import controller.ResultsController;
 import controller.SettingsController;
 import eduni.distributions.Negexp;
 import eduni.distributions.Normal;
@@ -453,6 +454,9 @@ public class OwnEngine extends Engine {
         controller.showEndTime(Clock.getInstance().getTime());
 
         calculatePerformanceMetrics();
+
+        new ResultsController().openResultsWindow();
+        
     }
 
     /**
