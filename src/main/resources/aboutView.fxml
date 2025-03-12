@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0" prefWidth="722.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AboutController">
+   <center>
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label prefHeight="72.0" prefWidth="216.0" text="Restaraunt Simulator">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <TextArea editable="false" prefHeight="337.0" prefWidth="722.0" text="                                             Welcome to our restaurant simulator!&#10;&#10;In this simulation, you will experience how a real restaurant operates. Customers arrive at the restaurant, wait in line, order, eat, and then exit. The simulator models each step of the process, from the customer’s arrival to their departure.&#10;&#10;The simulator relies on distributions that determine the time spent at each service point. It also controls customer arrival rates (how often customers arrive) and how many customers arrive in a group (from 1 to 4).&#10;Starters and desserts are optional and vary, but the main meal is mandatory. You can change all of these distributions in the settings.&#10;" wrapText="true">
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </TextArea>
+            <Button fx:id="closeButton" mnemonicParsing="false" onAction="#closeAboutWindow" text="Close">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="20.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.stage.Stage;
@@ -81,6 +82,7 @@ public class SettingsController {
     // Ottaa Sliderista arvot ja printtaa tuloksen OwnEnginessä consoliin (Vielä ei muuta mitään Distributionin meaneja)
     public void updateSliderValue(Slider slider, String type) {
         if (engine == null) {
+            showAlert("Error", "Engine not set\nSimulation needs to be started first");
             return;
         }
         double value = slider.getValue();
@@ -94,5 +96,21 @@ public class SettingsController {
             case "eating": ownEngine.changeEatingMean(value);  break;
             case "exiting": ownEngine.changeExitingMean(value);break;
         }
+    }
+
+    /**
+     * Displays an alert dialog with the specified title and message.
+     *
+     * @param title the title of the alert dialog
+     * @param message the message to be displayed in the alert dialog
+     */
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+
     }
 }

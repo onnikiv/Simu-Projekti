@@ -21,6 +21,7 @@ import simu.model.OwnEngine;
 import view.ISimulatorUI;
 import view.IVisualization;
 import view.Visualization;
+import javafx.stage.Modality;
 
 /**
  * Controller class for handling the FXML UI interactions.
@@ -97,6 +98,11 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     @FXML
     private Button settingsButton;
 
+    @FXML
+    private Button aboutButton;
+
+
+
     /**
      * Initializes the controller, setting up the visualization and event handlers.
      */
@@ -112,12 +118,19 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
         setUi(this);
         customerSound = new AudioClip(getClass().getResource("/sounds/customer.mp3").toString());
         settingsButton.setOnAction(event -> openSettings());
-        muteButton.setOnAction(event -> {if (mute) {mute = false;} else if (!mute) { mute = true;}});
-
+        muteButton.setOnAction(event -> {
+            if (mute) {
+                mute = false;
+            } else if (!mute) {
+                mute = true;
+            }
+        });
     }
+
 
     /**
      * Sets the visualization interface.
+     *
      * @param screen the visualization interface
      */
 
@@ -128,6 +141,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     /**
      * Sets the simulator UI interface.
+     *
      * @param ui the simulator UI interface
      */
 
@@ -137,6 +151,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     /**
      * Returns the time of the simulation.
+     *
      * @return the time of the simulation
      */
 
@@ -147,6 +162,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     /**
      * Returns the delay of the simulation.
+     *
      * @return the delay of the simulation
      */
 
@@ -157,6 +173,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     /**
      * Sets the end time of the simulation.
+     *
      * @param time the end time of the simulation
      */
 
@@ -168,6 +185,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     /**
      * Returns the visualization interface.
+     *
      * @return the visualization interface
      */
 
@@ -177,7 +195,6 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     }
 
 
-
     /**
      * Starts the simulation with the specified time and delay.
      */
@@ -185,12 +202,12 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     @Override
     public void startSimulation() {
 
-        
+
         // ERROR HANDLÄYSTÄ
         try {
             double time = ui.getTime();
             long delay = ui.getDelay();
-            
+
             if (time < 0 || delay < 0) {
                 throw new IllegalArgumentException("ERROR // Time and delay can't be negative\n");
             }
@@ -214,19 +231,22 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     /**
      * Shows the end time of the simulation.
+     *
      * @param time the end time of the simulation
      */
 
     @Override
     public void showEndTime(double time) {
-        Platform.runLater(() -> {setEndTime(time);
-        consoleLogTextArea.appendText("\nSimulation has Ended...\n");        
-    });
+        Platform.runLater(() -> {
+            setEndTime(time);
+            consoleLogTextArea.appendText("\nSimulation has Ended...\n");
+        });
 
     }
 
     /**
      * Visualizes the specified customer.
+     *
      * @param customer the customer to visualize
      */
 
@@ -242,6 +262,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     /**
      * Removes the specified customer from the visualization.
+     *
      * @param customer the customer to remove
      */
 
@@ -254,6 +275,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     /**
      * Updates the service point sums with the specified values.
+     *
      * @param c0 the sum of customers at service point 0
      * @param c1 the sum of customers at service point 1
      * @param c2 the sum of customers at service point 2
@@ -263,7 +285,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
      */
 
     @Override
-    public synchronized void updateServicePointSums(int c0, int c1,int c2,int c3,int c4,int c5) {
+    public synchronized void updateServicePointSums(int c0, int c1, int c2, int c3, int c4, int c5) {
         Platform.runLater(() -> {
             countC0.setText(String.valueOf(c0));
             countC1.setText(String.valueOf(c1));
@@ -281,7 +303,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     @Override
     public void speedUp() {
         if (engine != null) {
-        engine.setDelay((long) (engine.getDelay() * 0.9));
+            engine.setDelay((long) (engine.getDelay() * 0.9));
         }
     }
 
@@ -292,12 +314,13 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
     @Override
     public void slowDown() {
         if (engine != null) {
-        engine.setDelay((long) (engine.getDelay() * 1.1));
+            engine.setDelay((long) (engine.getDelay() * 1.1));
         }
     }
 
     /**
      * Updates the console log text area with the specified message.
+     *
      * @param message the message to append to the console log
      */
 
@@ -315,21 +338,43 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
      */
 
     @FXML
-    private void openSettings() {
+    public void openSettings() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/settings.fxml"));
             Parent root = fxmlLoader.load();
-            SettingsController settingsController  = fxmlLoader.getController();
+            root.getStylesheets().add(getClass().getResource("/settingsStyle.css").toExternalForm());
+            SettingsController settingsController = fxmlLoader.getController();
             settingsController.setEngine(engine);
             settingsController.setMainController(this);
             settingsController.initialize();
             Stage stage = new Stage();
             stage.setTitle("Settings");
             stage.setScene(new Scene(root));
-            stage.show();
             pauseSimulation();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
         } catch (IOException e) {
+            e.printStackTrace();
         }
+    }
+
+    /**
+     * Opens the about window.
+     */
+
+    @FXML
+    public void openAboutWindow() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/aboutView.fxml"));
+        Parent root = loader.load();
+        root.getStylesheets().add(getClass().getResource("/aboutstyle.css").toExternalForm());
+        AboutController aboutController = loader.getController();
+        aboutController.setEngine(engine);
+        aboutController.setMainController(this);
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        pauseSimulation();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.showAndWait();
     }
 
     /**
