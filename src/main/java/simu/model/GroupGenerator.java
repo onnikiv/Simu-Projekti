@@ -8,9 +8,9 @@ public class GroupGenerator {
     private int groupId;
 
     public List<Customer> generateCustomerGroup(int maxSize) {
-        int groupSize = groupSize(maxSize);
+        int size = groupSize(maxSize);
         List<Customer> group = new ArrayList<>();
-        for (int i = 0; i < groupSize; i++) {
+        for (int i = 0; i < size; i++) {
             group.add(new Customer());
         }
         groupId++;
