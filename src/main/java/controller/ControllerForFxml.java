@@ -15,13 +15,13 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import simu.framework.IEngine;
 import simu.model.OwnEngine;
 import view.ISimulatorUI;
 import view.IVisualization;
 import view.Visualization;
-import javafx.stage.Modality;
 
 /**
  * Controller class for handling the FXML UI interactions.
@@ -326,11 +326,9 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     @FXML
     public synchronized void updateTextArea(String message) {
-        if (consoleLogTextArea != null) {
-            Platform.runLater(() -> consoleLogTextArea.appendText(message));
-        } else {
-            System.err.println("TextArea is not initialized.");
-        }
+
+        Platform.runLater(() -> consoleLogTextArea.appendText(message));
+
     }
 
     /**
