@@ -1,0 +1,33 @@
+.root {
+    -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    -fx-background-color: #4A4A4A;
+}
+
+.label {
+    -fx-text-fill: #FFFFFF;
+}
+
+.text-field {
+    -fx-prompt-text-fill: #AAAAAA;
+    -fx-background-color: #2A2A2A;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #4A4A4A;
+}
+
+.button {
+    -fx-background-color: #4A4A4A;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #6A6A6A;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #6A6A6A;
+}
+
+.text-area {
+    -fx-background-color: #2A2A2A;
+    -fx-control-inner-background: #2A2A2A;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #4A4A4A;
+}

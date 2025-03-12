@@ -1,0 +1,21 @@
+.root {
+    -fx-font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    -fx-background-color: #4A4A4A;
+}
+
+.label {
+    -fx-text-fill: #FFFFFF;
+}
+
+.button {
+    -fx-background-color: #4A4A4A;
+    -fx-text-fill: #FFFFFF;
+    -fx-border-color: #6A6A6A;
+    -fx-cursor: hand;
+}
+
+.button:hover {
+    -fx-background-color: #6A6A6A;
+}
+
+

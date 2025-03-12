@@ -270,10 +270,10 @@ public class OwnEngine extends Engine {
                 for (Customer customer : a) {
                     customer.setArrivalTime(currentTime);
                 }
+                c0 += a.size();
                 servicePoints[0].addToQueue(a);
                 controller.visualizeCustomer(0);
 
-                c0++;
 
                 arrivalProcess.generateNext();
 
@@ -294,19 +294,19 @@ public class OwnEngine extends Engine {
                         if (tableNumber > 0) {
                             controller.visualizeRemoveCustomers(0);
                             int id = a.get(0).getGroupId();
-                            System.out.print("GROUP: " + id + " (" + a.size() + " Customers)" + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
+                            //System.out.print("GROUP: " + id + " (" + a.size() + " Customers)" + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
                             controllerFxml.updateTextArea("GROUP: " + id + " (" + a.size() + " Customers)" + " -> OHJATAAN PÖYTÄÄN " + tableNumber + "\n");
                             for (Customer customer : a) {
                                 customer.setSeated(true);
                             }
                             controller.visualizeCustomer(1);
                             servicePoints[1].addToQueue(a);
-                            c1++;
                         } else {
                             servicePoints[0].addToQueue(a);
                         }
+                        c1 += a.size();
                     } catch (Exception e) {
-                        System.out.println("Error in PÖYTIINOHJAUS");
+                        //System.out.println("Error in PÖYTIINOHJAUS");
                     }
                 }
             }
@@ -319,24 +319,24 @@ public class OwnEngine extends Engine {
                         if (randChance(100) < 20) {
                             MenuItem starter = orderService.getRandomMeal(1);
                             customer.order(waiter, starter);
-                            System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + starter.getName() + "\n");
+                            //System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + starter.getName() + "\n");
                             controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + starter.getName() + "\n");
                         }
                         MenuItem mainMeal = orderService.getRandomMeal(2);
                         customer.order(waiter, mainMeal);
-                        System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
+                        //System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
                         controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + mainMeal.getName() + "\n");
                         if (randChance(100) < 50) {
                             MenuItem dessert = orderService.getRandomMeal(3);
                             customer.order(waiter, dessert);
-                            System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
+                            //System.out.print("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
                             controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> Tilaus: " + dessert.getName() + "\n");
                         }
                         customer.setHasOrdered(true);
                     }
                 }
+                c2+= a.size();
                 servicePoints[2].addToQueue(a);
-                c2++;
                 controller.visualizeCustomer(2);
             }
 
@@ -356,26 +356,28 @@ public class OwnEngine extends Engine {
                 for (Customer customer : a) {
                     List<MenuItem> order = waiter.deliverOrder(customer);
                     for (MenuItem item : order) {
-                        System.out.print("ASIAKAS: " + customer.getId() + " -> RUOKA: " + item.getName() + "\n");
+                        //System.out.print("ASIAKAS: " + customer.getId() + " -> RUOKA: " + item.getName() + "\n");
                         controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> RUOKA: " + item.getName() + "\n");
                     }
                 }
+                c3 += a.size();
                 servicePoints[3].addToQueue(a);
-                c3++;
                 controller.visualizeCustomer(3);
 
             }
 
             case SAFKAAMINEN -> {
                 a = servicePoints[3].fetchFromQueue();
+                /*
                 for (Customer customer : a) {
                     System.out.print("ASIAKAS: " + customer.getId() + " -> SYÖ\n");
-                    //controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> SYÖ\n");
+                    controllerFxml.updateTextArea("ASIAKAS: " + customer.getId() + " -> SYÖ\n");
                 }
+                 */
+                c4 += a.size();
                 controller.visualizeRemoveCustomers(3);
                 servicePoints[4].addToQueue(a);
                 controller.visualizeCustomer(4);
-                c4++;
             }
 
             case POISTUMINEN -> {
@@ -404,8 +406,8 @@ public class OwnEngine extends Engine {
                     timeInSystem += CustomerTime;
                 }
                 if (tableFreed) {
-                    System.out.println("Table freed up by group: " + id);
-                    System.out.println("Free tables: " + table.getFreeTables());
+                    //System.out.println("Table freed up by group: " + id);
+                    //System.out.println("Free tables: " + table.getFreeTables());
                 }
                 controller.visualizeCustomer(5);
             }
