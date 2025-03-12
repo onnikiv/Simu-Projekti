@@ -36,6 +36,9 @@
          <font>
             <Font size="20.0" />
          </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </Label>
       <Label fx:id="resultLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="41.0" prefWidth="177.0" text="0" textAlignment="CENTER" GridPane.columnIndex="2" GridPane.rowIndex="2">
          <GridPane.margin>
@@ -57,16 +60,34 @@
       </TextArea>
       <HBox prefHeight="100.0" prefWidth="200.0" spacing="20.0" GridPane.columnIndex="1">
          <children>
-            <Button fx:id="settingsButton" mnemonicParsing="false" text="Settings" />
-            <Button mnemonicParsing="false" text="Database" />
-            <Button fx:id="muteButton" mnemonicParsing="false" text="Mute" />
-            <Button fx:id="aboutButton" layoutX="175.0" layoutY="10.0" mnemonicParsing="false" onAction="#openAboutWindow" text="About" />
+            <Button fx:id="settingsButton" mnemonicParsing="false" text="Settings">
+               <HBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </HBox.margin></Button>
+            <Button mnemonicParsing="false" text="Database">
+               <HBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </HBox.margin></Button>
+            <Button fx:id="muteButton" mnemonicParsing="false" text="Mute">
+               <HBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </HBox.margin></Button>
+            <Button fx:id="aboutButton" layoutX="175.0" layoutY="10.0" mnemonicParsing="false" onAction="#openAboutWindow" text="About">
+               <HBox.margin>
+                  <Insets left="20.0" top="20.0" />
+               </HBox.margin></Button>
          </children>
       </HBox>
       <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
          <children>
-            <Button fx:id="slowDownButton" mnemonicParsing="false" onAction="#slowDown" text="Slowdown" />
-            <Button fx:id="speedUpButton" mnemonicParsing="false" onAction="#speedUp" text="Increase Speed" textAlignment="CENTER" />
+            <Button fx:id="slowDownButton" mnemonicParsing="false" onAction="#slowDown" text="Slowdown">
+               <VBox.margin>
+                  <Insets left="60.0" />
+               </VBox.margin></Button>
+            <Button fx:id="speedUpButton" mnemonicParsing="false" onAction="#speedUp" text="Increase Speed" textAlignment="CENTER">
+               <VBox.margin>
+                  <Insets left="60.0" />
+               </VBox.margin></Button>
          </children>
       </VBox>
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
@@ -75,11 +96,17 @@
                <font>
                   <Font size="20.0" />
                </font>
+               <VBox.margin>
+                  <Insets right="40.0" />
+               </VBox.margin>
             </Label>
             <Label prefHeight="45.0" prefWidth="158.0" text="Delay:">
                <font>
                   <Font size="20.0" />
                </font>
+               <VBox.margin>
+                  <Insets right="40.0" />
+               </VBox.margin>
             </Label>
          </children>
       </VBox>
@@ -162,14 +189,14 @@
       <VBox prefHeight="200.0" prefWidth="555.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
          <GridPane.margin><Insets left="10" /></GridPane.margin>
          <children>
-            <Canvas fx:id="canvas2" height="50.0" width="470.0" />
-            <Canvas fx:id="canvas3" height="50.0" width="470.0" />
+            <Canvas fx:id="canvas2" height="63.0" width="470.0" />
+            <Canvas fx:id="canvas3" height="63.0" width="470.0" />
          </children>
       </VBox>
       <VBox prefHeight="115.0" prefWidth="583.0" GridPane.columnIndex="3" GridPane.rowIndex="5">
          <GridPane.margin><Insets left="10" /></GridPane.margin>
          <children>
-            <Canvas fx:id="canvas4" height="50.0" width="470.0" />
+            <Canvas fx:id="canvas4" height="52.0" width="470.0" />
             <Canvas fx:id="canvas5" height="50.0" width="470.0" />
          </children>
       </VBox>
