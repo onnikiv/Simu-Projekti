@@ -455,7 +455,12 @@ public class OwnEngine extends Engine {
 
         calculatePerformanceMetrics();
 
-        new ResultsController().openResultsWindow(orderService.getAllMealResults(), Clock.getInstance().getTime());
+        new ResultsController().openResultsWindow(
+            orderService.getAllMealResults(), 
+            Clock.getInstance().getTime(),
+            orderService.getStartersCount(),
+            orderService.getMainsCount(),
+            orderService.getDessertsCount());
         
     }
 

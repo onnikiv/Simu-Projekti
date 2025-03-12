@@ -25,6 +25,14 @@ public class ResultsController {
     private TextArea dessertsArea;
     @FXML
     private Text timebox;
+    @FXML
+    private Text startersCount;
+
+    @FXML
+    private Text mainsCount;
+
+    @FXML
+    private Text dessertsCount;
 
     private Stage stage;
 
@@ -33,7 +41,7 @@ public class ResultsController {
      *
      * @param allMeals a map containing meal types and their respective meal counts
      */
-    public void openResultsWindow(Map<String, Map<String, Integer>> allMeals, double simulationTime) {
+    public void openResultsWindow(Map<String, Map<String, Integer>> allMeals, double simulationTime, int starter, int main, int dessert) {
         Platform.runLater(() -> {
             try {
                 stage = new Stage();
@@ -44,7 +52,8 @@ public class ResultsController {
                 root.getStylesheets().add(getClass().getResource("/aboutStyle.css").toExternalForm());
 
                 ResultsController controller = fxmlLoader.getController();
-                controller.addMealsToTextAreas(allMeals, simulationTime);
+                controller.updateOutputAreas(allMeals, simulationTime, starter, main, dessert);
+                System.out.println(starter +" " +  main + " " + dessert);
 
                 stage.setScene(new Scene(root));
                 stage.show();
@@ -60,10 +69,13 @@ public class ResultsController {
      *
      * @param allMeals a map containing meal types and their respective meal counts
      */
-    public void addMealsToTextAreas(Map<String, Map<String, Integer>> allMeals, double simulationTime) {
+    public void updateOutputAreas(Map<String, Map<String, Integer>> allMeals, double simulationTime, int starter, int main, int dessert) {
+        
+        Platform.runLater(() -> {
         allMeals.forEach((mealType, meals) -> {
             StringBuilder text = new StringBuilder();
             meals.forEach((meal, count) -> text.append(meal).append(": ").append(count).append("\n"));
+
 
             switch (mealType.toLowerCase()) {
                 case "starters" -> startersArea.appendText(text.toString());
@@ -72,5 +84,11 @@ public class ResultsController {
             }
         });
         timebox.setText(String.format("%.2f", simulationTime));
+        startersCount.setText("Amount: " + starter);
+        mainsCount.setText("Amount: " + main);
+        dessertsCount.setText("Amount: " + dessert);
+    });
+
+
     }
 }

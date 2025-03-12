@@ -110,6 +110,18 @@ public class OrderService {
         return allMeals;
     }
 
+    public int getStartersCount() {
+        return startersOrdered;
+    }
+
+    public int getMainsCount() {
+        return mainOrdered;
+    }
+
+    public int getDessertsCount() {
+        return dessertsOrdered;
+    }
+
     /**
      * A method that returns the total amount of starters ordered.
      * @return a map of starters and their counts
