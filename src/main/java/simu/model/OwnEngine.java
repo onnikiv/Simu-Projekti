@@ -487,9 +487,21 @@ public class OwnEngine extends Engine {
         }
     }
 
+    /**
+     * Returns the average queue time of the simulation.
+     *
+     * @return the average queue time
+     */
+
     public double getAverageQueueTime() {
         return totalQueueTime / totalCustomers;
     }
+
+    /**
+     * Returns the average service time of the simulation.
+     *
+     * @return the average service time
+     */
 
     public double getAverageServiceTime() {
         return totalServiceTime / totalCustomers;
