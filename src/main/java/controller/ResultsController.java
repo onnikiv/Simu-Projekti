@@ -34,6 +34,9 @@ public class ResultsController {
     @FXML
     private Text dessertsCount;
 
+    @FXML
+    private TextArea performanceArea;
+
     private Stage stage;
 
     /**
@@ -41,8 +44,7 @@ public class ResultsController {
      *
      * @param allMeals a map containing meal types and their respective meal counts
      */
-    public void openResultsWindow(Map<String, Map<String, Integer>> allMeals, double simulationTime, int starter, int main, int dessert) {
-        Platform.runLater(() -> {
+    public void openResultsWindow(Map<String, Map<String, Integer>> allMeals, double simulationTime, int starter, int main, int dessert, double queueTime, double SerciveTime) {        Platform.runLater(() -> {
             try {
                 stage = new Stage();
                 stage.setTitle("Results");
@@ -52,7 +54,7 @@ public class ResultsController {
                 root.getStylesheets().add(getClass().getResource("/aboutStyle.css").toExternalForm());
 
                 ResultsController controller = fxmlLoader.getController();
-                controller.updateOutputAreas(allMeals, simulationTime, starter, main, dessert);
+                controller.updateOutputAreas(allMeals, simulationTime, starter, main, dessert, queueTime, SerciveTime);
 
                 stage.setScene(new Scene(root));
                 stage.show();
@@ -68,7 +70,7 @@ public class ResultsController {
      *
      * @param allMeals a map containing meal types and their respective meal counts
      */
-    public void updateOutputAreas(Map<String, Map<String, Integer>> allMeals, double simulationTime, int starter, int main, int dessert) {
+    public void updateOutputAreas(Map<String, Map<String, Integer>> allMeals, double simulationTime, int starter, int main, int dessert, double queueTime, double serviceTime) {
         
         Platform.runLater(() -> {
         allMeals.forEach((mealType, meals) -> {
@@ -86,6 +88,7 @@ public class ResultsController {
         startersCount.setText("Amount: " + starter);
         mainsCount.setText("Amount: " + main);
         dessertsCount.setText("Amount: " + dessert);
+        performanceArea.setText(String.format("Average Queue Time: %.2f\nAverage Service Time: %.2f", queueTime, serviceTime));
     });
 
 

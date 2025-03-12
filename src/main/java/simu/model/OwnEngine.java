@@ -460,7 +460,9 @@ public class OwnEngine extends Engine {
             Clock.getInstance().getTime(),
             orderService.getStartersCount(),
             orderService.getMainsCount(),
-            orderService.getDessertsCount());
+            orderService.getDessertsCount(),
+                getAverageQueueTime(),
+                getAverageServiceTime());
         
     }
 
@@ -483,6 +485,14 @@ public class OwnEngine extends Engine {
         } else {
             System.out.println("No customers processed.");
         }
+    }
+
+    public double getAverageQueueTime() {
+        return totalQueueTime / totalCustomers;
+    }
+
+    public double getAverageServiceTime() {
+        return totalServiceTime / totalCustomers;
     }
 
 }
