@@ -44,5 +44,20 @@
             <TextArea fx:id="dessertsArea" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="2">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="startersCount" textAlignment="CENTER" wrappingWidth="260.32421875" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="mainsCount" textAlignment="CENTER" wrappingWidth="260.32421875" />
+         </children>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="dessertsCount" textAlignment="CENTER" wrappingWidth="260.32421875" />
+         </children>
+      </VBox>
    </children>
 </GridPane>
