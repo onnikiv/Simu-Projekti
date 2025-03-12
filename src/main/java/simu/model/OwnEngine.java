@@ -1,9 +1,6 @@
 package simu.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import controller.ControllerForFxml;
 import controller.IControllerForM;
@@ -453,7 +450,7 @@ public class OwnEngine extends Engine {
 
         controller.showEndTime(Clock.getInstance().getTime());
 
-        calculatePerformanceMetrics();
+        Map<String, Double> metrics = calculatePerformanceMetrics();
 
         new ResultsController().openResultsWindow(
             orderService.getAllMealResults(), 
@@ -461,8 +458,8 @@ public class OwnEngine extends Engine {
             orderService.getStartersCount(),
             orderService.getMainsCount(),
             orderService.getDessertsCount(),
-                getAverageQueueTime(),
-                getAverageServiceTime());
+                metrics.get("averageQueueTime"),
+                metrics.get("averageServiceTime"));
         
     }
 
@@ -470,12 +467,22 @@ public class OwnEngine extends Engine {
      * Calculates the performance metrics of the simulation.
      */
 
-    public void calculatePerformanceMetrics() {
+    public Map<String, Double> calculatePerformanceMetrics() {
+        Map<String, Double> metrics = new HashMap<>();
         if (totalCustomers > 0) {
             double averageQueueTime = totalQueueTime / totalCustomers;
             double averageServiceTime = totalServiceTime / totalCustomers;
+            double averageTimeInSystem = timeInSystem / totalCustomers;
 
-            System.out.println("\nAverage Time in System: " + timeInSystem / totalCustomers);
+            metrics.put("averageQueueTime", averageQueueTime);
+            metrics.put("maxQueueTime", maxQueueTime);
+            metrics.put("minQueueTime", minQueueTime);
+            metrics.put("averageServiceTime", averageServiceTime);
+            metrics.put("maxServiceTime", maxServiceTime);
+            metrics.put("minServiceTime", minServiceTime);
+            metrics.put("averageTimeInSystem", averageTimeInSystem);
+
+            System.out.println("\nAverage Time in System: " + averageTimeInSystem);
             System.out.println("\nAverage Queue Time: " + averageQueueTime);
             System.out.println("Maximum Queue Time: " + maxQueueTime);
             System.out.println("Minimum Queue Time: " + minQueueTime);
@@ -485,26 +492,7 @@ public class OwnEngine extends Engine {
         } else {
             System.out.println("No customers processed.");
         }
-    }
-
-    /**
-     * Returns the average queue time of the simulation.
-     *
-     * @return the average queue time
-     */
-
-    public double getAverageQueueTime() {
-        return totalQueueTime / totalCustomers;
-    }
-
-    /**
-     * Returns the average service time of the simulation.
-     *
-     * @return the average service time
-     */
-
-    public double getAverageServiceTime() {
-        return totalServiceTime / totalCustomers;
+        return metrics;
     }
 
 }
