@@ -77,9 +77,10 @@ public class OrderService {
 
     /**
      * A method that returns the total amount of meals ordered.
-     */
-
-    public void getAllMealResults() {
+          * @return 
+          */
+     
+    public Map<String, Map<String, Integer>> getAllMealResults() {
         System.out.println("TOTAL AMOUNT OF MEALS ORDERED:\n");
         System.out.print("Starters: " + startersOrdered + " - ");
         System.out.print(", Main meals: " + mainOrdered + " - ");
@@ -100,6 +101,13 @@ public class OrderService {
         for (Map.Entry<String, Integer> entry : listDesserts.entrySet()) {
             System.out.println(entry.getKey() + ": " + entry.getValue());
         }
+
+        Map<String, Map<String, Integer>> allMeals = new HashMap<>();
+        allMeals.put("Starters", listStarters);
+        allMeals.put("Mains", listMains);
+        allMeals.put("Desserts", listDesserts);
+
+        return allMeals;
     }
 
     /**
