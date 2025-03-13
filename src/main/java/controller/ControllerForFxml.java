@@ -62,7 +62,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             countC3, countC4, countC5;
 
     @FXML
-    private Label queue0, queue1, queue2, queue3, queue4;
+    private Label queue0, queue1, queue2, queue3, queue4, queue5;
 
 
     @FXML
@@ -282,7 +282,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
 
     @Override
     public synchronized void updateServicePointSums(int c0, int c1, int c2, int c3, int c4, int c5,
-                                                    int q0, int q1, int q2, int q3, int q4) {
+                                                    int q0, int q1, int q2, int q3, int q4, int q5) {
         Platform.runLater(() -> {
             countC0.setText(String.valueOf(c0));
             countC1.setText(String.valueOf(c1));
@@ -295,6 +295,7 @@ public class ControllerForFxml implements IControllerForM, IControllerForV, ISim
             queue2.setText(String.valueOf(q2));
             queue3.setText(String.valueOf(q3));
             queue4.setText(String.valueOf(q4));
+            queue5.setText(String.valueOf(q5));
         });
     }
 
