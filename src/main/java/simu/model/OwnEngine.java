@@ -97,7 +97,7 @@ public class OwnEngine extends Engine {
         servicePoints[3] = new ServicePoint(new Normal(meanEating, 15), eventList, EventType.SAFKAAMINEN);
         servicePoints[4] = new ServicePoint(new Normal(meanExiting, 2), eventList, EventType.POISTUMINEN);
 
-        arrivalProcess = new ArrivalProcess(new Negexp(meanArrival, 10), eventList, EventType.SAAPUMINEN);
+        arrivalProcess = new ArrivalProcess(new Negexp(meanArrival), eventList, EventType.SAAPUMINEN);
 
         Kitchen kitchen = new Kitchen();
         this.waiter = new Waiter(kitchen);
