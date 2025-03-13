@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="742.0" prefWidth="1278.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerForFxml">
+<GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="742.0" prefWidth="1278.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControllerForFxml">
   <columnConstraints>
       <ColumnConstraints maxWidth="0.0" minWidth="0.0" prefWidth="0.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1016.0" minWidth="0.0" prefWidth="282.0" />
@@ -149,7 +149,7 @@
                <children>
                   <Label fx:id="queue1" text="0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKBLUE" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="PÖYTIINOHJATTU" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="Seating" />
                   <Canvas fx:id="canvas1" height="350.0" width="100.0">
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -161,7 +161,7 @@
                <children>
                   <Label fx:id="queue2" text="0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKCYAN" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="200.0" text="TILANNUT" />
+                  <Label alignment="CENTER" prefHeight="20.0" prefWidth="200.0" text="Ordering" />
                   <Canvas fx:id="canvas2" height="350.0" width="100.0">
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -173,7 +173,7 @@
                <children>
                   <Label fx:id="queue3" text="0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGOLDENROD" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="TARJOILTU" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="Serving" />
                   <Canvas fx:id="canvas3" height="350.0" width="100.0">
                      <VBox.margin>
                         <Insets bottom="20.0" />
@@ -185,7 +185,7 @@
                <children>
                   <Label fx:id="queue4" text="0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DARKGREEN" height="30.0" stroke="BLACK" strokeType="INSIDE" width="30.0" />
-                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="SAFKANNUT" />
+                  <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="20.0" prefWidth="200.0" text="Eating" />
                   <Canvas fx:id="canvas4" height="350.0" width="100.0">
                      <VBox.margin>
                         <Insets bottom="20.0" />
