@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="719.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingsController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="461.0" prefWidth="719.0" stylesheets="@settingsStyle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingsController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="436.5" minWidth="10.0" prefWidth="343.0" />
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="379.0" minWidth="10.0" prefWidth="376.0" />
@@ -30,13 +30,13 @@
             <Slider BorderPane.alignment="CENTER" />
          </center>
          <left>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Volume" wrappingWidth="56.79296875" BorderPane.alignment="CENTER">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Volume" wrappingWidth="56.79296875" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets left="30.0" />
                </BorderPane.margin></Text>
          </left>
          <top>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sounds" BorderPane.alignment="CENTER">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Sounds" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets top="20.0" />
                </BorderPane.margin></Text>
@@ -94,7 +94,7 @@
          </center></BorderPane>
       <BorderPane prefHeight="200.0" prefWidth="200.0">
          <center>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Distributions" textAlignment="CENTER" wrappingWidth="126.13671875" BorderPane.alignment="CENTER_LEFT">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Distributions" textAlignment="CENTER" wrappingWidth="126.13671875" BorderPane.alignment="CENTER_LEFT">
                <BorderPane.margin>
                   <Insets bottom="60.0" left="60.0" />
                </BorderPane.margin>
@@ -122,42 +122,42 @@
          <center>
             <VBox prefHeight="200.0" prefWidth="100.0" spacing="30.0" BorderPane.alignment="CENTER">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Saapuminen">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Saapuminen">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
                      <font>
                         <Font size="15.0" />
                      </font></Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Pöytiinohjaus">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Pöytiinohjaus">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                      <font>
                         <Font size="15.0" />
                      </font></Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tilaaminen">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tilaaminen">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
                      <font>
                         <Font size="15.0" />
                      </font></Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Tarjoilu">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Tarjoilu">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
                      <font>
                         <Font size="15.0" />
                      </font></Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Safkaaminen">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Safkaaminen">
                      <VBox.margin>
                         <Insets />
                      </VBox.margin>
                      <font>
                         <Font size="15.0" />
                      </font></Text>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Poistuminen">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Poistuminen">
                      <VBox.margin>
                         <Insets top="5.0" />
                      </VBox.margin>
