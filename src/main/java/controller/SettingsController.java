@@ -42,6 +42,9 @@ public class SettingsController {
         loadSettings();
     }
 
+    /**
+     * Loads the default settings for the simulation.
+     */
     private void loadSettings() {
         settingsMap.put("maxGroupSize", 4);
         settingsMap.put("tableAmount", 15);
@@ -67,14 +70,25 @@ public class SettingsController {
         updateTextFields();
     }
 
+    /**
+     * Sets the engine for the controller.
+     * @param engine the engine to set
+     */
     public void setEngine(IEngine engine) {
         this.engine = engine;
     }
 
+    /**
+     * Sets the main controller for the controller.
+     * @param mainController the main controller to set
+     */
     public void setMainController(ControllerForFxml mainController) {
         this.controller = mainController;
     }
 
+    /**
+     * Handles the back button action.
+     */
     @FXML
     private void handleBackButtonAction() {
         Stage stage = (Stage) backButton.getScene().getWindow();
@@ -84,6 +98,11 @@ public class SettingsController {
         }
     }
 
+    /**
+     * Updates the simulation parameters based on the slider value.
+     * @param slider the slider to update
+     * @param type the type of parameter to update
+     */
     public void updateSliderValue(Slider slider, String type) {
         if (engine == null) {
             return;
@@ -113,10 +132,18 @@ public class SettingsController {
         }
     }
 
+    /**
+     * Returns the maximum group size.
+     * @return the maximum group size
+     */
     public int getMaxGroupSize() {
         return settingsMap.get("maxGroupSize");
     }
 
+    /**
+     * Returns the table amount.
+     * @return the table amount
+     */
     public int getTableAmount() {
         return settingsMap.get("tableAmount");
     }
@@ -133,6 +160,10 @@ public class SettingsController {
         settingsMap.put("tableSize", tableSize);
     }
 
+    /**
+     * Decrements the value of the given text field by one.
+     * @param field the text field to decrement
+     */
     public void decrementValue(TextField field) {
         int value = Integer.parseInt(field.getText());
         if (value > 1) {
@@ -142,6 +173,10 @@ public class SettingsController {
         }
     }
 
+    /**
+     * Increments the value of the given text field by one.
+     * @param field the text field to increment
+     */
     public void incrementValue(TextField field) {
         int value = Integer.parseInt(field.getText());
         value++;
@@ -149,6 +184,10 @@ public class SettingsController {
         updateSettingsView(field);
     }
 
+    /**
+     * Handles the button actions for incrementing and decrementing values.
+     * @param event the action event
+     */
     @FXML
     public void handleButtonAction(ActionEvent event) {
         Button source = (Button) event.getSource();
@@ -174,6 +213,10 @@ public class SettingsController {
         }
     }
 
+    /**
+     * Updates the settings view based on the given text field.
+     * @param field the text field to update
+     */
     public void updateSettingsView(TextField field) {
         if (field == tableAmountField) {
             settingsMap.put("tableAmount", Integer.parseInt(field.getText()));
@@ -189,6 +232,10 @@ public class SettingsController {
         updateTextFields();
     }
 
+    /**
+     * Sets the maximum group size to the given value.
+     * @param size the maximum group size
+     */
     public void setGroupSize(int size) {
         settingsMap.put("maxGroupSize", size);
         if (size > settingsMap.get("tableSize")) {
@@ -197,6 +244,9 @@ public class SettingsController {
         updateTextFields();
     }
 
+    /**
+     * Updates the text fields with the current settings values.
+     */
     public void updateTextFields() {
         tableAmountField.setText(String.valueOf(settingsMap.get("tableAmount")));
         tableSizeField.setText(String.valueOf(settingsMap.get("tableSize")));

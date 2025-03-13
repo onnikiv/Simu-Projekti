@@ -27,7 +27,6 @@ public class Waiter {
      */
     public void takeOrder(MenuItem item, Customer customer) {
         kitchen.receiveOrder(item, customer);
-        //Clock.getInstance().setTime(Clock.getInstance().getTime() + 1);
         System.out.println("Order received: " + item.getName());
     }
 
