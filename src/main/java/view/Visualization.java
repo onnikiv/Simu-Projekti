@@ -112,11 +112,21 @@ public class Visualization extends Canvas implements IVisualization {
         resetPositions();
     }
 
+    /**
+     * Clears a customer by filling a rectangle on the canvas.
+     * The method is synchronized to prevent multiple threads from accessing the screen at the same time.
+     *
+     * @param customer the customer to clear
+     */
     private synchronized void clearCustomer(int customer) {
         gcs[customer].setFill(backgroundColors[customer]);
         gcs[customer].fillRect(0, 0, gcs[customer].getCanvas().getWidth(), gcs[customer].getCanvas().getHeight());
     }
 
+    /**
+     * Resets the positions of the customers.
+     * The method is synchronized to prevent multiple threads from accessing the screen at the same time.
+     */
     public synchronized void resetPositions() {
         for (int y = 0; y < gcs.length; y++) {
             i[y] = 0;

@@ -62,7 +62,6 @@ public class Tables {
     /**
      * Removes a customer from a table.
      * @param customer the customer to remove
-     * @return true if the customer was removed, false otherwise
      */
 
     public void removeCustomerFromTable(Customer customer) {

@@ -1,31 +1,23 @@
 package simu.model;
 
-import eduni.distributions.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
- * The GroupGenerator class is responsible for generating groups of customers
- * with sizes determined by a normal distribution.
+ * GroupGenerator class that generates a group of customers.
+ * @see Customer Class that is part of the group.
+ *
+ * @version 1.0
  */
 public class GroupGenerator {
     private int groupId;
-    private Normal normalDist;
 
     /**
-     * Constructs a GroupGenerator with a normal distribution.
-     * The mean is set to 2.5 and the standard deviation is set to 1,
-     * favoring group sizes of 2 and 3.
-     */
-    public GroupGenerator() {
-        this.normalDist = new Normal(2.5, 1);
-    }
-
-    /**
-     * Generates a group of customers with a size determined by the normal distribution.
+     * Constructs a GroupGenerator object with the specified group ID.
      *
-     * @param maxSize the maximum size of the group
-     * @return a list of customers in the group
+     * @param maxSize Gets the randomly generated group size.
+     * @return Returns the generated group of Customers.
      */
     public List<Customer> generateCustomerGroup(int maxSize) {
         int size = groupSize(maxSize);
@@ -43,17 +35,11 @@ public class GroupGenerator {
     }
 
     /**
-     * Determines the size of the group using the normal distribution.
-     * Ensures the size is within the valid range (1 to maxSize).
-     *
-     * @param maxSize the maximum size of the group
-     * @return the size of the group
+     * Generates a random group size.
+     * @param n Parameter for maximum group size.
+     * @return Random group size.
      */
-    public int groupSize(int maxSize) {
-        int size;
-        do {
-            size = (int) Math.round(normalDist.sample());
-        } while (size < 1 || size > maxSize);
-        return size;
+    public int groupSize(int n) {
+        return new Random().nextInt(n) + 1;
     }
 }
