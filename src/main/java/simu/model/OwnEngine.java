@@ -242,7 +242,7 @@ public class OwnEngine extends Engine {
         }
 
         // lähettää kontrollerille arvot
-        controller.updateServicePointSums(c0, c1, c2, c3, c4, c5, q0, q1, q2, q3, q4);
+        controller.updateServicePointSums(c0, c1, c2, c3, c4, c5, q0, q1, q2, q3, q4, q5);
         // Update the simulation time in the UI
         controllerFxml.updateSimulationTime(Clock.getInstance().getTime());
 
@@ -380,7 +380,6 @@ public class OwnEngine extends Engine {
             case POISTUMINEN -> {
                 a = servicePoints[4].fetchFromQueue();
                 q4 -= a.size();
-                q5 += a.size();
                 controller.visualizeRemoveCustomers(4, a.size());
                 int id = a.get(0).getGroupId();
                 Double prepTime = groupPrepTimes.getOrDefault(id, 0.0);
@@ -394,6 +393,7 @@ public class OwnEngine extends Engine {
                         customer.setLeaving(true);
                         customer.setSeated(false);
                         c5++;
+                        q5++;
                     }
                 }
                 for (Customer customer : a) {

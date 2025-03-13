@@ -196,7 +196,7 @@
             <VBox alignment="BOTTOM_CENTER" prefHeight="560.0" prefWidth="100.0">
                <children>
                   <Label alignment="CENTER" prefHeight="20.0" prefWidth="200.0" text="Left" />
-                  <Label fx:id="countC5" alignment="CENTER" prefHeight="30.0" prefWidth="87.0" text="0" />
+                  <Label fx:id="queue5" alignment="CENTER" prefHeight="30.0" prefWidth="87.0" text="0" />
                   <Canvas fx:id="canvas5" height="50.0" width="50.0">
                      <VBox.margin>
                         <Insets bottom="170.0" />
