@@ -66,5 +66,11 @@
             <TextArea fx:id="performanceArea" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0" GridPane.rowIndex="3">
+         <children>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Customers Served" textAlignment="CENTER" wrappingWidth="260.32421875" />
+            <Text fx:id="customersServed" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="260.32421875" />
+         </children>
+      </VBox>
    </children>
 </GridPane>

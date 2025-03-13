@@ -33,6 +33,8 @@ public class ResultsController {
 
     @FXML
     private Text dessertsCount;
+    @FXML
+    private Text customersServed;
 
     @FXML
     private TextArea performanceArea;
@@ -88,6 +90,7 @@ public class ResultsController {
         startersCount.setText("Amount: " + starter);
         mainsCount.setText("Amount: " + main);
         dessertsCount.setText("Amount: " + dessert);
+        customersServed.setText(String.valueOf(main));
             performanceArea.setText(String.format(
                     "Average Queue Time: %.2f\nMax Queue Time: %.2f\nMin Queue Time: %.2f\n" +
                             "Average Service Time: %.2f\nMax Service Time: %.2f\nMin Service Time: %.2f\n" +
